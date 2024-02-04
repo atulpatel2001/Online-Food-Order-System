@@ -1,0 +1,41 @@
+package com.online.food.modal;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "tbl_customer")
+@Builder
+public class Customer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "customer_id")
+    private Long customerId;
+    @Column(name = "customer_name")
+    private String customerName;
+
+    @Column(name = "customer_email")
+    private String customerEmail;
+
+    @Column(name = "customer_password")
+    private String customerPassword;
+
+    @Column(name = "customer_role")
+    private String customerRole;
+
+
+    @Column(name = "customer_join-date")
+    private LocalDateTime customerJoinDate;
+
+    private boolean enable;
+
+
+
+}
