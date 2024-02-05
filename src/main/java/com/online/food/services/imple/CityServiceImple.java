@@ -4,6 +4,8 @@ import com.online.food.modal.City;
 import com.online.food.repository.CityRepo;
 import com.online.food.services.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,5 +32,15 @@ public class CityServiceImple implements CityService {
     @Override
     public void delete(City city) {
         this.cityRepo.delete(city);
+    }
+
+    @Override
+    public Page<City> findAllCityByPagination(Pageable pageable) {
+        return this.cityRepo.findAll(pageable);
+    }
+
+    @Override
+    public City findByCityName(String cityName) {
+        return this.cityRepo.findByCityName(cityName);
     }
 }
