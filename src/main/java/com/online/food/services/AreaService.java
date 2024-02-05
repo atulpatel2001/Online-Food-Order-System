@@ -13,4 +13,6 @@ public interface AreaService {
     List<Area> findAll();
 
     void delete(Area area);
+
+    List<Area> getAreaByCityId(Long cityId);
 }

@@ -4,9 +4,10 @@ import com.online.food.modal.SubCategory;
 import com.online.food.repository.SubCategoryRepo;
 import com.online.food.services.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class SubCategoryServiceImple implements SubCategoryService {
     @Autowired
     private SubCategoryRepo categoryRepo;

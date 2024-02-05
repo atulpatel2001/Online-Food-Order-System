@@ -19,8 +19,10 @@ public class Restaurant {
     @Column(name = "restaurant_name")
     private String restaurantName;
     @Column(name = "phone_number")
-    private Long phoneNumber;
+    private Long restaurantPhoneNumber;
 
+    @Column(name = "restaurant_address",length = 2000)
+    private String restaurantAddress;
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;

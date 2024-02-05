@@ -4,9 +4,10 @@ import com.online.food.modal.City;
 import com.online.food.repository.CityRepo;
 import com.online.food.services.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class CityServiceImple implements CityService {
     @Autowired
     private CityRepo cityRepo;

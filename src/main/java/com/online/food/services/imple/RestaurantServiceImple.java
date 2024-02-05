@@ -4,9 +4,10 @@ import com.online.food.modal.Restaurant;
 import com.online.food.repository.RestaurantRepo;
 import com.online.food.services.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class RestaurantServiceImple implements RestaurantService {
     @Autowired
     private RestaurantRepo restaurantRepo;

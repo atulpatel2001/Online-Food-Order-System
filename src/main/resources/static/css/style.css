@@ -1,8 +1,12 @@
 
 
-.primary-bg{
+#primary-bg{
 background:#424242;
 
+}
+
+#card-border{
+border-radius:10px;
 }
 .error{
 color:red;

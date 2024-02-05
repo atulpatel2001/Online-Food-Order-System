@@ -4,9 +4,10 @@ import com.online.food.modal.Product;
 import com.online.food.repository.ProductRepo;
 import com.online.food.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ProductServiceImple implements ProductService {
     @Autowired
     private ProductRepo  productRepo;
@@ -22,7 +23,7 @@ public class ProductServiceImple implements ProductService {
 
     @Override
     public List<Product> findAll() {
-        return this,productRepo.findAll();
+        return this.productRepo.findAll();
     }
 
     @Override
