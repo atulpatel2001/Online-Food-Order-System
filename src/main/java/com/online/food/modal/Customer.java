@@ -36,6 +36,9 @@ public class Customer {
 
     private boolean enable;
 
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "customer")
+    private Restaurant restaurant;
+
 
 
 }

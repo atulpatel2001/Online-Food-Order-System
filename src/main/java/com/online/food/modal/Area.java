@@ -3,6 +3,8 @@ package com.online.food.modal;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -24,4 +26,8 @@ public class Area {
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
+
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "area")
+    private List<Restaurant> restaurants ;
 }

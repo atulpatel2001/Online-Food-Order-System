@@ -26,5 +26,8 @@ public class City {
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "city")
     private List<Area> areas;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "city")
+    private List<Restaurant> restaurants;
+
 
 }
