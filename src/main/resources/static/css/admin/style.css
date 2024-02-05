@@ -6,6 +6,14 @@
   font-family: "Poppins", sans-serif;
 }
 
+
+.primary-bg{
+background:#424242;
+
+}
+.error{
+color:red;
+}
 :root {
   /* ===== Colors ===== */
   --primary-color: #0e4bf1;
