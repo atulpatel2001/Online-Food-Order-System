@@ -1,15 +1,3 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:3308/online-food-order
-    username: postgres
-    password: root123
-
-
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+  profiles:
+    active: dev
