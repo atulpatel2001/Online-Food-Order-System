@@ -10,4 +10,6 @@ public class OnlineFoodOrderSystemApplication {
 		SpringApplication.run(OnlineFoodOrderSystemApplication.class, args);
 	}
 
+    public static class imple {
+    }
 }
