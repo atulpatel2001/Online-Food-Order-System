@@ -3,6 +3,7 @@ package com.online.food.services.imple;
 import com.online.food.modal.Customer;
 import com.online.food.repository.CustomerRepo;
 import com.online.food.services.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 @Service
 public class CustomerServiceImple implements CustomerService {
 
-
+@Autowired
     private CustomerRepo customerRepo;
     @Override
     public Customer save(Customer customer) {
