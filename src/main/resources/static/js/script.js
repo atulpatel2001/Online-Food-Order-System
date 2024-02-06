@@ -134,7 +134,7 @@ $(document).ready(function() {
             },
             messages: {
             restaurantPhoneNumber:{
-            required :"must be required with formate"
+            required : "must be required with formate"
             },
             cityId:{
               required: "must be required"

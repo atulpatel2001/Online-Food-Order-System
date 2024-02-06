@@ -8,6 +8,7 @@ import com.online.food.payload.RestaurantPayLoad;
 import com.online.food.services.AreaService;
 import com.online.food.services.CityService;
 import com.online.food.services.CustomerService;
+import com.online.food.services.RestaurantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class HomeController {
     private CityService cityService;
     @Autowired
     private AreaService areaService;
+    @Autowired
+    private RestaurantService restaurantService;
 
     //sign in page
     @GetMapping("/signin")
@@ -104,10 +107,40 @@ public class HomeController {
 
     @PostMapping("/restaurant-signup")
     @ResponseBody
-    public String submitRestaurantData(@RequestBody RestaurantPayLoad restaurantPayLoad) {
-        System.out.println(restaurantPayLoad);
-        return "success";
+    public String submitRestaurantData(@ModelAttribute RestaurantPayLoad restaurantPayLoad) {
+        try{
+            Customer customer = this.customerService.findByEmailId(restaurantPayLoad.getCustomerEmail());
+            if (customer == null){
+                City city = this.cityService.findById(restaurantPayLoad.getCityId());
+                Area area = this.areaService.findById(restaurantPayLoad.getAreaId());
+                Customer customer1 = Customer.builder()
+                        .customerEmail(restaurantPayLoad.getCustomerEmail())
+                        .customerPassword(this.passwordEncoder.encode(restaurantPayLoad.getCustomerPassword()))
+                        .customerJoinDate(LocalDateTime.now())
+                        .customerRole("ROLE_RESTAURANT")
+                        .customerName(restaurantPayLoad.getCustomerName())
+                        .enable(false).build();
+                Customer save = this.customerService.save(customer1);
 
+                Restaurant restaurant = Restaurant.builder()
+                        .restaurantAddress(restaurantPayLoad.getRestaurantAddress())
+                        .restaurantName(restaurantPayLoad.getRestaurantName())
+                        .restaurantPhoneNumber(restaurantPayLoad.getRestaurantPhoneNumber())
+                        .area(area)
+                        .city(city)
+                        .customer(save)
+                        .build();
+                this.restaurantService.save(restaurant);
+            }
+            else {
+                this.logger.info("Already Registered This Email");
+                return "Already Registered This Email";
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return "success";
     }
 
 
