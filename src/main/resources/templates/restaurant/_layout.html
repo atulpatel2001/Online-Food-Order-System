@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html
-        lang="en"
+<html lang="en"
         xmlns:th="http://www.thymeleaf.org"
-        th:fragment="Layout(content)"
->
+        th:fragment="Layout(content)">
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" th:href="@{/css/admin/style.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <title th:text="${title}">Base</title>
     <!-- fa fa font -->
@@ -45,61 +42,38 @@
     <div class="menu-items">
         <ul class="nav-links">
             <li>
-                <a th:href="@{/admin/index}">
+                <a th:href="@{/restaurant/index}">
                     <i class="uil uil-estate"></i>
                     <span class="link-name">Dahsboard</span>
                 </a>
             </li>
             <li>
-                <a href="#" th:href="@{/admin/manage-city/0}">
-                    <i class="uil uil-building"></i>
+                <a href="#" th:href="@{/restaurant/manage-product/0}">
+                    <i class="uil uil-briefcase"></i>
 
-                    <span class="link-name">Manage City</span>
+                    <span class="link-name">Manage Product</span>
                 </a>
             </li>
             <li>
-                <a href="#" th:href="@{/admin/manage-area/0}">
-                    <i class="uil uil-map-marker"></i>
-                    <span class="link-name">Manage Area</span>
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/admin/manage-category/0}">
-                    <i class="uil-glass-martini"></i>
-                    <span class="link-name">Manage Category</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" th:href="@{/admin/manage-sub-category/0}">
-                    <i class="uil-utensils-alt"></i>
-                    <span class="link-name">Manage Sub Category</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" th:href="@{/admin/manage-restaturant/0}">
-                    <i class="uil-swiggy"></i>
-                    <span class="link-name">Manage Restaturant</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" th:href="@{/admin/manage-offer/0}">
-                    <i class="uil-bag-alt"></i>
+                <a href="#" th:href="@{/restaurant/manage-offer/0}">
+                    <i class="uil-dropbox"></i>
                     <span class="link-name">Manage Offers</span>
                 </a>
             </li>
+            <li>
+                <a th:href="@{/restaurant/manage-order/0}">
+                    <i class="uil-bus-school"></i>
+                    <span class="link-name">Manage Order</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" th:href="@{/restaurant/manage-complain/0}">
+                    <i class="uil-missed-call"></i>
+                    <span class="link-name">Manage Complain</span>
+                </a>
+            </li>
 
-            <li>
-                <a href="#" th:href="@{/admin/manage-complaint/0}">
-                    <i class="uil-calling"></i>
-                    <span class="link-name">Manage Complaint</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" th:href="@{/admin/manage-feedback/0}">
-                    <i class="uil-thumbs-up"></i>
-                    <span class="link-name">Manage Feedback</span>
-                </a>
-            </li>
+
         </ul>
 
         <ul class="logout-mode">
@@ -110,13 +84,13 @@
                 </a>
             </li>
             <li class="mode">
-<!--                <a href="#">-->
-<!--                    <i class="uil uil-moon"></i>-->
-<!--                    <span class="link-name">Dark Mode</span>-->
-<!--                </a>-->
-<!--                <div class="mode-toggle">-->
-<!--                    <span class="switch"></span>-->
-<!--                </div>-->
+                <!--                <a href="#">-->
+                <!--                    <i class="uil uil-moon"></i>-->
+                <!--                    <span class="link-name">Dark Mode</span>-->
+                <!--                </a>-->
+                <!--                <div class="mode-toggle">-->
+                <!--                    <span class="switch"></span>-->
+                <!--                </div>-->
             </li>
         </ul>
     </div>
@@ -155,11 +129,11 @@
 ></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
-		integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
-		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script th:src="@{/js/common.js}"></script>
-<script th:src="@{/js/admin/script.js}"></script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.online.food.modal;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -12,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "tbl_category")
 @Builder
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

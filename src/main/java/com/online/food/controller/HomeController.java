@@ -35,6 +35,12 @@ public class HomeController {
     @Autowired
     private RestaurantService restaurantService;
 
+    @GetMapping("/")
+    public String indexpage(Model model){
+        model.addAttribute("title", "Food | Order Food Online in India");
+        return "index";
+    }
+
     //sign in page
     @GetMapping("/signin")
     public String signin(Model model) {

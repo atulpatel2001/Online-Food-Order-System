@@ -3,6 +3,8 @@ package com.online.food.modal;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Entity
 @Getter
 @Setter
@@ -10,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @Table(name = "tbl_restaurant")
 @Builder
-public class Restaurant {
+public class Restaurant implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

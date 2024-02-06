@@ -1,3 +1,6 @@
+
+
+
 $(document).ready(function() {
         $('#reg-form').validate({
             rules: {
