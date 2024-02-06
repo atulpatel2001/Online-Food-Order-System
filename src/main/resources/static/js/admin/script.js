@@ -4,6 +4,7 @@
       $(document).ready(function () {
         $("#add-city").click(function () {
           $("#show-city").hide();
+          $("#update-city-form").hide();
           $("#add-city-form").show();
         });
       });
@@ -60,6 +61,30 @@ $(document).ready(function() {
     });
 });
 
+$(document).ready(function() {
+    $(".update-city-button").click(function() {
+      var cityId = $(this).data('city_id');
+
+        $.ajax({
+            url: '/admin/get-city',
+            type: 'GET',
+            data: { cityId: cityId },
+            success: function(response) {
+                $("#cityId-up").val(response.cityId);
+                $("#cityName-up").val(response.cityName);
+                $("#cityDiscription-up").val(response.cityDiscription);
+                $("#show-city").hide();
+                $("#update-city-form").show();
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+
+            }
+        });
+    });
+});
+
+
 //update city
 $(document).ready(function() {
         $('#city-update-reg-form').validate({
@@ -74,9 +99,9 @@ $(document).ready(function() {
             },
             submitHandler: function(form) {
                 let formData = {
-                    cityId: $('#cityId').val(),
-                    cityName: $('#cityName1').val(),
-                    cityDiscription: $('#cityDiscription1').val(),
+                    cityId: $('#cityId-up').val(),
+                    cityName: $('#cityName-up').val(),
+                    cityDiscription: $('#cityDiscription-up').val(),
                 };
 
                 $.ajax({
@@ -113,7 +138,7 @@ $(document).ready(function() {
     // delete City
 
       $(document).ready(function () {
-                              $('#delete-city').click(function () {
+                              $('.delete-city').click(function () {
 
                                   var city_id = $(this).data('city_id');
                                   const swalWithBootstrapButtons = Swal.mixin({

@@ -172,8 +172,7 @@
 									<td>
 										<button
 												type="button"
-												class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 "
-												id="delete-city"
+												class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 delete-city"
 												th:data-city_id="${city.cityId}"
 										
 										>
@@ -181,8 +180,9 @@
 										</button>
 										<button
 												type="button"
-												class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"
-												id="update-city-button"
+												class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 update-city-button"
+												
+												th:data-city_id="${city.cityId}"
 										
 										>
 											<i class="fa fa-edit"></i>
@@ -295,63 +295,61 @@
 
 			<!--update city form&ndash;&gt;-->
 
-<!--			<div id="update-city-form" style="display: none">-->
-<!--				<div-->
-<!--						class="col-md-5 offset-md-4"-->
+			<div id="update-city-form" style="display: none">
+				<div
+						class="col-md-5 offset-md-4"
 
 
-<!--				>-->
-<!--					<div class="card mt-3">-->
-<!--						<div class="card-header text-center ">-->
-<!--							<br/>-->
-<!--							Update City-->
-<!--						</div>-->
+				>
+					<div class="card mt-3">
+						<div class="card-header text-center ">
+							<br/>
+							Update City
+						</div>
 
-<!--						<div class="card-body">-->
-<!--							<form-->
-<!--									id="city-update-reg-form"-->
+						<div class="card-body">
+							<form
+									id="city-update-reg-form"
 
-<!--							>-->
-<!--								<input type="hidden" th:value="${city.cityId}" >-->
-<!--								<div class="form-group">-->
-<!--									<label for="cityName">City Name</label>-->
-<!--									<input-->
-<!--											name="cityName"-->
-<!--											type="text"-->
-<!--											class="form-control"-->
-<!--											id="cityName1"-->
-<!--											aria-describedby="emailHelp"-->
-<!--											th:value="${city.cityName}"-->
+							>
+								<input type="hidden" name="cityId" id="cityId-up">
+								<div class="form-group">
+									<label for="cityName">City Name</label>
+									<input
+											name="cityName"
+											type="text"
+											class="form-control"
+											id="cityName-up"
+											aria-describedby="emailHelp"
+									/>
+								</div>
 
-<!--									/>-->
-<!--								</div>-->
+								<div class="form-group">
+									<label for="cityDiscription">City Description</label>
+									<textarea
+											name="cityDiscription"
+											class="form-control"
+											id="cityDiscription-up"
+											rows="10"
+											
+									></textarea>
+								</div>
 
-<!--								<div class="form-group">-->
-<!--									<label for="cityDiscription">City Description</label>-->
-<!--									<textarea-->
-<!--											name="cityDiscription"-->
-<!--											class="form-control"-->
-<!--											id="cityDiscription1"-->
-<!--											rows="10"-->
-<!--											th:text="${city.cityDiscription}"-->
-<!--									></textarea>-->
-<!--								</div>-->
-
-<!--								<div class="container text-center mt-3">-->
-<!--									<button type="submit" class="btn btn-primary" id="submit-btn2">-->
-<!--										Submit-->
-<!--									</button>-->
-<!--									<button type="reset" class="btn btn-warning" id="reset-btn2">-->
-<!--										Reset-->
-<!--									</button>-->
-<!--								</div>-->
-<!--							</form>-->
+								<div class="container text-center mt-3">
+									<button type="submit" class="btn btn-primary" id="submit-btn2">
+										Submit
+									</button>
+									<button type="reset" class="btn btn-warning" id="reset-btn2">
+										Reset
+									</button>
+								</div>
+							</form>
 
 
-<!--						</div>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--			</div>-->
+						</div>
+					</div>
+				</div>
+			</div>
 
 
 			<!--			end update city form-->

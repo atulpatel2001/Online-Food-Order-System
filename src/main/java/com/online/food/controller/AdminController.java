@@ -71,11 +71,15 @@ public class AdminController {
     //add city data
     @PostMapping("/add-cityData")
     @ResponseBody
-    public String addCityData(@RequestBody City city) {
+    public String addCityData(@RequestBody Map<String, String> data) {
         try {
-            City byCityName = this.cityService.findByCityName(city.getCityName());
+
+            String cityName=data.get("cityName");
+            String cityDiscription=data.get("cityDiscription");
+            City byCityName = this.cityService.findByCityName(cityName);
             if (byCityName == null) {
-                this.cityService.save(city);
+                City build = City.builder().cityDiscription(cityDiscription).cityName(cityName).build();
+                this.cityService.save(build);
             } else {
                 this.logger.info("already present this city");
                 return "already present this city";
@@ -88,14 +92,31 @@ public class AdminController {
 
     }
 
+    @GetMapping("/get-city")
+    @ResponseBody
+    public City getCity(@RequestParam("cityId") String cityId){
+
+
+        City byId = this.cityService.findById(Long.valueOf(cityId));
+
+        return byId;
+    }
     //update city data
 
     @PostMapping("/update-cityData")
     @ResponseBody
-    public String updateCityData(@RequestBody City city) {
-        System.out.println(city.getCityId());
-        try {
+    public String updateCityData(@RequestBody Map<String, String> data) {
 
+
+        try {
+            String cityId=data.get("cityId");
+            String cityName=data.get("cityName");
+            String cityDiscription=data.get("cityDiscription");
+            City city = this.cityService.findById(Long.valueOf(cityId));
+            city.setCityName(cityName);
+            city.setCityDiscription(cityDiscription);
+
+            this.cityService.save(city);
         } catch (Exception e) {
             e.printStackTrace();
         }
