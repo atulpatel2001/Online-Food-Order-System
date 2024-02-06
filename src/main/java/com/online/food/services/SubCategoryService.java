@@ -1,6 +1,8 @@
 package com.online.food.services;
 
 import com.online.food.modal.SubCategory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -13,4 +15,8 @@ public interface SubCategoryService {
     List<SubCategory> findAll();
 
     void delete(SubCategory  subCategory);
+
+    Page<SubCategory> findByPagination(Pageable pageable);
+
+    SubCategory findBySubCategoryName(String subCategoryName);
 }

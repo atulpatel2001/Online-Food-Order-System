@@ -12,4 +12,6 @@ import java.util.List;
 public interface AreaRepo extends JpaRepository<Area,Long> {
     @Query("select a from Area a where a.city.cityId =:cityId")
     public List<Area> getAreaByCityId(@Param("cityId") Long cityId);
+    @Query("select a from Area a where a.areaName =:areaName")
+    public Area getAreaByName(@Param("areaName") String areaName);
 }

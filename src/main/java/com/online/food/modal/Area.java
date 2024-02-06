@@ -1,5 +1,6 @@
 package com.online.food.modal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,9 +26,11 @@ public class Area {
     private String areaDiscription;
     @ManyToOne
     @JoinColumn(name = "city_id")
+    @JsonBackReference
     private City city;
 
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "area")
+    @JsonBackReference
     private List<Restaurant> restaurants ;
 }

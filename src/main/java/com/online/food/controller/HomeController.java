@@ -22,19 +22,15 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+    private final Logger logger = LoggerFactory.getLogger(HomeController.class);
     @Autowired
     private CustomerService customerService;
-
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
     @Autowired
     private CityService cityService;
-
     @Autowired
- private  AreaService areaService;
-
-    private final Logger logger = LoggerFactory.getLogger(HomeController.class);
+    private AreaService areaService;
 
     //sign in page
     @GetMapping("/signin")
@@ -85,7 +81,7 @@ public class HomeController {
             model.addAttribute("restaurant", new Restaurant());
 
             List<City> cities = this.cityService.findAll();
-            model.addAttribute("cities",cities);
+            model.addAttribute("cities", cities);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -96,21 +92,19 @@ public class HomeController {
 
     @GetMapping("/get-areas")
     @ResponseBody
-    public List<Area> getAllArea(@RequestParam Long cityId, Model model){
-        List<Area> areas=null;
+    public List<Area> getAllArea(@RequestParam Long cityId, Model model) {
+        List<Area> areas = null;
         try {
             areas = this.areaService.getAreaByCityId(cityId);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return areas;
     }
 
-    @GetMapping("/restaurant-signup")
-@ResponseBody
-    public String submitRestaurantData(@RequestBody RestaurantPayLoad restaurantPayLoad)
-    {
+    @PostMapping("/restaurant-signup")
+    @ResponseBody
+    public String submitRestaurantData(@RequestBody RestaurantPayLoad restaurantPayLoad) {
         System.out.println(restaurantPayLoad);
         return "success";
 

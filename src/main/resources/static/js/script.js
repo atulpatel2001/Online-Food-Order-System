@@ -115,7 +115,6 @@ $(document).ready(function() {
                     required: true,
                     minlength: 6,
                     maxlength: 20,
-                    strongPassword: true
                 },
                 restaurantPhoneNumber:{
                  required: true,

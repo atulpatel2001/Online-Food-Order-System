@@ -61,7 +61,7 @@
 
                                 <div class="form-group">
                                     <label class="form-label" for="password2">City</label>
-                                    <select aria-label="Default select example" class="form-select" name="cityId">
+                                    <select aria-label="Default select example" class="form-select" name="cityId" id="citySelect">
                                         <option selected>Select City</option>
                                         <option th:each="city:${cities}" th:text="${city.cityName}"
                                                 th:value="${city.cityId}"></option>

@@ -4,6 +4,8 @@ import com.online.food.modal.SubCategory;
 import com.online.food.repository.SubCategoryRepo;
 import com.online.food.services.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,5 +31,15 @@ public class SubCategoryServiceImple implements SubCategoryService {
     @Override
     public void delete(SubCategory subCategory) {
         this.categoryRepo.delete(subCategory);
+    }
+
+    @Override
+    public Page<SubCategory> findByPagination(Pageable pageable) {
+        return this.categoryRepo.findAll(pageable);
+    }
+
+    @Override
+    public SubCategory findBySubCategoryName(String subCategoryName) {
+        return this.categoryRepo.findBySubCategoryName(subCategoryName);
     }
 }

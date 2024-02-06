@@ -4,6 +4,8 @@ import com.online.food.modal.Area;
 import com.online.food.repository.AreaRepo;
 import com.online.food.services.AreaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,5 +37,15 @@ public class AreaServiceImple implements AreaService {
     @Override
     public List<Area> getAreaByCityId(Long cityId) {
         return this.areaRepo.getAreaByCityId(cityId);
+    }
+
+    @Override
+    public Page<Area> findAreaByPagination(Pageable pageable) {
+        return this.areaRepo.findAll(pageable);
+    }
+
+    @Override
+    public Area getAreaByName(String areaName) {
+        return this.areaRepo.getAreaByName(areaName);
     }
 }
