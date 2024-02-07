@@ -30,7 +30,7 @@ public class Product implements Serializable {
     @Column(name = "product_discription")
     private String productDiscription;
     @Column(name = "product_image")
-    private String imageUrl;
+    private String imageName;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")

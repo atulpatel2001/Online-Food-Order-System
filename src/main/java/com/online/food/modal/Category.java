@@ -1,5 +1,6 @@
 package com.online.food.modal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,5 +29,6 @@ public class Category implements Serializable {
 
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "category")
+    @JsonBackReference
     private List<SubCategory> subCategories;
 }

@@ -33,7 +33,6 @@ public class Security {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(this.userDetailsService);
         authenticationProvider.setPasswordEncoder(this.passwordEncoder);
-
         return authenticationProvider;
     }
 

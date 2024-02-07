@@ -16,7 +16,7 @@ $(document).ready(function() {
                     required: true,
                     minlength: 6,
                     maxlength: 20,
-                    strongPassword: true
+
                 },
                 password2: {
                     required: true,
@@ -24,6 +24,10 @@ $(document).ready(function() {
                 },
             },
             messages: {
+                customerPassword:   {
+                                   required: "Please enter a password.",
+                                  minlength: "Password must be at least 8 characters long."
+                  },
                 password2: {
                     equalTo: "Passwords do not match!"
                 },

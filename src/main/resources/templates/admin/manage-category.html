@@ -1,305 +1,280 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/_layout::Layout(~{::section})}">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
 <body>
-<section>
+    <section>
 
 
-    <main class="p-5 banner-background" >
-        <div class="container">
+        <main class="p-5 banner-background">
+            <div class="container">
 
-            <button class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 " id="add-category"><i class="fa fa-plus"></i></button>
-
-
-
-
-
-            <div class="m-3" id="show-category">
-
-<!--                all buttons-->
-                <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                    <div class="container-fluid">
-                        <div
-                                class="collapse navbar-collapse"
-                                id="navbarSupportedContent"
-                        >
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li class="nav-item">
-                                    <a
-                                            class=" btn btn-secondary m-2"
-                                            aria-current="page"
-                                            type="button"
-                                    >Copy</a
-                                    >
-                                </li>
-                                <li class="nav-item">
-                                    <a class=" btn btn-info m-2"  type="button" href="#">CSV</a>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a
-                                            class="btn btn-success m-2"
-                                            type="button"
-
-                                    >
-                                        Excel
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="btn btn-danger m-2"  type="button">PDF</a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class=" btn btn-primary m-2"  type="button">PRINT</a>
-                                </li>
-                            </ul>
-                            <div class="d-flex" role="search">
+                <button class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 " id="add-category"><i
+                        class="fa fa-plus"></i></button>
 
 
 
 
+
+                <div class="m-3" id="show-category">
+
+                    <!--                all buttons-->
+                    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                        <div class="container-fluid">
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                    <li class="nav-item">
+                                        <a class=" btn btn-secondary m-2" aria-current="page" type="button">Copy</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class=" btn btn-info m-2" type="button" href="#">CSV</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="btn btn-success m-2" type="button">
+                                            Excel
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="btn btn-danger m-2" type="button">PDF</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class=" btn btn-primary m-2" type="button">PRINT</a>
+                                    </li>
+                                </ul>
+                                <div class="d-flex" role="search">
+
+
+
+
+                                </div>
                             </div>
+
+
                         </div>
+                    </nav>
 
 
-                    </div>
-                </nav>
-
-
-<!--                search input tag-->
-                <div class="search-all m-2">
-                    <div class="search">
-                        <svg
-                                class="search__icon"
-                                width="22"
-                                height="22"
-                                viewBox="0 0 22 22"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
+                    <!--                search input tag-->
+                    <div class="search-all m-2">
+                        <div class="search">
+                            <svg class="search__icon" width="22" height="22" viewBox="0 0 22 22" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
                                     d="M10.5418 19.25C15.3513 19.25 19.2502 15.3512 19.2502 10.5417C19.2502 5.73223 15.3513 1.83337 10.5418 1.83337C5.73235 1.83337 1.8335 5.73223 1.8335 10.5417C1.8335 15.3512 5.73235 19.25 10.5418 19.25Z"
-                                    stroke="#596780"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                            />
-                            <path
-                                    d="M20.1668 20.1667L18.3335 18.3334"
-                                    stroke="#596780"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                            />
-                        </svg>
-                        <input
-                                type="text"
-                                class="search__input"
-                                placeholder="Search something here"
-                                id=""
-                                onkeyup="searchCategory()"
-                        />
+                                    stroke="#596780" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M20.1668 20.1667L18.3335 18.3334" stroke="#596780" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <input type="text" class="search__input" placeholder="Search something here" id=""
+                                onkeyup="searchCategory()" />
+                        </div>
+
                     </div>
+
+
+                    <div class="row">
+                        <div class="">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title text-uppercase mb-0">
+                                        Manage Area
+                                    </h5>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table no-wrap user-table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="border-0 text-uppercase font-medium pl-4">
+                                                    ID
+                                                </th>
+                                                <th scope="col" class="border-0 text-uppercase font-medium">
+                                                    Category Name
+                                                </th>
+                                                <th scope="col" class="border-0 text-uppercase font-medium">
+                                                    Category Discription
+                                                </th>
+                                                <th scope="col" class="border-0 text-uppercase font-medium">
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="category:${categories}" th:if="${categories != null}">
+                                                <td class="pl-4" th:text="${category.categoryId}">
+                                                    1
+                                                </td>
+                                                <td>
+                                                    <h5 class="font-medium mb-0" th:text="${category.categoryName}">
+                                                        Daniel Kristeen
+                                                    </h5>
+                                                </td>
+                                                <td>
+                                                    <div class="text-muted" th:text="${category.categoryDiscription}">
+                                                        Hello
+                                                    </div>
+                                                    <br />
+                                                </td>
+
+                                                <td>
+                                                    <button type="button"
+                                                        class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 delete-category"
+                                                        th:data-category_id="${category.categoryId}">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                    <button type="button"
+                                                        class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 update-category-button"
+                                                        th:data-category_id="${category.categoryId}">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--                     pagination start-->
+                    <div aria-label="Page navigation" th:if="${totalPages>0}">
+                        <ul class="pagination justify-content-center">
+                            <li th:if="${currentPage != 0 }" class="page-item">
+                                <a class="page-link"
+                                    th:href="@{'/admin/manage-category/' + ${currentPage - 1}}">Previous</a>
+                            </li>
+                            <li th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item"
+                                th:classappend="${currentPage == i-1 ? 'active' : ''}">
+                                <a class="page-link" th:href="@{'/admin/manage-category/' + ${i-1}}">
+                                    <span th:text="${i}"></span>
+                                </a>
+                            </li>
+                            <li th:if="${currentPage + 1 != totalPages}" class="page-item">
+                                <a class="page-link"
+                                    th:href="@{'/admin/manage-category/' + ${currentPage + 1}}">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--               pagination end-->
+
+
 
                 </div>
 
+                <!--            show end-->
 
-                <div class="row">
-                    <div class="">
-                        <div class="card">
+
+
+
+
+
+
+
+
+                <!--			add category form-->
+                <div id="add-category-form" style="display: none">
+                    <div class="col-md-5 offset-md-4">
+                        <div class="card mt-3">
+                            <div class="card-header text-center text-white" id="primary-bg">
+                                <br />
+                                Add Category
+                            </div>
+
                             <div class="card-body">
-                                <h5 class="card-title text-uppercase mb-0">
-                                    Manage Area
-                                </h5>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table no-wrap user-table mb-0">
-                                    <thead>
-                                    <tr>
-                                        <th
-                                                scope="col"
-                                                class="border-0 text-uppercase font-medium pl-4"
-                                        >
-                                            ID
-                                        </th>
-                                        <th
-                                                scope="col"
-                                                class="border-0 text-uppercase font-medium"
-                                        >
-                                            Category Name
-                                        </th>
-                                        <th
-                                                scope="col"
-                                                class="border-0 text-uppercase font-medium"
-                                        >
-                                            Category Discription
-                                        </th>
-                                        <th
-                                                scope="col"
-                                                class="border-0 text-uppercase font-medium"
-                                        >
-                                            Action
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="category:${categories}" th:if="${categories != null}">
-                                        <td
-                                                class="pl-4"
-                                                th:text="${category.categoryId}"
+                                <form id="category-reg-form">
+                                    <div class="form-group">
+                                        <label for="categoryName">Category Name</label>
+                                        <input name="categoryName" type="text" class="form-control" id="categoryName"
+                                            aria-describedby="emailHelp" placeholder="Enter Category Name" required />
+                                    </div>
 
-                                        >
-                                            1
-                                        </td>
-                                        <td>
-                                            <h5
-                                                    class="font-medium mb-0"
-                                                    th:text="${category.categoryName}"
+                                    <div class="form-group">
+                                        <label for="categoryDiscription">Category Description</label>
+                                        <textarea name="categoryDiscription" class="form-control"
+                                            id="categoryDiscription" rows="10"
+                                            placeholder="Enter Something About Category"></textarea>
+                                    </div>
 
-                                            >
-                                                Daniel Kristeen
-                                            </h5>
-                                        </td>
-                                        <td>
-                                            <div
-                                                    class="text-muted"
-                                                    th:text="${category.categoryDiscription}"
-                                            >
-                                                Hello
-                                            </div>
-                                            <br />
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                    type="button"
-                                                    class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 delete-category"
-                                                    id="delete-category"
-                                                    th:data-category_id="${category.categoryId}"
-
-                                            >
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                            <button
-                                                    type="button"
-                                                    class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"
-
-                                            >
-                                                <i class="fa fa-edit"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-
-
-                                    </tbody>
-                                </table>
+                                    <div class="container text-center mt-3">
+                                        <button type="submit" class="btn btn-primary" id="submit-btn">
+                                            Submit
+                                        </button>
+                                        <button type="reset" class="btn btn-warning" id="reset-btn">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </form>
 
 
                             </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-<!--                     pagination start-->
-                <div aria-label="Page navigation" th:if="${totalPages>0}">
-                    <ul class="pagination justify-content-center">
-                        <li th:if="${currentPage != 0 }" class="page-item">
-                            <a class="page-link" th:href="@{'/admin/manage-category/' + ${currentPage - 1}}">Previous</a>
-                        </li>
-                        <li th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item"
-                            th:classappend="${currentPage == i-1 ? 'active' : ''}">
-                            <a class="page-link" th:href="@{'/admin/manage-category/' + ${i-1}}">
-                                <span th:text="${i}"></span>
-                            </a>
-                        </li>
-                        <li th:if="${currentPage + 1 != totalPages}" class="page-item">
-                            <a class="page-link" th:href="@{'/admin/manage-category/' + ${currentPage + 1}}">Next</a>
-                        </li>
-                    </ul>
-                </div>
-<!--               pagination end-->
-
-
-
-            </div>
-
-<!--            show end-->
-
-
-
-
-
-
-
-
-
-            <!--			add city form-->
-            <div id="add-category-form" style="display: none">
-                <div
-                        class="col-md-5 offset-md-4"
-
-
-                >
-                    <div class="card mt-3">
-                        <div class="card-header text-center ">
-                            <br/>
-                            Add Category
-                        </div>
-
-                        <div class="card-body">
-                            <form
-                                    id="category-reg-form"
-
-                            >
-                                <div class="form-group">
-                                    <label for="categoryName">Category Name</label>
-                                    <input
-                                            name="categoryName"
-                                            type="text"
-                                            class="form-control"
-                                            id="categoryName"
-                                            aria-describedby="emailHelp"
-                                            placeholder="Enter Category Name"
-                                            required
-                                    />
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="categoryDiscription">Category Description</label>
-                                    <textarea
-                                            name="categoryDiscription"
-                                            class="form-control"
-                                            id="categoryDiscription"
-                                            rows="10"
-                                            placeholder="Enter Something About Category"
-                                    ></textarea>
-                                </div>
-
-                                <div class="container text-center mt-3">
-                                    <button type="submit" class="btn btn-primary" id="submit-btn">
-                                        Submit
-                                    </button>
-                                    <button type="reset" class="btn btn-warning" id="reset-btn">
-                                        Reset
-                                    </button>
-                                </div>
-                            </form>
-
-
                         </div>
                     </div>
                 </div>
+
+                <!--			end  add category -->
+
+
+
+
+                <!--            start update category page-->
+                <div id="update-category-form" style="display: none">
+                    <div class="col-md-5 offset-md-4">
+                        <div class="card mt-3">
+                            <div class="card-header text-center text-white" id="primary-bg">
+                                <br />
+                                Update Category
+                            </div>
+
+                            <div class="card-body">
+                                <form id="category-update-form">
+                                    <input type="hidden" name="categoryId" id="categoryId-up">
+                                    <div class="form-group">
+                                        <label for="categoryName">Category Name</label>
+                                        <input name="categoryName" type="text" class="form-control" id="categoryName-up"
+                                            aria-describedby="emailHelp" placeholder="Enter Category Name" required />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="categoryDiscription">Category Description</label>
+                                        <textarea name="categoryDiscription" class="form-control"
+                                            id="categoryDiscription-up" rows="10"
+                                            placeholder="Enter Something About Category"></textarea>
+                                    </div>
+
+                                    <div class="container text-center mt-3">
+                                        <button type="submit" class="btn btn-primary" id="submit-btn-up">
+                                            Submit
+                                        </button>
+                                        <button type="reset" class="btn btn-warning" id="reset-btn-up">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--            update form end-->
+
+
             </div>
-
-            <!--			end area add category -->
-
-
-        </div>
-    </main>
-</section>
+        </main>
+    </section>
 </body>
+
 </html>

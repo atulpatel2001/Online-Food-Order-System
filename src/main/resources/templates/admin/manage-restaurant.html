@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/_layout::Layout(~{::section})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+
+
+<section>
+    <main class="p-5">
+        <div class="container">
+            <div class="m-3">
+
+
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class=" btn btn-secondary m-2" aria-current="page" type="button">Copy</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class=" btn btn-info m-2" type="button" href="#">CSV</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="btn btn-success m-2" type="button">
+                                        Excel
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="btn btn-danger m-2" type="button">PDF</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class=" btn btn-primary m-2" type="button">PRINT</a>
+                                </li>
+                            </ul>
+                            <div class="d-flex" role="search">
+
+
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </nav>
+
+            </div>
+
+
+            <div class="search-all m-2">
+                <div class="search">
+                    <svg class="search__icon" width="22" height="22" viewBox="0 0 22 22" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path
+                                d="M10.5418 19.25C15.3513 19.25 19.2502 15.3512 19.2502 10.5417C19.2502 5.73223 15.3513 1.83337 10.5418 1.83337C5.73235 1.83337 1.8335 5.73223 1.8335 10.5417C1.8335 15.3512 5.73235 19.25 10.5418 19.25Z"
+                                stroke="#596780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M20.1668 20.1667L18.3335 18.3334" stroke="#596780" stroke-width="1.5"
+                              stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <input type="text" class="search__input" placeholder="Search something here" id=""
+                           onkeyup="searchCategory()" />
+                </div>
+            </div>
+
+
+            <div class="row show-restaurant">
+                <div class="">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase mb-0">
+                                Restaurant
+                            </h5>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table no-wrap user-table mb-0">
+                                <thead>
+                                <tr>
+                                    <th scope="col" class="border-0 text-uppercase font-medium pl-4">
+                                        ID
+                                    </th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                        CityName
+                                    </th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                        AreaName
+                                    </th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                        Restaurant Name
+                                    </th>
+
+                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                        Restaurant Address
+                                    </th>
+
+                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                        Phone No
+                                    </th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                        Action
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="restaurant:${restaurants}" th:if="${restaurants != null}">
+                                    <td class="pl-4">
+                                        <div class="text-muted" th:text="${restaurant.restaurantId}">
+                                            45-89-96
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted" th:text="${restaurant.city.cityName}">
+                                            45-89-96
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted" th:text="${restaurant.area.areaName}">
+                                            45-89-96
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5 class="font-medium mb-0" th:text="${restaurant.restaurantName}">
+                                            Daniel Kristeen
+                                        </h5>
+
+                                    </td>
+                                    <td>
+                                        <div class="text-muted" th:text="${restaurant.restaurantAddress}">
+                                            45-89-96
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted" th:text="${restaurant.restaurantPhoneNumber}">
+                                            45-89-96
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <button type="button"
+                                                class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 "
+                                                >
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+<!--                                        <button type="button"-->
+<!--                                                class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"-->
+<!--                                                >-->
+<!--                                            <i class="fa fa-edit"></i>-->
+<!--                                        </button>-->
+                                    </td>
+                                </tr>
+
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+
+
+                        <!-- pagination -->
+
+                        <div aria-label="Page navigation" th:if="${totalPages>0}">
+                            <ul class="pagination justify-content-center">
+                                <li th:if="${currentPage != 0 }" class="page-item">
+                                    <a class="page-link"
+                                       th:href="@{'/admin/manage-restaturant/' + ${currentPage - 1}}">Previous</a>
+                                </li>
+                                <li th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item"
+                                    th:classappend="${currentPage == i-1 ? 'active' : ''}">
+                                    <a class="page-link" th:href="@{'/admin/manage-restaturant/' + ${i-1}}">
+                                        <span th:text="${i}"></span>
+                                    </a>
+                                </li>
+                                <li th:if="${currentPage + 1 != totalPages}" class="page-item">
+                                    <a class="page-link" th:href="@{'/admin/manage-restaturant/' + ${currentPage + 1}}">Next</a>
+                                </li>
+                            </ul>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</section>
+</body>
+</html>

@@ -1,13 +1,7 @@
 package com.online.food.controller;
 
-import com.online.food.modal.Area;
-import com.online.food.modal.Category;
-import com.online.food.modal.City;
-import com.online.food.modal.SubCategory;
-import com.online.food.services.AreaService;
-import com.online.food.services.CategoryService;
-import com.online.food.services.CityService;
-import com.online.food.services.SubCategoryService;
+import com.online.food.modal.*;
+import com.online.food.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +32,8 @@ public class AdminController {
 
     @Autowired
     private SubCategoryService subCategoryService;
+    @Autowired
+    private RestaurantService restaurantService;
 
     @GetMapping("/index")
     public String indexPage(Model model) {
@@ -307,6 +303,40 @@ public class AdminController {
         return "success";
     }
 
+    //get Category
+
+    @GetMapping("/get-category")
+    @ResponseBody
+    public Category getCategory(@RequestParam("categoryId") String categoryId) throws Exception{
+
+
+        Category category = this.categoryService.findById(Long.valueOf(categoryId));
+
+        return category;
+    }
+
+
+    //update category data handle
+@PostMapping("/update-categoryData")
+@ResponseBody
+    public String handleUpdateCategoryData(@RequestBody Map<String,String> data){
+        try{
+            String categoryId=data.get("categoryId");
+            String categoryName=data.get("categoryName");
+            String categoryDiscription=data.get("categoryDiscription");
+
+            Category category = this.categoryService.findById(Long.valueOf(categoryId));
+            category.setCategoryDiscription(categoryDiscription);
+            category.setCategoryName(categoryName);
+            this.categoryService.save(category);
+            this.logger.info("Update Category");
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return "success";
+    }
+
 
     //delete category
     @PostMapping("/delete-category")
@@ -381,6 +411,50 @@ public class AdminController {
     }
 
 
+    //get subCategory data
+
+
+    @GetMapping("/get-sub-category")
+    @ResponseBody
+    public Map<String,String> getSubCategoryData(@RequestParam("subCategoryId") String subCategoryId) throws Exception{
+
+        SubCategory subCategory = this.subCategoryService.findById(Long.valueOf(subCategoryId));
+            Map<String,String> data=new HashMap<>();
+            data.put("categoryId", String.valueOf(subCategory.getCategory().getCategoryId()));
+            data.put("categoryName",subCategory.getCategory().getCategoryName());
+            data.put("subCategoryId", String.valueOf(subCategory.getSubCategoryId()));
+            data.put("subCategoryName",subCategory.getSubCategoryName());
+            data.put("subCategoryDiscription",subCategory.getSubCategoryDiscription());
+
+            return data;
+    }
+
+
+    //update sub category
+    @PostMapping("/update-sub-categoryData")
+    @ResponseBody
+    public String handleSubCategoryUpdateData(@RequestBody Map<String,String> data){
+        try{
+            String subCategoryId=data.get("subCategoryId");
+            String categoryId=data.get("categoryId");
+            String subCategoryName=data.get("subCategoryName");
+            String subCategoryDiscription=data.get("subCategoryDiscription");
+
+            Category category = this.categoryService.findById(Long.valueOf(categoryId));
+            SubCategory subCategory = this.subCategoryService.findById(Long.valueOf(subCategoryId));
+
+            subCategory.setCategory(category);
+            subCategory.setSubCategoryName(subCategoryName);
+            subCategory.setSubCategoryDiscription(subCategoryDiscription);
+            this.subCategoryService.save(subCategory);
+            this.logger.info("update sub category");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "success";
+    }
+
     //delete sub category
 
     @PostMapping("/delete-sub-category")
@@ -398,6 +472,27 @@ public class AdminController {
             this.logger.info("Something Went Wrong during delete a SubCategory !!!");
         }
         return "SubCategory deleted successfully";
+    }
+
+
+
+
+    //for restaurant page
+    @GetMapping("/manage-restaturant/{page}")
+    public String managerestaurantPage(@PathVariable("page")int page,Model model){
+        try{
+            Pageable pageable = PageRequest.of(page, 5);
+            Page<Restaurant> restaurants = this.restaurantService.findByPagination(pageable);
+            model.addAttribute("restaurants", restaurants.getContent());
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", restaurants.getTotalPages());
+            model.addAttribute("title", "Restaurant");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "admin/manage-restaurant";
     }
 
 

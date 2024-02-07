@@ -1,13 +1,13 @@
 
 
 
-      $(document).ready(function () {
-        $("#add-city").click(function () {
-          $("#show-city").hide();
-          $("#update-city-form").hide();
-          $("#add-city-form").show();
-        });
-      });
+$(document).ready(function () {
+    $("#add-city").click(function () {
+        $("#show-city").hide();
+        $("#update-city-form").hide();
+        $("#add-city-form").show();
+    });
+});
 
 
 //      $(document).ready(function () {
@@ -19,7 +19,7 @@
 
 
 //add city
-$(document).ready(function() {
+$(document).ready(function () {
     $('#city-reg-form').validate({
         rules: {
             cityName: {
@@ -31,7 +31,7 @@ $(document).ready(function() {
             },
         },
 
-        submitHandler: function(form) {
+        submitHandler: function (form) {
             let formData = {
                 cityName: $('#cityName').val(),  // Adjust the selector based on your actual form field IDs
                 cityDiscription: $('#cityDiscription').val(),
@@ -42,7 +42,7 @@ $(document).ready(function() {
                 type: 'POST',
                 data: JSON.stringify(formData),
                 contentType: 'application/json',  // Set content type to JSON
-                success: function(data, textStatus, jqXHR) {
+                success: function (data, textStatus, jqXHR) {
                     if (data.trim() === 'success') {
                         Swal.fire("Good job!", "Successfully Add City", "success")
                             .then((value) => {
@@ -52,7 +52,7 @@ $(document).ready(function() {
                         Swal.fire("Please Try Again ", data);
                     }
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR);
                     Swal.fire("Something Went Wrong !!! Try Again!!");
                 }
@@ -63,22 +63,22 @@ $(document).ready(function() {
 
 
 //get city data
-$(document).ready(function() {
-    $(".update-city-button").click(function() {
-      var cityId = $(this).data('city_id');
+$(document).ready(function () {
+    $(".update-city-button").click(function () {
+        var cityId = $(this).data('city_id');
 
         $.ajax({
             url: '/admin/get-city',
             type: 'GET',
             data: { cityId: cityId },
-            success: function(response) {
+            success: function (response) {
                 $("#cityId-up").val(response.cityId);
                 $("#cityName-up").val(response.cityName);
                 $("#cityDiscription-up").val(response.cityDiscription);
                 $("#show-city").hide();
                 $("#update-city-form").show();
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
 
             }
@@ -88,127 +88,127 @@ $(document).ready(function() {
 
 
 //update city
-$(document).ready(function() {
-        $('#city-update-reg-form').validate({
-            rules: {
-                cityName: {
-                    required: true,
-                    minlength: 4
-                },
-                cityDiscription: {
-                    required: true,
-                },
+$(document).ready(function () {
+    $('#city-update-reg-form').validate({
+        rules: {
+            cityName: {
+                required: true,
+                minlength: 4
             },
-            submitHandler: function(form) {
-                let formData = {
-                    cityId: $('#cityId-up').val(),
-                    cityName: $('#cityName-up').val(),
-                    cityDiscription: $('#cityDiscription-up').val(),
-                };
+            cityDiscription: {
+                required: true,
+            },
+        },
+        submitHandler: function (form) {
+            let formData = {
+                cityId: $('#cityId-up').val(),
+                cityName: $('#cityName-up').val(),
+                cityDiscription: $('#cityDiscription-up').val(),
+            };
+
+            $.ajax({
+                url: "/admin/update-cityData",
+                type: 'POST',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function (data, textStatus, jqXHR) {
+                    if (data.trim() === 'success') {
+                        Swal.fire("Good job!", "Successfully Update City", "success")
+                            .then((value) => {
+                                window.location = "/admin/manage-city/0";
+                            });
+                    } else {
+                        Swal.fire("Please Try Again ", data);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    Swal.fire("Something Went Wrong !!! Try Again!!");
+                }
+            });
+        }
+    });
+});
+
+
+
+// delete City
+
+$(document).ready(function () {
+    $('.delete-city').click(function () {
+
+        var city_id = $(this).data('city_id');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success ml-2',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false,
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: 'You are about to delete this City.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
 
                 $.ajax({
-                    url: "/admin/update-cityData",
                     type: 'POST',
-                    data: JSON.stringify(formData),
-                    contentType: 'application/json',
-                    success: function(data, textStatus, jqXHR) {
-                        if (data.trim() === 'success') {
-                            Swal.fire("Good job!", "Successfully Update City", "success")
-                                .then((value) => {
-                                    window.location = "/admin/manage-city/0";
-                                });
-                        } else {
-                            Swal.fire("Please Try Again ", data);
-                        }
+                    url: '/admin/delete-city',
+                    data: {
+                        city_id: city_id
                     },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.log(jqXHR);
-                        Swal.fire("Something Went Wrong !!! Try Again!!");
+                    success: function (response) {
+
+                        swalWithBootstrapButtons.fire(
+                            'Deleted!',
+                            'The City has been deleted.',
+                            'success'
+                        );
+
+                        $(this).closest('tr').remove();
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error, e.g., display an error message
+                        swalWithBootstrapButtons.fire(
+                            'Error!',
+                            'An error occurred while deleting the City.',
+                            'error'
+                        );
                     }
                 });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'The City has not been deleted.',
+                    'error'
+                );
             }
         });
     });
-
-
-
-    // delete City
-
-      $(document).ready(function () {
-                              $('.delete-city').click(function () {
-
-                                  var city_id = $(this).data('city_id');
-                                  const swalWithBootstrapButtons = Swal.mixin({
-                                      customClass: {
-                                          confirmButton: 'btn btn-success ml-2',
-                                          cancelButton: 'btn btn-danger'
-                                      },
-                                      buttonsStyling: false,
-                                  });
-
-                                  swalWithBootstrapButtons.fire({
-                                      title: 'Are you sure?',
-                                      text: 'You are about to delete this City.',
-                                      icon: 'warning',
-                                      showCancelButton: true,
-                                      confirmButtonText: 'Yes, delete it!',
-                                      cancelButtonText: 'No, cancel!',
-                                      reverseButtons: true,
-                                  }).then((result) => {
-                                      if (result.isConfirmed) {
-
-                                          $.ajax({
-                                              type: 'POST',
-                                              url:'/admin/delete-city',
-                                              data: {
-                                                  city_id: city_id
-                                              },
-                                              success: function (response) {
-
-                                                  swalWithBootstrapButtons.fire(
-                                                      'Deleted!',
-                                                      'The City has been deleted.',
-                                                      'success'
-                                                  );
-
-                                                   $(this).closest('tr').remove();
-                                              },
-                                              error: function (xhr, status, error) {
-                                                  // Handle error, e.g., display an error message
-                                                  swalWithBootstrapButtons.fire(
-                                                      'Error!',
-                                                      'An error occurred while deleting the City.',
-                                                      'error'
-                                                  );
-                                              }
-                                          });
-                                      } else if (result.dismiss === Swal.DismissReason.cancel) {
-                                          swalWithBootstrapButtons.fire(
-                                              'Cancelled',
-                                              'The City has not been deleted.',
-                                              'error'
-                                          );
-                                      }
-                                  });
-                              });
-                          });
+});
 
 
 
 
 // for area
 
-  $(document).ready(function () {
-        $("#add-area").click(function () {
-          $("#show-area").hide();
-          $("#add-area-form").show();
-        });
-      });
+$(document).ready(function () {
+    $("#add-area").click(function () {
+        $("#show-area").hide();
+        $("#add-area-form").show();
+    });
+});
 
 
 
 //add city
-$(document).ready(function() {
+$(document).ready(function () {
     $('#area-reg-form').validate({
         rules: {
             areaName: {
@@ -220,19 +220,19 @@ $(document).ready(function() {
             },
         },
 
-        submitHandler: function(form) {
+        submitHandler: function (form) {
             let formData = {
-                        cityId: $('#cityId').val(),
-                        areaName: $('#areaName').val(),
-                        areaDiscription: $('#areaDiscription').val()
-                    };
+                cityId: $('#cityId').val(),
+                areaName: $('#areaName').val(),
+                areaDiscription: $('#areaDiscription').val()
+            };
 
             $.ajax({
                 url: "/admin/add-AreaData",
                 type: 'POST',
                 data: JSON.stringify(formData),
                 contentType: 'application/json',
-                success: function(data, textStatus, jqXHR) {
+                success: function (data, textStatus, jqXHR) {
                     if (data.trim() === 'success') {
                         Swal.fire("Good job!", "Successfully Add Area", "success")
                             .then((value) => {
@@ -242,7 +242,7 @@ $(document).ready(function() {
                         Swal.fire("Please Try Again ", data);
                     }
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR);
                     Swal.fire("Something Went Wrong !!! Try Again!!");
                 }
@@ -253,15 +253,15 @@ $(document).ready(function() {
 
 
 //get area
-$(document).ready(function() {
-    $(".update-area-button").click(function() {
-      var areaId = $(this).data('area_id');
+$(document).ready(function () {
+    $(".update-area-button").click(function () {
+        var areaId = $(this).data('area_id');
 
         $.ajax({
             url: '/admin/get-area',
             type: 'GET',
             data: { areaId: areaId },
-            success: function(response) {
+            success: function (response) {
                 $("#cityId-up").val(response.cityId);
                 $("#areaId-up").val(response.areaId)
                 $("#areaName-up").val(response.areaName);
@@ -269,9 +269,9 @@ $(document).ready(function() {
                 $("#areaDiscription-up").val(response.areaDiscription);
                 $("#show-area").hide();
                 $("#update-area-form").show();
-console.log(response);
+                console.log(response);
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });
@@ -279,230 +279,302 @@ console.log(response);
 });
 
 //update area
-$(document).ready(function() {
-        $('#area-update-form').validate({
-            rules: {
-                cityId: {
-                    required: true,
-                },
-                areaName: {
-                    required: true,
-                    minlength:3
-                },
-                areaDiscription:{
-                    required: true,
-                    minlength: 3
-                },
+$(document).ready(function () {
+    $('#area-update-form').validate({
+        rules: {
+            cityId: {
+                required: true,
             },
-            submitHandler: function(form) {
-                let formData = {
-                   cityId : $('#cityId-up').val(),
-                     areaId:$('#areaId-up').val(),
-                    areaName: $('#areaName-up').val(),
-                    areaDiscription: $('#areaDiscription-up').val(),
-                };
+            areaName: {
+                required: true,
+                minlength: 3
+            },
+            areaDiscription: {
+                required: true,
+                minlength: 3
+            },
+        },
+        submitHandler: function (form) {
+            let formData = {
+                cityId: $('#cityId-up').val(),
+                areaId: $('#areaId-up').val(),
+                areaName: $('#areaName-up').val(),
+                areaDiscription: $('#areaDiscription-up').val(),
+            };
+
+            $.ajax({
+                url: "/admin/update-areaData",
+                type: 'POST',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function (data, textStatus, jqXHR) {
+                    if (data.trim() === 'success') {
+                        Swal.fire("Good job!", "Successfully Update Area", "success")
+                            .then((value) => {
+                                window.location = "/admin/manage-area/0";
+                            });
+                    } else {
+                        Swal.fire("Please Try Again ", data);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    Swal.fire("Something Went Wrong !!! Try Again!!");
+                }
+            });
+        }
+    });
+});
+
+
+// delete area
+$(document).ready(function () {
+    $('.delete-area').click(function () {
+
+        var area_id = $(this).data('area_id');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success ml-2',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false,
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: 'You are about to delete this Area.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
 
                 $.ajax({
-                    url: "/admin/update-areaData",
                     type: 'POST',
-                    data: JSON.stringify(formData),
-                    contentType: 'application/json',
-                    success: function(data, textStatus, jqXHR) {
-                        if (data.trim() === 'success') {
-                            Swal.fire("Good job!", "Successfully Update Area", "success")
-                                .then((value) => {
-                                    window.location = "/admin/manage-area/0";
-                                });
-                        } else {
-                            Swal.fire("Please Try Again ", data);
-                        }
+                    url: '/admin/delete-area',
+                    data: {
+                        area_id: area_id
                     },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.log(jqXHR);
-                        Swal.fire("Something Went Wrong !!! Try Again!!");
+                    success: function (response) {
+
+                        swalWithBootstrapButtons.fire(
+                            'Deleted!',
+                            'The Area has been deleted.',
+                            'success'
+                        );
+
+                        $(this).closest('tr').remove();
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error, e.g., display an error message
+                        swalWithBootstrapButtons.fire(
+                            'Error!',
+                            'An error occurred while deleting the Area.',
+                            'error'
+                        );
                     }
                 });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'The Area has not been deleted.',
+                    'error'
+                );
             }
         });
     });
-
-
- // delete area
-      $(document).ready(function () {
-                              $('.delete-area').click(function () {
-
-                                  var area_id = $(this).data('area_id');
-                                  const swalWithBootstrapButtons = Swal.mixin({
-                                      customClass: {
-                                          confirmButton: 'btn btn-success ml-2',
-                                          cancelButton: 'btn btn-danger'
-                                      },
-                                      buttonsStyling: false,
-                                  });
-
-                                  swalWithBootstrapButtons.fire({
-                                      title: 'Are you sure?',
-                                      text: 'You are about to delete this Area.',
-                                      icon: 'warning',
-                                      showCancelButton: true,
-                                      confirmButtonText: 'Yes, delete it!',
-                                      cancelButtonText: 'No, cancel!',
-                                      reverseButtons: true,
-                                  }).then((result) => {
-                                      if (result.isConfirmed) {
-
-                                          $.ajax({
-                                              type: 'POST',
-                                              url:'/admin/delete-area',
-                                              data: {
-                                                  area_id: area_id
-                                              },
-                                              success: function (response) {
-
-                                                  swalWithBootstrapButtons.fire(
-                                                      'Deleted!',
-                                                      'The Area has been deleted.',
-                                                      'success'
-                                                  );
-
-                                                   $(this).closest('tr').remove();
-                                              },
-                                              error: function (xhr, status, error) {
-                                                  // Handle error, e.g., display an error message
-                                                  swalWithBootstrapButtons.fire(
-                                                      'Error!',
-                                                      'An error occurred while deleting the Area.',
-                                                      'error'
-                                                  );
-                                              }
-                                          });
-                                      } else if (result.dismiss === Swal.DismissReason.cancel) {
-                                          swalWithBootstrapButtons.fire(
-                                              'Cancelled',
-                                              'The Area has not been deleted.',
-                                              'error'
-                                          );
-                                      }
-                                  });
-                              });
-                          });
+});
 
 
 
 // for category
 
-  $(document).ready(function () {
-        $("#add-category").click(function () {
-          $("#show-category").hide();
-          $("#add-category-form").show();
+$(document).ready(function () {
+    $("#add-category").click(function () {
+        $("#show-category").hide();
+        $("#add-category-form").show();
+    });
+});
+
+
+//add category
+$(document).ready(function () {
+    $('#category-reg-form').validate({
+        rules: {
+            categoryName: {
+                required: true,
+                minlength: 4
+            },
+            categoryDiscription: {
+                required: true,
+            },
+        },
+
+        submitHandler: function (form) {
+            let formData = {
+                categoryName: $('#categoryName').val(),
+                categoryDiscription: $('#categoryDiscription').val()
+            };
+
+            $.ajax({
+                url: "/admin/add-categoryData",
+                type: 'POST',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function (data, textStatus, jqXHR) {
+                    if (data.trim() === 'success') {
+                        Swal.fire("Good job!", "Successfully Add Category", "success")
+                            .then((value) => {
+                                window.location = "/admin/manage-category/0";
+                            });
+                    } else {
+                        Swal.fire("Please Try Again ", data);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    Swal.fire("Something Went Wrong !!! Try Again!!");
+                }
+            });
+        }
+    });
+});
+
+//get category
+$(document).ready(function () {
+    $(".update-category-button").click(function () {
+        var categoryId = $(this).data('category_id');
+
+        $.ajax({
+            url: '/admin/get-category',
+            type: 'GET',
+            data: { categoryId: categoryId },
+            success: function (response) {
+                $("#categoryId-up").val(response.categoryId);
+                $("#categoryName-up").val(response.categoryName);
+                $("#categoryDiscription-up").val(response.categoryDiscription);
+                $("#show-category").hide();
+                $("#update-category-form").show();
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
         });
-      });
+    });
+});
 
+//update category
 
-      //add category
-      $(document).ready(function() {
-          $('#category-reg-form').validate({
-              rules: {
-                  categoryName: {
-                      required: true,
-                      minlength: 4
-                  },
-                  categoryDiscription: {
-                      required: true,
-                  },
-              },
+//update area
+$(document).ready(function () {
+    $('#category-update-form').validate({
+        rules: {
+            categoryId: {
+                required: true,
+            },
+            categoryName: {
+                required: true,
+                minlength: 3
+            },
+            categoryDiscription: {
+                required: true,
+                minlength: 3
+            },
+        },
+        submitHandler: function (form) {
+            let formData = {
+                categoryId: $('#categoryId-up').val(),
+                categoryName: $('#categoryName-up').val(),
+                categoryDiscription: $('#categoryDiscription-up').val(),
 
-              submitHandler: function(form) {
-                  let formData = {
-                              categoryName: $('#categoryName').val(),
-                              categoryDiscription: $('#categoryDiscription').val()
-                          };
+            };
 
-                  $.ajax({
-                      url: "/admin/add-categoryData",
-                      type: 'POST',
-                      data: JSON.stringify(formData),
-                      contentType: 'application/json',
-                      success: function(data, textStatus, jqXHR) {
-                          if (data.trim() === 'success') {
-                              Swal.fire("Good job!", "Successfully Add Category", "success")
-                                  .then((value) => {
-                                      window.location = "/admin/manage-category/0";
-                                  });
-                          } else {
-                              Swal.fire("Please Try Again ", data);
-                          }
-                      },
-                      error: function(jqXHR, textStatus, errorThrown) {
-                          console.log(jqXHR);
-                          Swal.fire("Something Went Wrong !!! Try Again!!");
-                      }
-                  });
-              }
-          });
-      });
-
-
+            $.ajax({
+                url: "/admin/update-categoryData",
+                type: 'POST',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function (data, textStatus, jqXHR) {
+                    if (data.trim() === 'success') {
+                        Swal.fire("Good job!", "Successfully Update Category", "success")
+                            .then((value) => {
+                                window.location = "/admin/manage-category/0";
+                            });
+                    } else {
+                        Swal.fire("Please Try Again ", data);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    Swal.fire("Something Went Wrong !!! Try Again!!");
+                }
+            });
+        }
+    });
+});
 
 // delete Category
-      $(document).ready(function () {
-                              $('#delete-category').click(function () {
+$(document).ready(function () {
+    $('.delete-category').click(function () {
 
-                                  var category_id = $(this).data('category_id');
-                                  const swalWithBootstrapButtons = Swal.mixin({
-                                      customClass: {
-                                          confirmButton: 'btn btn-success ml-2',
-                                          cancelButton: 'btn btn-danger'
-                                      },
-                                      buttonsStyling: false,
-                                  });
+        var category_id = $(this).data('category_id');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success ml-2',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false,
+        });
 
-                                  swalWithBootstrapButtons.fire({
-                                      title: 'Are you sure?',
-                                      text: 'You are about to delete this Category.',
-                                      icon: 'warning',
-                                      showCancelButton: true,
-                                      confirmButtonText: 'Yes, delete it!',
-                                      cancelButtonText: 'No, cancel!',
-                                      reverseButtons: true,
-                                  }).then((result) => {
-                                      if (result.isConfirmed) {
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: 'You are about to delete this Category.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
 
-                                          $.ajax({
-                                              type: 'POST',
-                                              url:'/admin/delete-category',
-                                              data: {
-                                                  category_id: category_id
-                                              },
-                                              success: function (response) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/delete-category',
+                    data: {
+                        category_id: category_id
+                    },
+                    success: function (response) {
 
-                                                  swalWithBootstrapButtons.fire(
-                                                      'Deleted!',
-                                                      'The category has been deleted.',
-                                                      'success'
-                                                  );
+                        swalWithBootstrapButtons.fire(
+                            'Deleted!',
+                            'The category has been deleted.',
+                            'success'
+                        );
 
-                                                   $(this).closest('tr').remove();
-                                              },
-                                              error: function (xhr, status, error) {
-                                                  // Handle error, e.g., display an error message
-                                                  swalWithBootstrapButtons.fire(
-                                                      'Error!',
-                                                      'An error occurred while deleting the Category.',
-                                                      'error'
-                                                  );
-                                              }
-                                          });
-                                      } else if (result.dismiss === Swal.DismissReason.cancel) {
-                                          swalWithBootstrapButtons.fire(
-                                              'Cancelled',
-                                              'The Category has not been deleted.',
-                                              'error'
-                                          );
-                                      }
-                                  });
-                              });
-                          });
+                        $(this).closest('tr').remove();
+                    },
+                    error: function (xhr, status, error) {
+
+                        swalWithBootstrapButtons.fire(
+                            'Error!',
+                            'An error occurred while deleting the Category.',
+                            'error'
+                        );
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'The Category has not been deleted.',
+                    'error'
+                );
+            }
+        });
+    });
+});
 
 
 
@@ -510,120 +582,198 @@ $(document).ready(function() {
 
 
 $(document).ready(function () {
-        $("#add-sub-category").click(function () {
-          $("#show-sub-category").hide();
-          $("#add-sub-category-form").show();
-        });
-      });
+    $("#add-sub-category").click(function () {
+        $("#show-sub-category").hide();
+        $("#add-sub-category-form").show();
+    });
+});
 
 
 //add sub category
-      $(document).ready(function() {
-          $('#sub-category-reg-form').validate({
-              rules: {
-              categoryId:{
-                  required: true
-              },
-                  subCategoryName: {
-                      required: true,
-                      minlength: 4
-                  },
-                  subCategoryDiscription: {
-                      required: true,
-                  },
-              },
+$(document).ready(function () {
+    $('#sub-category-reg-form').validate({
+        rules: {
+            categoryId: {
+                required: true
+            },
+            subCategoryName: {
+                required: true,
+                minlength: 4
+            },
+            subCategoryDiscription: {
+                required: true,
+            },
+        },
 
-              submitHandler: function(form) {
-                  let formData = {
-                               categoryId :$('#categoryId').val(),
-                              subCategoryName: $('#subCategoryName').val(),
-                              subCategoryDiscription: $('#subCategoryDiscription').val()
-                          };
+        submitHandler: function (form) {
+            let formData = {
+                categoryId: $('#categoryId').val(),
+                subCategoryName: $('#subCategoryName').val(),
+                subCategoryDiscription: $('#subCategoryDiscription').val()
+            };
 
-                  $.ajax({
-                      url: "/admin/add-subcategoryData",
-                      type: 'POST',
-                      data: JSON.stringify(formData),
-                      contentType: 'application/json',
-                      success: function(data, textStatus, jqXHR) {
-                          if (data.trim() === 'success') {
-                              Swal.fire("Good job!", "Successfully Add  SubCategory", "success")
-                                  .then((value) => {
-                                      window.location = "/admin/manage-sub-category/0";
-                                  });
-                          } else {
-                              Swal.fire("Please Try Again ", data);
-                          }
-                      },
-                      error: function(jqXHR, textStatus, errorThrown) {
-                          console.log(jqXHR);
-                          Swal.fire("Something Went Wrong !!! Try Again!!");
-                      }
-                  });
-              }
-          });
-      });
+            $.ajax({
+                url: "/admin/add-subcategoryData",
+                type: 'POST',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function (data, textStatus, jqXHR) {
+                    if (data.trim() === 'success') {
+                        Swal.fire("Good job!", "Successfully Add  SubCategory", "success")
+                            .then((value) => {
+                                window.location = "/admin/manage-sub-category/0";
+                            });
+                    } else {
+                        Swal.fire("Please Try Again ", data);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    Swal.fire("Something Went Wrong !!! Try Again!!");
+                }
+            });
+        }
+    });
+});
 
 
+//get sub category
 
-// delete Category
-      $(document).ready(function () {
-                              $('#delete-sub-category').click(function () {
+//get area
+$(document).ready(function () {
+    $(".update-sub-category").click(function () {
+        var subCategoryId = $(this).data('sub_category_id');
 
-                                  var sub_category_id = $(this).data('sub_category_id');
-                                  const swalWithBootstrapButtons = Swal.mixin({
-                                      customClass: {
-                                          confirmButton: 'btn btn-success ml-2',
-                                          cancelButton: 'btn btn-danger'
-                                      },
-                                      buttonsStyling: false,
-                                  });
+        $.ajax({
+            url: '/admin/get-sub-category',
+            type: 'GET',
+            data: { subCategoryId: subCategoryId },
+            success: function (response) {
+                $("#subCategoryId-up").val(response.subCategoryId);
+                $("#categoryId-up").val(response.categoryId)
+                $("#select-category-name").val(response.categoryName);
+                $("#subCategoryName-up").val(response.subCategoryName);
+                $("#subCategoryDiscription-up").val(response.subCategoryDiscription);
+                $("#show-sub-category").hide();
+                $("#update-sub-category-form").show();
+                console.log(response);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+});
 
-                                  swalWithBootstrapButtons.fire({
-                                      title: 'Are you sure?',
-                                      text: 'You are about to delete this SubCategory.',
-                                      icon: 'warning',
-                                      showCancelButton: true,
-                                      confirmButtonText: 'Yes, delete it!',
-                                      cancelButtonText: 'No, cancel!',
-                                      reverseButtons: true,
-                                  }).then((result) => {
-                                      if (result.isConfirmed) {
+//update sub category
+$(document).ready(function () {
+    $('#sub-category-update-form').validate({
+        rules: {
+            categoryId: {
+                required: true,
+            },
+            subCategoryId:{
+            required:true,
+            },
+            subCategoryName: {
+                required: true,
+                minlength: 3
+            },
+            subCategoryDiscription: {
+                required: true,
+                minlength: 3
+            },
+        },
+        submitHandler: function (form) {
+            let formData = {
+                categoryId: $('#categoryId-up').val(),
+                subCategoryId: $('#subCategoryId-up').val(),
+                subCategoryName: $('#subCategoryName-up').val(),
+                subCategoryDiscription: $('#subCategoryDiscription-up').val(),
 
-                                          $.ajax({
-                                              type: 'POST',
-                                              url:'/admin/delete-sub-category',
-                                              data: {
-                                                  sub_category_id: sub_category_id
-                                              },
-                                              success: function (response) {
+            };
 
-                                                  swalWithBootstrapButtons.fire(
-                                                      'Deleted!',
-                                                      'The subcategory has been deleted.',
-                                                      'success'
-                                                  );
+            $.ajax({
+                url: "/admin/update-sub-categoryData",
+                type: 'POST',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function (data, textStatus, jqXHR) {
+                    if (data.trim() === 'success') {
+                        Swal.fire("Good job!", "Successfully Update SubCategory", "success")
+                            .then((value) => {
+                                window.location = "/admin/manage-sub-category/0";
+                            });
+                    } else {
+                        Swal.fire("Please Try Again ", data);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    Swal.fire("Something Went Wrong !!! Try Again!!");
+                }
+            });
+        }
+    });
+});
+// delete sub Category
+$(document).ready(function () {
+    $('.delete-sub-category').click(function () {
 
-                                                   $(this).closest('tr').remove();
-                                              },
-                                              error: function (xhr, status, error) {
-                                                  // Handle error, e.g., display an error message
-                                                  swalWithBootstrapButtons.fire(
-                                                      'Error!',
-                                                      'An error occurred while deleting the SubCategory.',
-                                                      'error'
-                                                  );
-                                              }
-                                          });
-                                      } else if (result.dismiss === Swal.DismissReason.cancel) {
-                                          swalWithBootstrapButtons.fire(
-                                              'Cancelled',
-                                              'The SubCategory has not been deleted.',
-                                              'error'
-                                          );
-                                      }
-                                  });
-                              });
-                          });
+        var sub_category_id = $(this).data('sub_category_id');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success ml-2',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false,
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: 'You are about to delete this SubCategory.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/delete-sub-category',
+                    data: {
+                        sub_category_id: sub_category_id
+                    },
+                    success: function (response) {
+
+                        swalWithBootstrapButtons.fire(
+                            'Deleted!',
+                            'The subcategory has been deleted.',
+                            'success'
+                        );
+
+                        $(this).closest('tr').remove();
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error, e.g., display an error message
+                        swalWithBootstrapButtons.fire(
+                            'Error!',
+                            'An error occurred while deleting the SubCategory.',
+                            'error'
+                        );
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'The SubCategory has not been deleted.',
+                    'error'
+                );
+            }
+        });
+    });
+});
 
 

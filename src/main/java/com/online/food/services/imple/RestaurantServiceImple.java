@@ -4,6 +4,8 @@ import com.online.food.modal.Restaurant;
 import com.online.food.repository.RestaurantRepo;
 import com.online.food.services.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,5 +31,10 @@ public class RestaurantServiceImple implements RestaurantService {
     @Override
     public void delete(Restaurant restaurant) {
         this.restaurantRepo.delete(restaurant);
+    }
+
+    @Override
+    public Page<Restaurant> findByPagination(Pageable pageable) {
+        return this.restaurantRepo.findAll(pageable);
     }
 }

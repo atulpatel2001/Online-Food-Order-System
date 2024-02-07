@@ -1,250 +1,181 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/_layout::Layout(~{::section})}">
+
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
 </head>
+
 <body>
-<section>
+  <section>
 
 
-  <main class="p-5 banner-background" >
-    <div class="container">
+    <main class="p-5 banner-background">
+      <div class="container">
 
-      <button class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 " id="add-sub-category"><i class="fa fa-plus"></i></button>
+        <button class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 " id="add-sub-category"><i
+            class="fa fa-plus"></i></button>
 
 
-      <div class="m-3" id="show-sub-category">
+        <div class="m-3" id="show-sub-category">
 
-        <!--                all buttons-->
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-          <div class="container-fluid">
-            <div
-                    class="collapse navbar-collapse"
-                    id="navbarSupportedContent"
-            >
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a
-                          class=" btn btn-secondary m-2"
-                          aria-current="page"
-                          type="button"
-                  >Copy</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class=" btn btn-info m-2"  type="button" href="#">CSV</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a
-                          class="btn btn-success m-2"
-                          type="button"
+          <!--                all buttons-->
+          <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class=" btn btn-secondary m-2" aria-current="page" type="button">Copy</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class=" btn btn-info m-2" type="button" href="#">CSV</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="btn btn-success m-2" type="button">
+                      Excel
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="btn btn-danger m-2" type="button">PDF</a>
+                  </li>
 
-                  >
-                    Excel
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="btn btn-danger m-2"  type="button">PDF</a>
-                </li>
-
-                <li class="nav-item">
-                  <a class=" btn btn-primary m-2"  type="button">PRINT</a>
-                </li>
-              </ul>
-              <div class="d-flex" role="search">
+                  <li class="nav-item">
+                    <a class=" btn btn-primary m-2" type="button">PRINT</a>
+                  </li>
+                </ul>
+                <div class="d-flex" role="search">
 
 
 
 
+                </div>
               </div>
+
+
+            </div>
+          </nav>
+
+
+          <!--                search input tag-->
+          <div class="search-all m-2">
+            <div class="search">
+              <svg class="search__icon" width="22" height="22" viewBox="0 0 22 22" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10.5418 19.25C15.3513 19.25 19.2502 15.3512 19.2502 10.5417C19.2502 5.73223 15.3513 1.83337 10.5418 1.83337C5.73235 1.83337 1.8335 5.73223 1.8335 10.5417C1.8335 15.3512 5.73235 19.25 10.5418 19.25Z"
+                  stroke="#596780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M20.1668 20.1667L18.3335 18.3334" stroke="#596780" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <input type="text" class="search__input" placeholder="Search something here" id=""
+                onkeyup="searchCategory()" />
             </div>
 
-
-          </div>
-        </nav>
-
-
-        <!--                search input tag-->
-        <div class="search-all m-2">
-          <div class="search">
-            <svg
-                    class="search__icon"
-                    width="22"
-                    height="22"
-                    viewBox="0 0 22 22"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                      d="M10.5418 19.25C15.3513 19.25 19.2502 15.3512 19.2502 10.5417C19.2502 5.73223 15.3513 1.83337 10.5418 1.83337C5.73235 1.83337 1.8335 5.73223 1.8335 10.5417C1.8335 15.3512 5.73235 19.25 10.5418 19.25Z"
-                      stroke="#596780"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-              />
-              <path
-                      d="M20.1668 20.1667L18.3335 18.3334"
-                      stroke="#596780"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-              />
-            </svg>
-            <input
-                    type="text"
-                    class="search__input"
-                    placeholder="Search something here"
-                    id=""
-                    onkeyup="searchCategory()"
-            />
           </div>
 
-        </div>
+
+          <div class="row">
+            <div class="">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title text-uppercase mb-0">
+                    Manage Sub Category
+                  </h5>
+                </div>
+                <div class="table-responsive">
+                  <table class="table no-wrap user-table mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col" class="border-0 text-uppercase font-medium pl-4">
+                          Id
+                        </th>
+                        <th scope="col" class="border-0 text-uppercase font-medium">
+                          Category Name
+                        </th>
+                        <th scope="col" class="border-0 text-uppercase font-medium">
+                          Sub Category Name
+                        </th>
+                        <th scope="col" class="border-0 text-uppercase font-medium">
+                          Sub Category Discription
+                        </th>
+                        <th scope="col" class="border-0 text-uppercase font-medium">
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="subCategory:${subCategories}" th:if="${subCategories != null}">
+                        <td class="pl-4" th:text="${subCategory.subCategoryId}">
+                          1
+                        </td>
+                        <td>
+                          <h5 class="font-medium mb-0" th:text="${subCategory.category.categoryName}">
+                            Daniel Kristeen
+                          </h5>
+                        </td>
+                        <td>
+                          <div class="text-muted" th:text="${subCategory.subCategoryName}">
+                            45-89-96
+                          </div>
+                          <br />
+                        </td>
+
+                        <td>
+                          <div class="text-muted" th:text="${subCategory.subCategoryDiscription}">
+                            Hello
+                          </div>
+                          <br />
+                        </td>
+
+                        <td>
+                          <button type="button"
+                            class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 delete-sub-category"
+                             th:data-sub_category_id="${subCategory.subCategoryId}">
+                            <i class="fa fa-trash"></i>
+                          </button>
+                          <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 update-sub-category" th:data-sub_category_id="${subCategory.subCategoryId}">
+                            <i class="fa fa-edit"></i>
+                          </button>
+                        </td>
+                      </tr>
 
 
-        <div class="row">
-          <div class="">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title text-uppercase mb-0">
-                  Manage Sub Category
-                </h5>
-              </div>
-              <div class="table-responsive">
-                <table class="table no-wrap user-table mb-0">
-                  <thead>
-                  <tr>
-                    <th
-                            scope="col"
-                            class="border-0 text-uppercase font-medium pl-4"
-                    >
-                      Id
-                    </th>
-                    <th
-                            scope="col"
-                            class="border-0 text-uppercase font-medium"
-                    >
-                      Category Name
-                    </th>
-                    <th
-                            scope="col"
-                            class="border-0 text-uppercase font-medium"
-                    >
-                      Sub Category Name
-                    </th>
-                    <th
-                            scope="col"
-                            class="border-0 text-uppercase font-medium"
-                    >
-                      Sub Category Discription
-                    </th>
-                    <th
-                            scope="col"
-                            class="border-0 text-uppercase font-medium"
-                    >
-                      Action
-                    </th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr th:each="subCategory:${subCategories}" th:if="${subCategories != null}">
-                    <td
-                            class="pl-4"
-                            th:text="${subCategory.subCategoryId}"
-
-                    >
-                      1
-                    </td>
-                    <td>
-                      <h5
-                              class="font-medium mb-0"
-                              th:text="${subCategory.category.categoryName}"
-
-                      >
-                        Daniel Kristeen
-                      </h5>
-                    </td>
-                    <td>
-                      <div
-                              class="text-muted"
-                              th:text="${subCategory.subCategoryName}"
-
-                      >
-                        45-89-96
-                      </div>
-                      <br />
-                    </td>
-
-                    <td>
-                      <div
-                              class="text-muted"
-                              th:text="${subCategory.subCategoryDiscription}"
-
-                      >
-                        Hello
-                      </div>
-                      <br />
-                    </td>
-
-                    <td>
-                      <button
-                              type="button"
-                              class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 delete-category"
-                              id="delete-sub-category"
-                              th:data-sub_category_id="${subCategory.subCategoryId}"
-
-                      >
-                        <i class="fa fa-trash"></i>
-                      </button>
-                      <button
-                              type="button"
-                              class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"
+                    </tbody>
+                  </table>
 
 
-                      >
-                        <i class="fa fa-edit"></i>
-                      </button>
-                    </td>
-                  </tr>
-
-
-                  </tbody>
-                </table>
-
+                </div>
 
               </div>
 
             </div>
-
           </div>
-        </div>
 
-        <!--                     pagination start-->
-        <div aria-label="Page navigation" th:if="${totalPages>0}">
-          <ul class="pagination justify-content-center">
-            <li th:if="${currentPage != 0 }" class="page-item">
-              <a class="page-link" th:href="@{'/admin/manage-sub-category/' + ${currentPage - 1}}">Previous</a>
-            </li>
-            <li th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item"
+          <!--                     pagination start-->
+          <div aria-label="Page navigation" th:if="${totalPages>0}">
+            <ul class="pagination justify-content-center">
+              <li th:if="${currentPage != 0 }" class="page-item">
+                <a class="page-link" th:href="@{'/admin/manage-sub-category/' + ${currentPage - 1}}">Previous</a>
+              </li>
+              <li th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item"
                 th:classappend="${currentPage == i-1 ? 'active' : ''}">
-              <a class="page-link" th:href="@{'/admin/manage-sub-category/' + ${i-1}}">
-                <span th:text="${i}"></span>
-              </a>
-            </li>
-            <li th:if="${currentPage + 1 != totalPages}" class="page-item">
-              <a class="page-link" th:href="@{'/admin/manage-sub-category/' + ${currentPage + 1}}">Next</a>
-            </li>
-          </ul>
+                <a class="page-link" th:href="@{'/admin/manage-sub-category/' + ${i-1}}">
+                  <span th:text="${i}"></span>
+                </a>
+              </li>
+              <li th:if="${currentPage + 1 != totalPages}" class="page-item">
+                <a class="page-link" th:href="@{'/admin/manage-sub-category/' + ${currentPage + 1}}">Next</a>
+              </li>
+            </ul>
+          </div>
+
+          <!--               pagination end-->
+
+
+
         </div>
 
-        <!--               pagination end-->
-
-
-
-      </div>
-
-      <!--            show end-->
+        <!--            show end-->
 
 
 
@@ -254,79 +185,110 @@
 
 
 
-      <!--			add city form-->
-      <div id="add-sub-category-form" style="display: none">
-        <div
-                class="col-md-5 offset-md-4"
+        <!--			add sub category form-->
+        <div id="add-sub-category-form" style="display: none" >
+          <div class="col-md-5 offset-md-4">
+            <div class="card mt-3">
+              <div class="card-header text-center text-white " id="primary-bg">
+                <br />
+                Add Sub Category
+              </div>
+
+              <div class="card-body">
+                <form id="sub-category-reg-form">
+
+                  <div class="form-group">
+                    <label class="form-label" for="categoryId">Category</label>
+                    <select aria-label="Default select example" class="form-select" name="categoryId" id="categoryId">
+                      <option selected>Select Category</option>
+                      <option th:each="category:${categories}" th:text="${category.categoryName}"
+                        th:value="${category.categoryId}"></option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="subCategoryName">SubCategory Name</label>
+                    <input name="subCategoryName" type="text" class="form-control" id="subCategoryName"
+                      aria-describedby="emailHelp" placeholder="Enter SubCategory Name" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="subCategoryDiscription">SubCategory Description</label>
+                    <textarea name="subCategoryDiscription" class="form-control" id="subCategoryDiscription" rows="10"
+                      placeholder="Enter Something About SubCategory"></textarea>
+                  </div>
+
+                  <div class="container text-center mt-3">
+                    <button type="submit" class="btn btn-primary" id="submit-btn">
+                      Submit
+                    </button>
+                    <button type="reset" class="btn btn-warning" id="reset-btn">
+                      Reset
+                    </button>
+                  </div>
+                </form>
 
 
-        >
-          <div class="card mt-3">
-            <div class="card-header text-center ">
-              <br/>
-              Add Sub Category
-            </div>
-
-            <div class="card-body">
-              <form
-                      id="sub-category-reg-form"
-
-              >
-
-                <div class="form-group">
-                  <label class="form-label" for="categoryId">Category</label>
-                  <select aria-label="Default select example" class="form-select" name="categoryId" id="categoryId">
-                    <option selected>Select Category</option>
-                    <option th:each="category:${categories}" th:text="${category.categoryName}"
-                            th:value="${category.categoryId}"></option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label for="subCategoryName">SubCategory Name</label>
-                  <input
-                          name="subCategoryName"
-                          type="text"
-                          class="form-control"
-                          id="subCategoryName"
-                          aria-describedby="emailHelp"
-                          placeholder="Enter SubCategory Name"
-                          required
-                  />
-                </div>
-
-                <div class="form-group">
-                  <label for="subCategoryDiscription">SubCategory Description</label>
-                  <textarea
-                          name="subCategoryDiscription"
-                          class="form-control"
-                          id="subCategoryDiscription"
-                          rows="10"
-                          placeholder="Enter Something About SubCategory"
-                  ></textarea>
-                </div>
-
-                <div class="container text-center mt-3">
-                  <button type="submit" class="btn btn-primary" id="submit-btn">
-                    Submit
-                  </button>
-                  <button type="reset" class="btn btn-warning" id="reset-btn">
-                    Reset
-                  </button>
-                </div>
-              </form>
-
-
+              </div>
             </div>
           </div>
         </div>
+
+        <!--			end sub category -->
+<!--    start update-->
+
+        <div id="update-sub-category-form" style="display: none">
+          <div class="col-md-5 offset-md-4">
+            <div class="card mt-3">
+              <div class="card-header text-center text-white" id="primary-bg">
+                <br />
+                Update Sub Category
+              </div>
+
+              <div class="card-body">
+                <form id="sub-category-update-form">
+                    <input type="hidden" name="subCategoryId" id="subCategoryId-up">
+                  <div class="form-group">
+                    <label class="form-label" for="categoryId">Category</label>
+                    <select aria-label="Default select example" class="form-select" name="categoryId" id="categoryId-up">
+                      <option selected id="select-category-name">Select Category</option>
+                      <option th:each="category:${categories}" th:text="${category.categoryName}"
+                              th:value="${category.categoryId}"></option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="subCategoryName">SubCategory Name</label>
+                    <input name="subCategoryName" type="text" class="form-control" id="subCategoryName-up"
+                           aria-describedby="emailHelp" placeholder="Enter SubCategory Name" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="subCategoryDiscription">SubCategory Description</label>
+                    <textarea name="subCategoryDiscription" class="form-control" id="subCategoryDiscription-up" rows="10"
+                              placeholder="Enter Something About SubCategory"></textarea>
+                  </div>
+
+                  <div class="container text-center mt-3">
+                    <button type="submit" class="btn btn-primary" id="submit-btn-up">
+                      Submit
+                    </button>
+                    <button type="reset" class="btn btn-warning" id="reset-btn-up">
+                      Reset
+                    </button>
+                  </div>
+                </form>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--        end update-->
       </div>
-
-      <!--			end area add category -->
-
-
-    </div>
-  </main>
-</section>
+    </main>
+  </section>
 </body>
+
 </html>
