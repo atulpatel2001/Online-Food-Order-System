@@ -1,5 +1,6 @@
 package com.online.food.modal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -25,9 +26,11 @@ public class City implements Serializable {
     private String cityDiscription;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "city")
+    @JsonBackReference
     private List<Area> areas;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "city")
+    @JsonBackReference
     private List<Restaurant> restaurants;
 
 

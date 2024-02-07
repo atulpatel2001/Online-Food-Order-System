@@ -61,6 +61,8 @@ $(document).ready(function() {
     });
 });
 
+
+//get city data
 $(document).ready(function() {
     $(".update-city-button").click(function() {
       var cityId = $(this).data('city_id');
@@ -130,11 +132,6 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-
     // delete City
 
       $(document).ready(function () {
@@ -199,7 +196,7 @@ $(document).ready(function() {
 
 
 
-//area
+// for area
 
   $(document).ready(function () {
         $("#add-area").click(function () {
@@ -255,9 +252,84 @@ $(document).ready(function() {
 });
 
 
+//get area
+$(document).ready(function() {
+    $(".update-area-button").click(function() {
+      var areaId = $(this).data('area_id');
+
+        $.ajax({
+            url: '/admin/get-area',
+            type: 'GET',
+            data: { areaId: areaId },
+            success: function(response) {
+                $("#cityId-up").val(response.cityId);
+                $("#areaId-up").val(response.areaId)
+                $("#areaName-up").val(response.areaName);
+                $("#city-select").val(response.cityName);
+                $("#areaDiscription-up").val(response.areaDiscription);
+                $("#show-area").hide();
+                $("#update-area-form").show();
+console.log(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });
+});
+
+//update area
+$(document).ready(function() {
+        $('#area-update-form').validate({
+            rules: {
+                cityId: {
+                    required: true,
+                },
+                areaName: {
+                    required: true,
+                    minlength:3
+                },
+                areaDiscription:{
+                    required: true,
+                    minlength: 3
+                },
+            },
+            submitHandler: function(form) {
+                let formData = {
+                   cityId : $('#cityId-up').val(),
+                     areaId:$('#areaId-up').val(),
+                    areaName: $('#areaName-up').val(),
+                    areaDiscription: $('#areaDiscription-up').val(),
+                };
+
+                $.ajax({
+                    url: "/admin/update-areaData",
+                    type: 'POST',
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json',
+                    success: function(data, textStatus, jqXHR) {
+                        if (data.trim() === 'success') {
+                            Swal.fire("Good job!", "Successfully Update Area", "success")
+                                .then((value) => {
+                                    window.location = "/admin/manage-area/0";
+                                });
+                        } else {
+                            Swal.fire("Please Try Again ", data);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        Swal.fire("Something Went Wrong !!! Try Again!!");
+                    }
+                });
+            }
+        });
+    });
+
+
  // delete area
       $(document).ready(function () {
-                              $('#delete-area').click(function () {
+                              $('.delete-area').click(function () {
 
                                   var area_id = $(this).data('area_id');
                                   const swalWithBootstrapButtons = Swal.mixin({

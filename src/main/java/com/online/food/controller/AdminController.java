@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -196,7 +197,50 @@ public class AdminController {
         return "success";
     }
 
+    @GetMapping("/get-area")
+    @ResponseBody
+    public Map<String,String> getArea(@RequestParam("areaId") String areaId){
 
+
+        Area byId = this.areaService.findById(Long.valueOf(areaId));
+           Map<String,String> data=new HashMap<>();
+           data.put("cityId", String.valueOf(byId.getCity().getCityId()));
+           data.put("cityName",byId.getCity().getCityName());
+           data.put("areaId", String.valueOf(byId.getAreaId()));
+           data.put("areaName",byId.getAreaName());
+           data.put("areaDiscription",byId.getAreaDiscription());
+           this.logger.info("retrive area");
+
+        return data;
+    }
+
+    //update area
+
+    @PostMapping("/update-areaData")
+    @ResponseBody
+    public String updateArea(@RequestBody  Map<String,String> data){
+        try{
+            String cityId=data.get("cityId");
+           String areaId= data.get("areaId");
+           String areaName=data.get("areaName");
+          String areaDiscription=data.get("areaDiscription");
+            City city = this.cityService.findById(Long.valueOf(cityId));
+            Area area = this.areaService.findById(Long.valueOf(areaId));
+            area.setAreaName(areaName);
+            area.setAreaDiscription(areaDiscription);
+            area.setCity(city);
+            this.areaService.save(area);
+            this.logger.info("Update City");
+
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return "something Went wrong";
+
+        }
+        return "success";
+    }
     //delete area
     @PostMapping("/delete-area")
     @ResponseBody
