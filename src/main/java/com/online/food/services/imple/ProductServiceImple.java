@@ -4,6 +4,8 @@ import com.online.food.modal.Product;
 import com.online.food.repository.ProductRepo;
 import com.online.food.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,5 +31,10 @@ public class ProductServiceImple implements ProductService {
     @Override
     public void delete(Product product) {
         this.productRepo.delete(product);
+    }
+
+    @Override
+    public Page<Product> findByPagination(Pageable pageable) {
+        return this.productRepo.findAll(pageable);
     }
 }

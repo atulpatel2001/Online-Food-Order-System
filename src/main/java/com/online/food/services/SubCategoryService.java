@@ -19,4 +19,6 @@ public interface SubCategoryService {
     Page<SubCategory> findByPagination(Pageable pageable);
 
     SubCategory findBySubCategoryName(String subCategoryName);
+
+    List<SubCategory> findByCategoryId(Long categoryId);
 }

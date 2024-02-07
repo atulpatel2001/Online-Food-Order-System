@@ -497,6 +497,6 @@ nav.close ~ .dashboard .top {
   height: 700px;
   background-color: #fff;
 
-  box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.1), 5px 5px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.5), 5px 5px 5px rgba(0, 0, 0, 0.2);
 }
 
