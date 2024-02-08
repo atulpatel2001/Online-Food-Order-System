@@ -19,4 +19,6 @@ public interface CityService {
     Page<City> findAllCityByPagination(Pageable pageable);
 
     City findByCityName(String cityName);
+
+    List<City> searchByTitle(String cityName);
 }

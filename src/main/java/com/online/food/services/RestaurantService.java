@@ -20,4 +20,6 @@ public interface RestaurantService {
     Page<Restaurant> findByPagination(Pageable pageable);
 
     Restaurant findByCustomerId(Long customerId);
+
+    List<Restaurant> searchRestaurant(String query);
 }

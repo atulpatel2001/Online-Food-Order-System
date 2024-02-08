@@ -1,6 +1,7 @@
 package com.online.food.modal;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +25,7 @@ public class Product implements Serializable {
     private String productName;
     @ManyToOne
     @JoinColumn(name = "sub_category_id")
+    @JsonIgnore
     private SubCategory subCategory;
 
     @Column(name = "product_price")

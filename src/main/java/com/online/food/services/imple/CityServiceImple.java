@@ -43,4 +43,9 @@ public class CityServiceImple implements CityService {
     public City findByCityName(String cityName) {
         return this.cityRepo.findByCityName(cityName);
     }
+
+    @Override
+    public List<City> searchByTitle(String cityName) {
+        return this.cityRepo.searchByTitle(cityName);
+    }
 }

@@ -42,4 +42,9 @@ public class CategoryServiceImple implements CategoryService {
     public Category getByCategoryName(String categoryName) {
         return this.categoryRepo.getByCategoryName(categoryName);
     }
+
+    @Override
+    public List<Category> searchByCategoryName(String query) {
+        return this.categoryRepo.searchByCategoryName(query);
+    }
 }

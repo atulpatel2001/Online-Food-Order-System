@@ -47,4 +47,9 @@ public class SubCategoryServiceImple implements SubCategoryService {
     public List<SubCategory> findByCategoryId(Long categoryId) {
         return this.categoryRepo.findByCategoryId(categoryId);
     }
+
+    @Override
+    public List<SubCategory> searchSubCategory(String query) {
+        return this.categoryRepo.searchSubCategory(query);
+    }
 }

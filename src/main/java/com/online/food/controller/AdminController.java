@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,8 @@ public class AdminController {
     private SubCategoryService subCategoryService;
     @Autowired
     private RestaurantService restaurantService;
+    @Autowired
+    private OfferService offerService;
 
     @GetMapping("/index")
     public String indexPage(Model model) {
@@ -495,5 +498,27 @@ public class AdminController {
         return "admin/manage-restaurant";
     }
 
+//show all offer
+
+    @GetMapping("/manage-offer/{page}")
+    public String manageOffer(@PathVariable("page")int page, Model model){
+
+        try
+        {
+            Pageable pageable=PageRequest.of(page,5);
+            Page<Offer> offers = this.offerService.findAllWithPagination(pageable);
+            model.addAttribute("offers", offers.getContent());
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", offers.getTotalPages());
+
+
+            model.addAttribute("title","Admin | Offer");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "admin/manage-offer";
+    }
 
 }

@@ -21,4 +21,6 @@ public interface SubCategoryService {
     SubCategory findBySubCategoryName(String subCategoryName);
 
     List<SubCategory> findByCategoryId(Long categoryId);
+
+    List<SubCategory> searchSubCategory(String query);
 }

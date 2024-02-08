@@ -19,4 +19,6 @@ public interface CategoryService {
     Page<Category> findByPagination(Pageable pageable);
 
     Category getByCategoryName(String categoryName);
+
+    List<Category> searchByCategoryName(String query);
 }

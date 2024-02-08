@@ -16,4 +16,6 @@ public interface OfferService {
     void delete(Offer offer);
 
     Page<Offer> findByRestaurantID(Long restaurantId, Pageable pageable);
+
+    Page<Offer> findAllWithPagination(Pageable pageable);
 }

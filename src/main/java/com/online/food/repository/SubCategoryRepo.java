@@ -1,5 +1,6 @@
 package com.online.food.repository;
 
+import com.online.food.modal.Area;
 import com.online.food.modal.SubCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,7 @@ public interface SubCategoryRepo extends JpaRepository<SubCategory,Long> {
 
     @Query("select s from SubCategory s where s.category.categoryId =:categoryId")
     public List<SubCategory> findByCategoryId(@Param("categoryId") Long categoryId);
+
+    @Query("SELECT s from SubCategory s where s.subCategoryName LIKE %:query% OR s.category.categoryName LIKE %:query%")
+    List<SubCategory> searchSubCategory(@Param("query") String query);
 }

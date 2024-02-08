@@ -27,7 +27,7 @@ public class Area implements Serializable {
     private String areaDiscription;
     @ManyToOne
     @JoinColumn(name = "city_id")
-    @JsonBackReference
+
     private City city;
 
 

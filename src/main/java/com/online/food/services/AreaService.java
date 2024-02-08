@@ -21,4 +21,6 @@ public interface AreaService {
     Page<Area> findAreaByPagination(Pageable pageable);
 
     Area getAreaByName(String areaName);
+
+    List<Area> searchArea(String query);
 }

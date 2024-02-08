@@ -113,12 +113,7 @@
         <div class="top">
             <i class="fa fa-bars sidebar-toggle"></i>
 
-            <div class="container" th:if="${session.message}">
-                <div th:classappend="${'alert-'+session.message.typeOfMessage}" class="alert" role="alert">
-                    <span th:text="${session.message.content}"> </span>
-                </div>
-                <th:block th:text="${@sessionHelper.removeAttributeFromSession('message')}"></th:block>
-            </div>
+
         </div>
         <div th:replace="${content}" class="all-page-content">
 
@@ -137,6 +132,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script th:src="@{/js/search.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/admin/script.js}"></script>
 </body>

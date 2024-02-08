@@ -28,12 +28,14 @@ public class SubCategory implements Serializable {
     private String subCategoryDiscription;
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @JsonBackReference
+
     private Category category;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "subCategory")
     @JsonBackReference
     private List<Offer> offers;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "subCategory")
+    private List<Product> products;
 
 
 }

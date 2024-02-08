@@ -1,5 +1,6 @@
 package com.online.food.modal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,6 +39,7 @@ public class Customer implements Serializable {
     private boolean enable;
 
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "customer")
+    @JsonBackReference
     private Restaurant restaurant;
 
 

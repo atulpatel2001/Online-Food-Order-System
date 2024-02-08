@@ -48,4 +48,9 @@ public class AreaServiceImple implements AreaService {
     public Area getAreaByName(String areaName) {
         return this.areaRepo.getAreaByName(areaName);
     }
+
+    @Override
+    public List<Area> searchArea(String query) {
+        return this.areaRepo.searchArea(query);
+    }
 }
