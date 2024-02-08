@@ -1,14 +1,8 @@
 package com.online.food.controller;
 
-import com.online.food.modal.Area;
-import com.online.food.modal.City;
-import com.online.food.modal.Customer;
-import com.online.food.modal.Restaurant;
+import com.online.food.modal.*;
 import com.online.food.payload.RestaurantPayLoad;
-import com.online.food.services.AreaService;
-import com.online.food.services.CityService;
-import com.online.food.services.CustomerService;
-import com.online.food.services.RestaurantService;
+import com.online.food.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +28,15 @@ public class HomeController {
     private AreaService areaService;
     @Autowired
     private RestaurantService restaurantService;
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/")
     public String indexpage(Model model){
         model.addAttribute("title", "Food | Order Food Online in India");
+
+        List<Product> products = this.productService.findAll();
+        model.addAttribute("products",products);
         return "index";
     }
 
