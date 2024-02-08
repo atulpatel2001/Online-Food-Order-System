@@ -37,4 +37,9 @@ public class RestaurantServiceImple implements RestaurantService {
     public Page<Restaurant> findByPagination(Pageable pageable) {
         return this.restaurantRepo.findAll(pageable);
     }
+
+    @Override
+    public Restaurant findByCustomerId(Long customerId) {
+        return this.restaurantRepo.findByCustomerId(customerId);
+    }
 }

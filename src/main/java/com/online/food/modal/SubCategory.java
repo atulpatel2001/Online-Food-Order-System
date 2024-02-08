@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,4 +30,10 @@ public class SubCategory implements Serializable {
     @JoinColumn(name = "category_id")
     @JsonBackReference
     private Category category;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "subCategory")
+    @JsonBackReference
+    private List<Offer> offers;
+
+
 }

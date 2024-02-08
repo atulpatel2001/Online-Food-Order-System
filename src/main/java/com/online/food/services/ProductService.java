@@ -18,4 +18,6 @@ public interface ProductService {
     void delete(Product product);
 
     Page<Product> findByPagination(Pageable pageable);
+
+    Page<Product> findProductForRestaurant(Long restaurantId,Pageable pageable);
 }

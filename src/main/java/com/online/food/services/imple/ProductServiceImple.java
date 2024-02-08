@@ -37,4 +37,9 @@ public class ProductServiceImple implements ProductService {
     public Page<Product> findByPagination(Pageable pageable) {
         return this.productRepo.findAll(pageable);
     }
+
+    @Override
+    public Page<Product> findProductForRestaurant(Long restaurantId, Pageable pageable) {
+        return this.productRepo.findProductForRestaurant(restaurantId,pageable);
+    }
 }

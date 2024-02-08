@@ -1,9 +1,11 @@
 package com.online.food.modal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,5 +37,12 @@ public class Restaurant implements Serializable {
     @OneToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "restaurant")
+    @JsonBackReference
+    private List<Product> products;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "restaurant")
+    @JsonBackReference
+    private List<Offer> offers;
 
 }

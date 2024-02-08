@@ -153,13 +153,14 @@
 										
 										<td>
 											<button type="button"
-													class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 delete-category"
-													id="delete-category">
+													class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 delete-product"
+													th:data-product_id="${product.productId}"
+													>
 												<i class="fa fa-trash"></i>
 											</button>
 											<button type="button"
-													class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"
-													data-bs-toggle="modal">
+													class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 update-product-button"
+													th:data-product_id="${product.productId}">
 												<i class="fa fa-edit"></i>
 											</button>
 										</td>
@@ -277,8 +278,64 @@
 	</div>
 	
 <!--			add form close-->
-		
-		
+
+<!--			upadte form-->
+			<div id="update-product-form" style="display:none">
+				<div class="col-md-5 offset-md-4">
+					<div class="card mt-3">
+						<div class="card-header text-center ">
+							<br />
+							Update Product
+						</div>
+
+						<div class="card-body">
+							<form id="product-update-form">
+								<input type="hidden" name="productId" id="productid-up">
+								<div class="form-group">
+									<label for="productName">Product Name</label>
+									<input name="productName" type="text" class="form-control" id="productName-up"
+										   aria-describedby="emailHelp" placeholder="Enter Product Name" required />
+								</div>
+
+								<div class="form-group">
+									<label for="productPrice">Product Price</label>
+									<input name="productPrice" class="form-control" id="productPrice-up"
+										   placeholder="Enter Product Price"></input>
+								</div>
+
+								<div class="mb-3">
+									<label for="formFile" class="form-label">Choose Product File</label>
+									<input class="form-control" type="file" id="formFile-up" name="productImage">
+								</div>
+
+								<div class="form-group">
+									<label for="productDiscription">Product Description</label>
+									<textarea name="productDiscription" class="form-control" id="productDiscription-up" cols="10"
+											  rows="10" placeholder="Enter Something About Product"></textarea>
+								</div>
+
+
+
+								<div class="container text-center mt-3">
+									<button type="submit" class="btn btn-primary" id="submit-btn-up">
+										Submit
+									</button>
+									<button type="reset" class="btn btn-warning" id="reset-btn-up">
+										Reset
+									</button>
+								</div>
+							</form>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
 		</div>
 	</main>
 </section>

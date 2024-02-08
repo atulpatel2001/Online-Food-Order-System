@@ -18,4 +18,6 @@ public interface RestaurantService {
 
 
     Page<Restaurant> findByPagination(Pageable pageable);
+
+    Restaurant findByCustomerId(Long customerId);
 }
