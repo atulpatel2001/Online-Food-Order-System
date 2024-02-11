@@ -1,6 +1,6 @@
 
 
-
+//register customer
 $(document).ready(function() {
         $('#reg-form').validate({
             rules: {
@@ -71,6 +71,7 @@ $(document).ready(function() {
 
 
 
+//get area
 $(document).ready(function () {
 
     $('#citySelect').change(function () {
@@ -102,6 +103,7 @@ $(document).ready(function () {
 });
 
 
+//retaturant register
 
 $(document).ready(function() {
         $('#res-reg-form').validate({

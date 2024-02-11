@@ -47,4 +47,9 @@ public class RestaurantServiceImple implements RestaurantService {
     public List<Restaurant> searchRestaurant(String query) {
         return this.restaurantRepo.searchRestaurant(query);
     }
+
+    @Override
+    public List<Restaurant> findByareaId(Long areaId) {
+        return this.restaurantRepo.findByareaId(areaId);
+    }
 }

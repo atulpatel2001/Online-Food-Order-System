@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -41,6 +42,10 @@ public class Customer implements Serializable {
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "customer")
     @JsonBackReference
     private Restaurant restaurant;
+
+    @OneToMany(cascade =  CascadeType.ALL,mappedBy = "customer")
+    @JsonBackReference
+    private List<Complain> complains;
 
 
 

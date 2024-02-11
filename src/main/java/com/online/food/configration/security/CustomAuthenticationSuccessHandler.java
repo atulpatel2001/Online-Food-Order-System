@@ -46,7 +46,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                 return;
             }
         }
-        response.sendRedirect("/order-food");
+        response.sendRedirect("/order-food/index");
 
 
     }
