@@ -42,6 +42,9 @@ public class RestaurantController {
     @Autowired
     private OfferService offerService;
 
+    @Autowired
+    private ComplainService complainService;
+
     private Logger logger= LoggerFactory.getLogger(RestaurantController.class);
 
 
@@ -345,6 +348,29 @@ public class RestaurantController {
       }
 
         return "success";
+    }
+
+
+
+    @GetMapping("/manage-complain/{page}")
+    public String manageComplain(@PathVariable("page") int page,Principal principal,Model model){
+        try
+        {
+            Customer customer = this.customerService.findByEmailId(principal.getName().trim());
+            Restaurant restaurant = customer.getRestaurant();
+            Pageable pageable=PageRequest.of(page,5);
+            Page<Complain> complains = this.complainService.findByPainationWithRestaurantId(pageable, restaurant.getRestaurantId());
+            model.addAttribute("complains", complains.getContent());
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", complains.getTotalPages());
+            model.addAttribute("title","Restaurant | Manage Complain");
+
+        }
+        catch (Exception e){
+           e.printStackTrace();
+        }
+
+        return "restaurant/manage-complain";
     }
 
 

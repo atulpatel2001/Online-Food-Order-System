@@ -4,6 +4,8 @@ import com.online.food.modal.Complain;
 import com.online.food.repository.ComplainRepo;
 import com.online.food.services.ComplainService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +15,7 @@ public class ComplainServiceImple implements ComplainService {
 
     @Autowired
     private ComplainRepo complainRepo;
+
     @Override
     public Complain save(Complain complain) {
         return this.complainRepo.save(complain);
@@ -31,5 +34,10 @@ public class ComplainServiceImple implements ComplainService {
     @Override
     public void delete(Complain complain) {
         this.complainRepo.delete(complain);
+    }
+
+    @Override
+    public Page<Complain> findByPainationWithRestaurantId(Pageable pageable, Long restaurantId) {
+        return this.complainRepo.findByPainationWithRestaurantId(pageable, restaurantId);
     }
 }

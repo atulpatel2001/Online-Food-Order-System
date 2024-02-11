@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -84,9 +85,7 @@ public class CustomerController {
                                   @RequestParam("restaurantId") Long restaurantId
                                     , @RequestParam("attachment")MultipartFile attachment
                                         , @RequestParam("complainDescription")String complainDescription, Principal principal){
-
-        try
-        {
+        try{
             boolean b = FileUploadHelper.uploadFile(attachment, "static/image/complain-img");
             if(b){
                 Restaurant restaurant = this.restaurantService.findById(restaurantId);
@@ -96,7 +95,9 @@ public class CustomerController {
                 Complain build = Complain.builder()
                         .complainSubject(complainSubject)
                         .complainDescription(complainDescription)
-                        .attachment(attachment.getName())
+                        .attachment(attachment.getOriginalFilename())
+                        .complainDate(LocalDate.now())
+                        .complainStatus(String.valueOf(Status.PENDING))
                         .restaurant(restaurant)
                         .customer(customer).build();
                 this.complainService.save(build);

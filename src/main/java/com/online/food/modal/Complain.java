@@ -3,6 +3,8 @@ package com.online.food.modal;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "tbl_complain")
 @Getter
@@ -25,6 +27,15 @@ public class Complain {
 
     @Column(name = "attachment_id")
     private String attachment;
+
+    @Column(name = "complain_date")
+    private LocalDate complainDate;
+
+    @Column(name = "reply_date")
+    private LocalDate replyDate;
+
+    @Column(name = "complain_status")
+    private String complainStatus;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id")
