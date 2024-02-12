@@ -485,7 +485,7 @@ $(document).ready(function () {
 
 
 $(document).ready(function () {
-    $("#select-status").change(function () {
+    $(".select-status").change(function () {
         var complainId = $(this).data('complain_id');
         var status = $(this).val();
 
@@ -505,14 +505,14 @@ $(document).ready(function () {
 
 
 $(document).ready(function () {
-    $("#button-reply").click(function () {
-        $("#reply-form").show();
+    $(".button-reply").click(function () {
+        $(".reply-form").show();
     });
 
 });
 
 $(document).ready(function () {
-     $("#reply-form-data").validate({
+     $(".reply-form-data").validate({
 
         rules:{
             replydes:{

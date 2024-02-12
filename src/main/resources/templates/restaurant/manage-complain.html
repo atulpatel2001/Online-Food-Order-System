@@ -166,12 +166,13 @@
 											<div th:if="${complain.reply != null}" class="text-muted" th:text="${complain.reply}">
 												45-89-96
 											</div>
-											<div class="alert alert-primary" th:if="${complain.reply== null}" id="button-reply" style="width: 10px;
+											<div class="alert alert-primary button-reply" th:if="${complain.reply== null}"  style="width: 10px;
       													  height: 15px; cursor: pointer; border-radius: 50%;">
 
 											</div>
-											<div class="row " style="display:none;" id="reply-form">
-												<form id="reply-form-data" class="col">
+
+											<div class="row reply-form" style="display:none;" >
+												<form class="reply-form-data col" >
 													<input type="hidden" name="complainId" th:value="${complain.complainId}">
 													<input type="text" name="replydes" class="form-control" placeholder="Enter Reply" aria-label="Last name">
 													<div class="container mt-1">
@@ -195,7 +196,7 @@
 
 
 												<div class="text-muted" >
-													<select class="form-select" aria-label="Default select example" name="status" id="select-status" th:data-complain_id="${complain.complainId}">
+													<select class="form-select select-status" aria-label="Default select example" name="status"  th:data-complain_id="${complain.complainId}">
 														<option selected th:text="${complain.complainStatus}"></option>
 														<option value="1">IN POGESS</option>
 														<option value="2">RESOLVED</option>
