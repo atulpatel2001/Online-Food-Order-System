@@ -358,8 +358,9 @@ public class RestaurantController {
         {
             Customer customer = this.customerService.findByEmailId(principal.getName().trim());
             Restaurant restaurant = customer.getRestaurant();
+
             Pageable pageable=PageRequest.of(page,5);
-            Page<Complain> complains = this.complainService.findByPainationWithRestaurantId(pageable, restaurant.getRestaurantId());
+            Page<Complain> complains = this.complainService.findByPainationWithRestaurantId(restaurant.getRestaurantId(),pageable);
             model.addAttribute("complains", complains.getContent());
             model.addAttribute("currentPage", page);
             model.addAttribute("totalPages", complains.getTotalPages());
@@ -373,6 +374,42 @@ public class RestaurantController {
         return "restaurant/manage-complain";
     }
 
+    @PostMapping("/update-complain-status")
+    @ResponseBody
+    public String updateComplainStatus(@RequestParam("complainId")Long complainId,@RequestParam("status") int status){
+        try{
+            Complain complain = this.complainService.findById(complainId);
 
+            if(status ==1){
+                complain.setComplainStatus(String.valueOf(Status.INPOGRESS));
+            }
+            else {
+                complain.setComplainStatus(String.valueOf((Status.RESOLVED)));
+            }
+            this.complainService.save(complain);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+
+
+        }
+        return "success";
+    }
+
+    @PostMapping("/reply-data")
+    @ResponseBody
+    public String replyDataHandle(@RequestParam("replydes") String replyDes,@RequestParam("complainId") Long complainId)
+    {
+        try{
+            Complain complain = this.complainService.findById(complainId);
+            complain.setReply(replyDes);
+            complain.setReplyDate(LocalDate.now());
+            this.complainService.save(complain);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return "success";
+    }
 }
 

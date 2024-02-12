@@ -17,5 +17,6 @@ public interface ComplainService {
 
     void delete(Complain complain);
 
-    Page<Complain> findByPainationWithRestaurantId(Pageable pageable,Long restaurantId);
+    Page<Complain> findByPainationWithRestaurantId(Long restaurantId,Pageable pageable);
+    Page<Complain> findAllBYPagination(Pageable pageable);
 }

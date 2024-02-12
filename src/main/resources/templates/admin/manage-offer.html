@@ -80,11 +80,9 @@
                                 <th scope="col" class="border-0 text-uppercase font-medium pl-4 font-size-table" >
                                     ID
                                 </th>
-                                <th scope="col" class="border-0 text-uppercase font-size-table" >
-                                    Category Name
-                                </th>
+
                                 <th scope="col" class="border-0 text-uppercase font-medium font-size-table">
-                                    Sub Category Name
+                                   Restaurant
                                 </th>
                                 <th scope="col" class="border-0 text-uppercase font-medium font-size-table">
                                     Offer Name
@@ -116,14 +114,9 @@
                                     </div>
                                 </td>
 
-                                <td>
-                                    <div class="text-muted" th:text="${offer.subCategory.category.categoryName}">
-
-                                    </div>
-                                </td>
 
                                 <td>
-                                    <div class="text-muted" th:text="${offer.subCategory.subCategoryName}">
+                                    <div class="text-muted" th:text="${offer.restaurant.restaurantName}">
                                         45-89-96
                                     </div>
                                 </td>

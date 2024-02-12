@@ -28,6 +28,8 @@ public class Complain {
     @Column(name = "attachment_id")
     private String attachment;
 
+    private String reply;
+
     @Column(name = "complain_date")
     private LocalDate complainDate;
 

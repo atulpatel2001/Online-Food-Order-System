@@ -1,4 +1,3 @@
-
 // for product
 $(document).ready(function () {
     $("#add-product-button").click(function () {
@@ -483,3 +482,76 @@ $(document).ready(function () {
         }
     });
 });
+
+
+$(document).ready(function () {
+    $("#select-status").change(function () {
+        var complainId = $(this).data('complain_id');
+        var status = $(this).val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/restaurant/update-complain-status',
+            data: { complainId: complainId, status: status },
+            success: function (data) {
+                Swal.fire("Good job!", "Successfully Update Status", "success");
+            },
+            error: function (xhr, status, error) {
+                console.error("Error Something Went Wrong:", error);
+            }
+        });
+    });
+});
+
+
+$(document).ready(function () {
+    $("#button-reply").click(function () {
+        $("#reply-form").show();
+    });
+
+});
+
+$(document).ready(function () {
+     $("#reply-form-data").validate({
+
+        rules:{
+            replydes:{
+                required:true,
+                minlength:2,
+            }
+        },
+        messages:{
+            replydes:{
+                required:"must be require!!",
+                minlength:"minimum 2 character require"
+            }
+        },
+        submitHandler:function(form){
+            $.ajax({
+                type: "POST",
+                url: "/restaurant/reply-data",
+                data: new FormData(form),
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    if (data.trim() === 'success') {
+                        Swal.fire("Good job!", "Successfully Give Reply", "success")
+                            .then((value) => {
+                                window.location = "/restaurant/manage-complain/0";
+                            });
+                    } else {
+                        Swal.fire("Please Try Again ", data);
+                    }
+                },
+                error: function (xhr, status, error) {
+
+                    console.error("Error:", error);
+                }
+            });
+
+
+        }
+
+     })
+})

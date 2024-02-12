@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ComplainRepo extends JpaRepository<Complain,Long> {
-    @Query("select c from Complain c where c.restaurant.restaurantId =: restaurantId")
-    Page<Complain> findByPainationWithRestaurantId(Pageable pageable, @Param("restaurantId")Long restaurantId);
+    @Query("select c from Complain c where c.restaurant.restaurantId =:restaurantId")
+    Page<Complain> findByPainationWithRestaurantId(@Param("restaurantId")Long restaurantId,Pageable pageable);
 }

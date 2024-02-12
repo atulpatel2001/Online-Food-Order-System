@@ -38,6 +38,11 @@ public class AdminController {
     @Autowired
     private OfferService offerService;
 
+    @Autowired
+    private CustomerService customerService;
+    @Autowired
+    private ComplainService complainService;
+
     @GetMapping("/index")
     public String indexPage(Model model) {
         try {
@@ -519,6 +524,27 @@ public class AdminController {
         }
 
         return "admin/manage-offer";
+    }
+
+    @GetMapping("/manage-complain/{page}")
+    public String manageComplain(@PathVariable("page") int page,Model model){
+        try
+        {
+
+
+            Pageable pageable=PageRequest.of(page,5);
+            Page<Complain> complains = this.complainService.findAllBYPagination(pageable);
+            model.addAttribute("complains", complains.getContent());
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", complains.getTotalPages());
+            model.addAttribute("title","Admin | Manage Complain");
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "admin/manage-complain";
     }
 
 }
