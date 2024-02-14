@@ -2,16 +2,26 @@ package com.online.food.controller;
 
 import com.online.food.modal.*;
 import com.online.food.services.*;
+import com.online.food.services.excel.CityExcelService;
+import com.online.food.services.pdf.CityPdfService;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
+import  java.io.ByteArrayOutputStream;
+
+import java.io.IOException;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +52,10 @@ public class AdminController {
     private CustomerService customerService;
     @Autowired
     private ComplainService complainService;
+    @Autowired
+    private CityExcelService cityExcelService;
+    @Autowired
+    private CityPdfService cityPdfService;
 
     @GetMapping("/index")
     public String indexPage(Model model) {
@@ -546,5 +560,54 @@ public class AdminController {
 
         return "admin/manage-complain";
     }
+
+
+    //for excel file
+
+
+    @GetMapping("/create-city-excel")
+    public ResponseEntity<byte[]> cityExcelFile() throws Exception{
+
+
+            String fileName="Food_Order_Cities";
+
+            List<City> city = this.cityService.findAll();
+        Workbook workbook = this.cityExcelService.dataToExcel(city);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment",fileName);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .body(outputStream.toByteArray());
+    }
+
+
+    //pdf service
+
+    @GetMapping("/city-pdf-create")
+    public ResponseEntity<byte[]> careateCityPdf() throws IOException {
+        try {
+            List<City> cities = this.cityService.findAll();
+            ByteArrayInputStream pdf = this.cityPdfService.createPdf(cities);
+            byte[] pdfBytes = pdf.readAllBytes();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "Food_Order_Cities.pdf");
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(pdfBytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
+
 
 }
