@@ -1,23 +1,20 @@
 package com.online.food.services.pdf;
 
 import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.PdfPCell;
+import com.online.food.modal.Category;
 import com.online.food.modal.City;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
-
 @Service
-public class CityPdfService {
-    public ByteArrayInputStream createPdf(List<City> cities) {
+public class CategoryPdfService {
+    public ByteArrayInputStream createPdf(List<Category> categories) {
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
@@ -27,22 +24,22 @@ public class CityPdfService {
 
             // Add title
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 25);
-            Paragraph title = new Paragraph("City Details", titleFont);
+            Paragraph title = new Paragraph("Categories Details", titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
 
             // Add city details table
             PdfPTable table = new PdfPTable(3); // Number of columns in the table
             table.setWidthPercentage(100);
-            table.setSpacingBefore(20f);
-            table.setSpacingAfter(20f);
+            table.setSpacingBefore(10f);
+            table.setSpacingAfter(10f);
 
             // Add table headers
             addTableHeader(table);
 
             // Add city details to the table
-            for (City city : cities) {
-                addCityToTable(table, city);
+            for (Category category : categories) {
+                addCategoryToTable(table, category);
             }
 
             document.add(table);
@@ -57,7 +54,7 @@ public class CityPdfService {
     }
 
     private void addTableHeader(PdfPTable table) {
-        Stream.of("City ID", "City Name", "Description")
+        Stream.of("Category_ID", "Category_Name", "Category_Discription")
                 .forEach(columnTitle -> {
                     PdfPCell header = new PdfPCell();
                     header.setBackgroundColor(BaseColor.LIGHT_GRAY);
@@ -67,9 +64,9 @@ public class CityPdfService {
                 });
     }
 
-    private void addCityToTable(PdfPTable table, City city) {
-        table.addCell(String.valueOf(city.getCityId()));
-        table.addCell(city.getCityName());
-        table.addCell(city.getCityDiscription());
+    private void addCategoryToTable(PdfPTable table, Category category) {
+        table.addCell(String.valueOf(category.getCategoryId()));
+        table.addCell(category.getCategoryName());
+        table.addCell(category.getCategoryDiscription());
     }
 }

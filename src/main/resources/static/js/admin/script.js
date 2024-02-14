@@ -10,12 +10,14 @@ $(document).ready(function () {
 });
 
 
-//      $(document).ready(function () {
-//        $("#update-city-button").click(function () {
-//          $("#show-city").hide();
-//          $("#update-city-form").show();
-//        });
-//      });
+      $(document).ready(function () {
+        $("#show-city-button").click(function () {
+
+          $("#add-city-form").hide();
+          $("#update-city-form").hide();
+          $("#show-city").show();
+        });
+      });
 
 
 //add city
@@ -201,7 +203,17 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#add-area").click(function () {
         $("#show-area").hide();
+         $("#update-area-form").hide();
         $("#add-area-form").show();
+    });
+});
+
+$(document).ready(function () {
+    $("#show-area-button").click(function () {
+
+        $("#add-area-form").hide();
+        $("#update-area-form").hide();
+         $("#show-area").show();
     });
 });
 
@@ -394,7 +406,19 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#add-category").click(function () {
         $("#show-category").hide();
+         $("#update-category-form").hide();
         $("#add-category-form").show();
+    });
+});
+
+
+$(document).ready(function () {
+    $("#show-category-button").click(function () {
+
+        $("#add-category-form").hide();
+          $("#update-category-form").hide();
+           $("#show-category").show();
+
     });
 });
 
@@ -584,10 +608,21 @@ $(document).ready(function () {
 $(document).ready(function () {
     $("#add-sub-category").click(function () {
         $("#show-sub-category").hide();
+         $("#update-sub-category-form").hide();
         $("#add-sub-category-form").show();
     });
 });
 
+
+
+$(document).ready(function () {
+    $("#show-subcategory-button").click(function () {
+
+        $("#add-sub-category-form").hide();
+          $("#update-sub-category-form").hide();
+        $("#show-sub-category").show();
+    });
+});
 
 //add sub category
 $(document).ready(function () {

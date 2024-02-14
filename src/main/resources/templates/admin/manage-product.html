@@ -5,10 +5,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-
 <body>
-
-
 <section>
     <main class="p-5">
         <div class="container">
@@ -26,12 +23,12 @@
                                     <a class=" btn btn-info m-2" type="button" href="#">CSV</a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a th:href="@{/admin/create-restaurant-excel}" class="btn btn-success m-2" type="button">
+                                    <a th:href="@{/admin/create-product-excel}" class="btn btn-success m-2" type="button">
                                         Excel
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a th:href="@{/admin/restaurant-pdf-create}" class="btn btn-danger m-2" type="button">PDF</a>
+                                    <a th:href="@{/admin/product-pdf-create}" class="btn btn-danger m-2" type="button">PDF</a>
                                 </li>
 
                                 <li class="nav-item">
@@ -75,7 +72,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title text-uppercase mb-0">
-                                Restaurant
+                                Product
                             </h5>
                         </div>
                         <div class="table-responsive">
@@ -86,73 +83,89 @@
                                         ID
                                     </th>
                                     <th scope="col" class="border-0 text-uppercase font-medium">
-                                        CityName
+                                        ProductName
                                     </th>
                                     <th scope="col" class="border-0 text-uppercase font-medium">
-                                        AreaName
+                                        Category Name
+                                    </th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                       SubCategory Name
                                     </th>
                                     <th scope="col" class="border-0 text-uppercase font-medium">
                                         Restaurant Name
                                     </th>
 
                                     <th scope="col" class="border-0 text-uppercase font-medium">
-                                        Restaurant Address
+                                        Product Price
+                                    </th>
+                                    <th scope="col" class="border-0 text-uppercase font-medium">
+                                        Product Image
                                     </th>
 
                                     <th scope="col" class="border-0 text-uppercase font-medium">
-                                        Phone No
+                                       Product Description
                                     </th>
-<!--                                    <th scope="col" class="border-0 text-uppercase font-medium">-->
-<!--                                        Action-->
-<!--                                    </th>-->
+                                    <!--                                    <th scope="col" class="border-0 text-uppercase font-medium">-->
+                                    <!--                                        Action-->
+                                    <!--                                    </th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="restaurant:${restaurants}" th:if="${restaurants != null}">
+                                <tr th:each="product:${products}" th:if="${products != null}">
                                     <td class="pl-4">
-                                        <div class="text-muted" th:text="${restaurant.restaurantId}">
+                                        <div class="text-muted" th:text="${product.productId}">
                                             45-89-96
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="text-muted" th:text="${restaurant.city.cityName}">
+                                        <div class="font-medium mb-0" th:text="${product.productName}">
                                             45-89-96
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="text-muted" th:text="${restaurant.area.areaName}">
+                                        <div class="text-muted" th:text="${product.subCategory.category.categoryName}">
                                             45-89-96
                                         </div>
                                     </td>
                                     <td>
-                                        <h5 class="font-medium mb-0" th:text="${restaurant.restaurantName}">
+                                        <h5 class="text-muted" th:text="${product.subCategory.subCategoryName}">
                                             Daniel Kristeen
                                         </h5>
 
                                     </td>
                                     <td>
-                                        <div class="text-muted" th:text="${restaurant.restaurantAddress}">
+                                        <div class="text-muted" th:text="${product.restaurant.restaurantName}">
                                             45-89-96
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="text-muted" th:text="${restaurant.restaurantPhoneNumber}">
+                                        <div class="text-muted" th:text="${product.productPrice}">
+                                            45-89-96
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted" >
+                                            <img th:src="@{'/image/product-img/'+${product.imageName}}" alt="no" style="border-radius:50%;height:50px;width:50px;">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="text-muted" th:text="${product.productDiscription}">
                                             45-89-96
                                         </div>
                                     </td>
 
-                                    <td>
-<!--                                        <button type="button"-->
-<!--                                                class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 "-->
-<!--                                                >-->
-<!--                                            <i class="fa fa-trash"></i>-->
-<!--                                        </button>-->
-<!--                                        <button type="button"-->
-<!--                                                class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"-->
-<!--                                                >-->
-<!--                                            <i class="fa fa-edit"></i>-->
-<!--                                        </button>-->
-                                    </td>
+<!--                                    <td>-->
+                                        <!--                                        <button type="button"-->
+                                        <!--                                                class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 "-->
+                                        <!--                                                >-->
+                                        <!--                                            <i class="fa fa-trash"></i>-->
+                                        <!--                                        </button>-->
+                                        <!--                                        <button type="button"-->
+                                        <!--                                                class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"-->
+                                        <!--                                                >-->
+                                        <!--                                            <i class="fa fa-edit"></i>-->
+                                        <!--                                        </button>-->
+<!--                                    </td>-->
                                 </tr>
 
 
@@ -169,16 +182,16 @@
                             <ul class="pagination justify-content-center">
                                 <li th:if="${currentPage != 0 }" class="page-item">
                                     <a class="page-link"
-                                       th:href="@{'/admin/manage-restaturant/' + ${currentPage - 1}}">Previous</a>
+                                       th:href="@{'/admin/manage-product/' + ${currentPage - 1}}">Previous</a>
                                 </li>
                                 <li th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item"
                                     th:classappend="${currentPage == i-1 ? 'active' : ''}">
-                                    <a class="page-link" th:href="@{'/admin/manage-restaturant/' + ${i-1}}">
+                                    <a class="page-link" th:href="@{'/admin/manage-product/' + ${i-1}}">
                                         <span th:text="${i}"></span>
                                     </a>
                                 </li>
                                 <li th:if="${currentPage + 1 != totalPages}" class="page-item">
-                                    <a class="page-link" th:href="@{'/admin/manage-restaturant/' + ${currentPage + 1}}">Next</a>
+                                    <a class="page-link" th:href="@{'/admin/manage-product/' + ${currentPage + 1}}">Next</a>
                                 </li>
                             </ul>
                         </div>

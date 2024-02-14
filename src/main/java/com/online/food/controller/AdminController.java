@@ -2,9 +2,8 @@ package com.online.food.controller;
 
 import com.online.food.modal.*;
 import com.online.food.services.*;
-import com.online.food.services.excel.CityExcelService;
-import com.online.food.services.pdf.AreaPdfService;
-import com.online.food.services.pdf.CityPdfService;
+import com.online.food.services.excel.*;
+import com.online.food.services.pdf.*;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,15 +49,49 @@ public class AdminController {
     private OfferService offerService;
 
     @Autowired
+    private AreaExcelService areaExcelService;
+    @Autowired
     private CustomerService customerService;
     @Autowired
     private ComplainService complainService;
     @Autowired
     private CityExcelService cityExcelService;
     @Autowired
+    private ProductExcelService productExcelService;
+    @Autowired
     private CityPdfService cityPdfService;
+
+    @Autowired
+    private CategoryExcelService categoryExcelService;
+
+    @Autowired
+    private SubCategoryExcelService subCategoryExcelService;
+    @Autowired
+    private RestaurantExcelService restaurantExcelService;
+
+    @Autowired
+    private ComplainExcelService complainExcelService;
+    @Autowired
+    private OfferExcelService offerExcelService;
     @Autowired
     private AreaPdfService areaPdfService;
+
+    @Autowired
+    private CategoryPdfService categoryPdfService;
+    @Autowired
+    private SubCategoryPdfService subCategoryPdfService;
+
+    @Autowired
+    private RestaurantPdfService restaurantPdfService;
+    @Autowired
+    private ProductPdfService productPdfService;
+    @Autowired
+    private OfferPdfService offerPdfService;
+
+    @Autowired
+    private ComplainPdfService complainPdfService;
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/index")
     public String indexPage(Model model) {
@@ -564,6 +597,24 @@ public class AdminController {
         return "admin/manage-complain";
     }
 
+    @GetMapping("/manage-product/{page}")
+    public String manageProduct(@PathVariable("page")int page,Model model){
+        try
+        {
+            Pageable pageable=PageRequest.of(page,5);
+
+            Page<Product> products = this.productService.findByPagination(pageable);
+            model.addAttribute("products", products.getContent());
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", products.getTotalPages());
+            model.addAttribute("title","Admin | Manage Product");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return "admin/manage-product";
+    }
+
 
     //for excel file
 
@@ -590,6 +641,168 @@ public class AdminController {
                 .body(outputStream.toByteArray());
     }
 
+    //area excel
+
+    @GetMapping("/create-area-excel")
+    public ResponseEntity<byte[]> areaExcelFile() throws Exception{
+
+
+        String fileName="Food_Order_areas";
+
+        List<Area> areas = this.areaService.findAll();
+        Workbook workbook = this.areaExcelService.dataToExcel(areas);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment",fileName);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .body(outputStream.toByteArray());
+    }
+
+    //category excel
+    @GetMapping("/create-category-excel")
+    public ResponseEntity<byte[]> categoryExcelFile() throws Exception{
+
+
+        String fileName="Food_Order_Categories";
+
+        List<Category> categories = this.categoryService.findAll();
+        Workbook workbook = this.categoryExcelService.dataToExcel(categories);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment",fileName);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .body(outputStream.toByteArray());
+    }
+
+    //sub category excel
+    @GetMapping("/create-sub-category-excel")
+    public ResponseEntity<byte[]> subcategoryExcelFile() throws Exception{
+
+
+        String fileName="Food_Order_SubCategories";
+
+        List<SubCategory> subCategories = this.subCategoryService.findAll();
+        Workbook workbook = this.subCategoryExcelService.dataToExcel(subCategories);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment",fileName);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .body(outputStream.toByteArray());
+    }
+
+    //restaurant excel
+    @GetMapping("/create-restaurant-excel")
+    public ResponseEntity<byte[]> restaurantExcelFile() throws Exception{
+
+
+        String fileName="Food_Order_Restaurant";
+
+        List<Restaurant> restaurants = this.restaurantService.findAll();
+        Workbook workbook = this.restaurantExcelService.dataToExcel(restaurants);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment",fileName);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .body(outputStream.toByteArray());
+    }
+
+    //product excel
+    @GetMapping("/create-product-excel")
+    public ResponseEntity<byte[]> productExcelFile() throws Exception{
+
+
+        String fileName="Food_Order_Products";
+
+        List<Product> products = this.productService.findAll();
+        Workbook workbook = this.productExcelService.dataToExcel(products);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment",fileName);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .body(outputStream.toByteArray());
+    }
+
+
+    //offer excel
+    @GetMapping("/create-offer-excel")
+    public ResponseEntity<byte[]> offerExcelFile() throws Exception{
+
+
+        String fileName="Food_Order_Offers";
+
+        List<Offer> offers = this.offerService.findAll();
+        Workbook workbook = this.offerExcelService.dataToExcel(offers);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment",fileName);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .body(outputStream.toByteArray());
+    }
+
+    //complain excel
+    @GetMapping("/create-complain-excel")
+    public ResponseEntity<byte[]> complainExcelFile() throws Exception{
+
+
+        String fileName="Food_Order_Complains";
+
+        List<Complain> complains = this.complainService.findAll();
+        Workbook workbook = this.complainExcelService.dataToExcel(complains);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        workbook.write(outputStream);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment",fileName);
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .body(outputStream.toByteArray());
+    }
 
     //pdf service
 
@@ -614,6 +827,9 @@ public class AdminController {
     }
 
 
+
+
+
     //area pdf
 
     @GetMapping("/area-pdf-create")
@@ -634,6 +850,131 @@ public class AdminController {
             return ResponseEntity.status(500).build();
         }
     }
+
+    //category pdf
+    @GetMapping("/category-pdf-create")
+    public ResponseEntity<byte[]> createCategoryPdf() throws IOException {
+        try {
+            List<Category> all = this.categoryService.findAll();
+            ByteArrayInputStream pdf = this.categoryPdfService.createPdf(all);
+            byte[] pdfBytes = pdf.readAllBytes();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "Food_Order_Categories.pdf");
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(pdfBytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    //subcategory pdf
+    @GetMapping("/subcategory-pdf-create")
+    public ResponseEntity<byte[]> createSubCategoryPdf() throws IOException {
+        try {
+            List<SubCategory> all = this.subCategoryService.findAll();
+            ByteArrayInputStream pdf =this.subCategoryPdfService.createPdf(all);
+            byte[] pdfBytes = pdf.readAllBytes();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "Food_Order_SubCategories.pdf");
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(pdfBytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+
+    //restaurant pdf
+    @GetMapping("/restaurant-pdf-create")
+    public ResponseEntity<byte[]> createRestaurantPdf() throws IOException {
+        try {
+            List<Restaurant> all = this.restaurantService.findAll();
+            ByteArrayInputStream pdf = this.restaurantPdfService.createPdf(all);
+            byte[] pdfBytes = pdf.readAllBytes();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "Food_Order_Restaurants.pdf");
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(pdfBytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+
+    //product pdf
+    @GetMapping("/product-pdf-create")
+    public ResponseEntity<byte[]> createProductPdf() throws IOException {
+        try {
+            List<Product> all = this.productService.findAll();
+            ByteArrayInputStream pdf = this.productPdfService.createPdf(all);
+            byte[] pdfBytes = pdf.readAllBytes();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "Food_Order_Products.pdf");
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(pdfBytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+
+
+    //offer pdf
+    @GetMapping("/offer-pdf-create")
+    public ResponseEntity<byte[]> createOfferPdf() throws IOException {
+        try {
+            List<Offer> all = this.offerService.findAll();
+            ByteArrayInputStream pdf =this.offerPdfService.createPdf(all);
+            byte[] pdfBytes = pdf.readAllBytes();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "Food_Order_Offers.pdf");
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(pdfBytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+    //complain pdf
+    @GetMapping("/complain-pdf-create")
+    public ResponseEntity<byte[]> createComplainPdf() throws IOException {
+        try {
+            List<Complain> all = this.complainService.findAll();
+            ByteArrayInputStream pdf = this.complainPdfService.createPdf(all);
+            byte[] pdfBytes = pdf.readAllBytes();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "Food_Order_Complaines.pdf");
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(pdfBytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
+
 
 
 

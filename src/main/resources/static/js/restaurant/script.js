@@ -6,6 +6,15 @@ $(document).ready(function () {
         $("#add-product-form").show();
     });
 });
+
+$(document).ready(function () {
+    $("#show-product-button").click(function () {
+
+        $("#update-product-form").hide();
+        $("#add-product-form").hide();
+        $("#show-products").show();
+    });
+})
 //select category for product
 $(document).ready(function () {
 
@@ -232,6 +241,16 @@ $(document).ready(function () {
         $("#add-offer-form").show();
     });
 });
+
+$(document).ready(function () {
+    $("#show-offer-button").click(function () {
+
+        $("#update-offer-form").hide();
+        $("#add-offer-form").hide();
+        $("#show-offers").show();
+    });
+});
+
 
 
 //add offer
