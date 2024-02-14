@@ -3,6 +3,7 @@ package com.online.food.controller;
 import com.online.food.modal.*;
 import com.online.food.services.*;
 import com.online.food.services.excel.CityExcelService;
+import com.online.food.services.pdf.AreaPdfService;
 import com.online.food.services.pdf.CityPdfService;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
@@ -56,6 +57,8 @@ public class AdminController {
     private CityExcelService cityExcelService;
     @Autowired
     private CityPdfService cityPdfService;
+    @Autowired
+    private AreaPdfService areaPdfService;
 
     @GetMapping("/index")
     public String indexPage(Model model) {
@@ -590,6 +593,7 @@ public class AdminController {
 
     //pdf service
 
+    //city pdf
     @GetMapping("/city-pdf-create")
     public ResponseEntity<byte[]> careateCityPdf() throws IOException {
         try {
@@ -608,6 +612,29 @@ public class AdminController {
             return ResponseEntity.status(500).build();
         }
     }
+
+
+    //area pdf
+
+    @GetMapping("/area-pdf-create")
+    public ResponseEntity<byte[]> careateAreaPdf() throws IOException {
+        try {
+            List<Area> areas = this.areaService.findAll();
+            ByteArrayInputStream pdf = this.areaPdfService.createPdf(areas);
+            byte[] pdfBytes = pdf.readAllBytes();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", "Food_Order_Areas.pdf");
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(pdfBytes);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).build();
+        }
+    }
+
 
 
 }
