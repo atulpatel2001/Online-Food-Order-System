@@ -30,9 +30,10 @@ public class Product implements Serializable {
 
     @Column(name = "product_price")
     private Long productPrice;
-    @Column(name = "product_discription")
+    @Column(name = "product_discription",length = 6000)
     private String productDiscription;
-    @Column(name = "product_image")
+    @Column(name = "product_image",length = 6000)
+
     private String imageName;
 
     @ManyToOne

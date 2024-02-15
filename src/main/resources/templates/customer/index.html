@@ -8,8 +8,47 @@
 <section>
 	<div class="mt-2">
 		<div class="container">
-			
-			<h1>Hello Customer</h1>
+
+
+			<div class="vegitairan-product" th:if="${products != null and not #lists.isEmpty(products)}">
+
+				<h1 class="title-shop m-3" id="title">VEGITARIAN</h1>
+				<main class="main bd-grid">
+
+					<article class="card1" th:each="product:${products}" style="width:255px;height:400px;">
+						<div class="card1__img">
+							<img th:src="${product.imageName}" class="img1" alt="" style="height:225px;">
+						</div>
+						<div class="card1__name">
+							<p th:text="${product.subCategory.category.categoryName}">AIR ZOOM PEGASUS</p>
+						</div>
+						<div class="card1__precis ">
+							<a  class="card1__icon ml-3" th:href="@{'/'+${product.productId}+'/product-detail'}">
+								<i class="fa fa-eye"></i>
+							</a>
+
+							<div>
+								<span class="card1__preci card1__preci--before" th:text="${product.productName}">$990.00</span>
+								<span class="card1__preci card1__preci--now" th:text="'$'+${product.productPrice}">$749.00</span>
+							</div>
+							<a th:href="@{/customer/add-cart}" class="card1__icon mr-3">
+								<ion-icon name="cart-outline"></ion-icon>
+							</a>
+
+						</div>
+
+					</article>
+
+
+				</main>
+				<footer class="m-3">
+					<div class="gap-2">
+						<a class="btn btn-outline-dark" th:href="@{/all-product}">Read More</a>
+					</div>
+				</footer>
+
+
+			</div>
 		</div>
 	</div>
 	

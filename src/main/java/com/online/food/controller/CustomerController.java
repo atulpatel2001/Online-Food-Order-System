@@ -37,9 +37,16 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private ProductService productService;
+
     @GetMapping("/index")
     public String indexpage(Model model) {
         model.addAttribute("title", "Order-Food | Order Food Online in India");
+        List<Product> products = this.productService.findVegitarianProduct();
+
+        model.addAttribute("products",products);
+
         return "customer/index";
     }
 

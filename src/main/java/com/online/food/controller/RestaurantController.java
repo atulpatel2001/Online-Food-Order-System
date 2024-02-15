@@ -109,7 +109,7 @@ public class RestaurantController {
                               @RequestParam("subCategoryId") String subCategoryId,
                               @RequestParam("productPrice") Long productPrice,
                               @RequestParam("productDiscription") String productDescription,
-                              @RequestParam("productImage") MultipartFile productImage, Principal principal) {
+                              @RequestParam("productImage") String productImage, Principal principal) {
 
         try {
             String name = principal.getName();
@@ -120,18 +120,13 @@ public class RestaurantController {
                     .productPrice(productPrice)
                     .productDiscription(productDescription)
                     .restaurant(restaurant)
-                    .imageName(productImage.getOriginalFilename())
+                    .imageName(productImage)
                     .productName(productName)
                     .subCategory(subCategory)
                     .build();
 
-            boolean b = FileUploadHelper.uploadFile(productImage, "static/image/product-img");
-            if(b){
+
                 this.productService.save(product);
-            }
-            else {
-                return "error";
-            }
         }
         catch (Exception e){
             e.printStackTrace();
@@ -147,7 +142,6 @@ public class RestaurantController {
 
         try{
             Product product = this.productService.findById(productId);
-
             this.productService.delete(product);
             this.logger.info("Product deleted");
         }
@@ -169,6 +163,7 @@ public class RestaurantController {
         data.put("productName",product.getProductName());
         data.put("productPrice", String.valueOf(product.getProductPrice()));
         data.put("productDiscription",product.getProductDiscription());
+        data.put("image",product.getImageName());
 
         return data;
     }
@@ -181,34 +176,11 @@ public class RestaurantController {
                               @RequestParam("productId") String productId,
                               @RequestParam("productPrice") Long productPrice,
                               @RequestParam("productDiscription") String productDescription,
-                              @RequestParam("productImage") MultipartFile productImage) {
+                              @RequestParam("productImage") String productImage) {
 
         try {
             Product product = this.productService.findById(Long.valueOf(productId));
-            if(productImage.isEmpty()){
-                this.logger.info("Selected Photo is Empty");
-            } else if (!productImage.isEmpty()) {
-                if (productImage.getOriginalFilename().trim().equals(product.getImageName().trim())){
-                    this.logger.info("old file and new file is equal");
-                }
-                else {
-                    String imageName = product.getImageName();
-                    boolean b = FileUploadHelper.deleteFile("static/image/product-img", imageName);
-                    if (b) {
-                        this.logger.info("old Photo Deleted");
-                        boolean b1 = FileUploadHelper.uploadFile(productImage, "static/image/product-img");
-                        if (b1) {
-                            this.logger.info("new product image uploaded ");
-                            product.setProductName(productImage.getName());
-                        } else {
-                            this.logger.info("new product image upload fail");
-                        }
-                    } else {
-                        this.logger.info("Old Photo not deleted");
-                    }
-                }
-            }
-
+            product.setImageName(productImage);
             product.setProductName(productName);
             product.setProductPrice(productPrice);
             product.setProductDiscription(productDescription);

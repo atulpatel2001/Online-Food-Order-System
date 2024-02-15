@@ -173,6 +173,7 @@ $(document).ready(function () {
                 $("#productName-up").val(response.productName);
                 $("#productPrice-up").val(response.productPrice);
                 $("#productDiscription-up").val(response.productDiscription);
+                $("#formFile-up").val(response.image);
                 $("#show-products").hide();
                 $("#update-product-form").show();
             },

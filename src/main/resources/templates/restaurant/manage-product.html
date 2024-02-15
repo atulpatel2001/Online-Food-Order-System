@@ -139,7 +139,7 @@
 										
 										</td>
 										<td>
-											<img th:src="@{'/image/product-img/'+${product.imageName}}" alt="no" style="border-radius:50%;height:50px;width:50px;">
+											<img th:src="${product.imageName}" alt="no" style="border-radius:50%;height:50px;width:50px;">
 										</td>
 										<td>
 											<div class="text-muted" th:text="${product.productPrice}">
@@ -245,13 +245,15 @@
 						
 						<div class="form-group">
 							<label for="productPrice">Product Price</label>
-							<input name="productPrice" class="form-control" id="productPrice"
+							<input type="number" name="productPrice" class="form-control" id="productPrice"
 								   placeholder="Enter Product Price"></input>
 						</div>
 						
 						<div class="mb-3">
-							<label for="formFile" class="form-label">Choose Product File</label>
-							<input class="form-control" type="file" id="formFile" name="productImage">
+							<label for="formFile" class="form-label">Enter Product Url</label>
+							<input type="text" name="productImage" class="form-control" id="formFile"
+								   placeholder="Enter Product Url"></input>
+
 						</div>
 						
 						<div class="form-group">
@@ -305,8 +307,10 @@
 								</div>
 
 								<div class="mb-3">
-									<label for="formFile" class="form-label">Choose Product File</label>
-									<input class="form-control" type="file" id="formFile-up" name="productImage">
+									<label for="formFile" class="form-label">Enter Product Url</label>
+									<input type="text" name="productImage" class="form-control" id="formFile-up"
+										   placeholder="Enter Product Url"></input>
+
 								</div>
 
 								<div class="form-group">

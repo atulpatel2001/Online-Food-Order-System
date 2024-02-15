@@ -20,4 +20,6 @@ public interface ProductService {
     Page<Product> findByPagination(Pageable pageable);
 
     Page<Product> findProductForRestaurant(Long restaurantId,Pageable pageable);
+
+    List<Product> findVegitarianProduct();
 }
