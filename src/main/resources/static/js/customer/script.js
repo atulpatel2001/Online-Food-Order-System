@@ -125,3 +125,214 @@ $(document).ready(function () {
         }
     });
 });
+
+
+//add to cart
+
+$(document).ready(function () {
+
+    $('.add-cart').click(function () {
+        var product_id = $(this).data('product_id');
+        $.ajax({
+            type: 'POST',
+            url: '/order-food/add-to-cart',
+            data: {
+                product_id: product_id,
+            },
+            success: function (response) {
+                Swal.fire("Successfully Add To Cart","", "success");
+                    location.reload();
+            },
+            error: function (xhr, status, error) {
+                Swal.fire("Not Added To Cart","","error");
+            }
+        });
+    });
+});
+
+
+
+
+
+
+//     cart qunatity update
+function adjustQuantity(change,cartId) {
+    var quantityInput = document.getElementById('cart' + cartId);
+    var newQuantity = parseInt(quantityInput.value) + change;
+    quantityInput.value = newQuantity;
+    $.ajax({
+        type: 'POST',
+        url: '/order-food/change-quantity',
+        data: {
+            quantity : newQuantity,
+            cartId:cartId
+        },
+        success: function (response) {
+            location.reload();
+        },
+        error: function (xhr, status, error) {
+
+        }
+    });
+}
+
+
+
+//delete cart
+$(document).ready(function () {
+    $('.delete-cart').click(function () {
+        var cart_id = $(this).data('cart_id');
+        $.ajax({
+            type: 'POST',
+            url: '/order-food/delete-cart',
+            data: {
+                cart_id: cart_id,
+            },
+            success: function (response) {
+
+                Swal.fire("Remove Product From Cart","", "success");
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                Swal.fire("Something Went Wrong","","error");
+            }
+        });
+    });
+});
+
+
+
+$(document).ready(function(){
+    $('#add-address-form').validate({
+        rules: {
+            fullName: {
+                required: true
+            },
+            phoneNumber: {
+                required: true,
+                digits: true,
+                minlength: 10
+            },
+            state: {
+                required: true
+            },
+            district: {
+                required: true
+            },
+            city: {
+                required: true
+            },
+            pinCode: {
+                required: true,
+                digits: true,
+                minlength: 6
+            },
+            houseNo: {
+                required: true
+            },
+            buildingName: {
+                required: true
+            },
+            area: {
+                required: true
+            },
+            colony: {
+                required: true
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                enctype: 'multipart/form-data',
+                url: '/order-food/add-address',
+                type: 'POST',
+                data: new FormData(form),
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data) {
+                    if (data.trim() === 'success') {
+                        Swal.fire("Good job!", "Successfully Add Address", "success")
+                            .then((value) => {
+                                window.location = "/order-food/checkout";
+                            });
+                    } else {
+                        Swal.fire("Please Try Again ", data);
+                    }
+                },
+                error: function(xhr, status, error) {
+
+                    console.error("error");
+                }
+            });
+        }
+    });
+});
+
+
+
+
+$(document).ready(function(){
+    $('#update-address-form').validate({
+        rules: {
+            fullName: {
+                required: true
+            },
+            phoneNumber: {
+                required: true,
+                digits: true,
+                minlength: 10
+            },
+            state: {
+                required: true
+            },
+            district: {
+                required: true
+            },
+            city: {
+                required: true
+            },
+            pinCode: {
+                required: true,
+                digits: true,
+                minlength: 6
+            },
+            houseNo: {
+                required: true
+            },
+            buildingName: {
+                required: true
+            },
+            area: {
+                required: true
+            },
+            colony: {
+                required: true
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                enctype: 'multipart/form-data',
+                url: '/order-food/update-address',
+                type: 'POST',
+                data: new FormData(form),
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data) {
+                    if (data.trim() === 'success') {
+                        Swal.fire("Good job!", "Successfully Update Address", "success")
+                            .then((value) => {
+                                window.location = "/order-food/checkout";
+                            });
+                    } else {
+                        Swal.fire("Please Try Again ", data);
+                    }
+                },
+                error: function(xhr, status, error) {
+
+                    console.error("error");
+                }
+            });
+        }
+    });
+});

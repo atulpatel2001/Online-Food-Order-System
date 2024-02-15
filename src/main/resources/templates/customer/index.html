@@ -22,6 +22,7 @@
 						<div class="card1__name">
 							<p th:text="${product.subCategory.category.categoryName}">AIR ZOOM PEGASUS</p>
 						</div>
+
 						<div class="card1__precis ">
 							<a  class="card1__icon ml-3" th:href="@{'/'+${product.productId}+'/product-detail'}">
 								<i class="fa fa-eye"></i>
@@ -29,9 +30,10 @@
 
 							<div>
 								<span class="card1__preci card1__preci--before" th:text="${product.productName}">$990.00</span>
+								<span class="card1__preci card1__preci--before" th:text="${product.restaurant.restaurantName}">$990.00</span>
 								<span class="card1__preci card1__preci--now" th:text="'$'+${product.productPrice}">$749.00</span>
 							</div>
-							<a th:href="@{/customer/add-cart}" class="card1__icon mr-3">
+							<a class="card1__icon mr-3 add-cart" style=" cursor: pointer;"  th:data-product_id="${product.productId}">
 								<ion-icon name="cart-outline"></ion-icon>
 							</a>
 
