@@ -623,7 +623,7 @@ public class AdminController {
     public ResponseEntity<byte[]> cityExcelFile() throws Exception{
 
 
-            String fileName="Food_Order_Cities";
+            String fileName="Food_Order_Cities.xlsx";
 
             List<City> city = this.cityService.findAll();
         Workbook workbook = this.cityExcelService.dataToExcel(city);
@@ -647,7 +647,7 @@ public class AdminController {
     public ResponseEntity<byte[]> areaExcelFile() throws Exception{
 
 
-        String fileName="Food_Order_areas";
+        String fileName="Food_Order_areas.xlsx";
 
         List<Area> areas = this.areaService.findAll();
         Workbook workbook = this.areaExcelService.dataToExcel(areas);
@@ -670,7 +670,7 @@ public class AdminController {
     public ResponseEntity<byte[]> categoryExcelFile() throws Exception{
 
 
-        String fileName="Food_Order_Categories";
+        String fileName="Food_Order_Categories.xlsx";
 
         List<Category> categories = this.categoryService.findAll();
         Workbook workbook = this.categoryExcelService.dataToExcel(categories);
@@ -693,7 +693,7 @@ public class AdminController {
     public ResponseEntity<byte[]> subcategoryExcelFile() throws Exception{
 
 
-        String fileName="Food_Order_SubCategories";
+        String fileName="Food_Order_SubCategories.xlsx";
 
         List<SubCategory> subCategories = this.subCategoryService.findAll();
         Workbook workbook = this.subCategoryExcelService.dataToExcel(subCategories);
@@ -716,7 +716,7 @@ public class AdminController {
     public ResponseEntity<byte[]> restaurantExcelFile() throws Exception{
 
 
-        String fileName="Food_Order_Restaurant";
+        String fileName="Food_Order_Restaurant.xlsx";
 
         List<Restaurant> restaurants = this.restaurantService.findAll();
         Workbook workbook = this.restaurantExcelService.dataToExcel(restaurants);
@@ -739,7 +739,7 @@ public class AdminController {
     public ResponseEntity<byte[]> productExcelFile() throws Exception{
 
 
-        String fileName="Food_Order_Products";
+        String fileName="Food_Order_Products.xlsx";
 
         List<Product> products = this.productService.findAll();
         Workbook workbook = this.productExcelService.dataToExcel(products);
@@ -763,7 +763,7 @@ public class AdminController {
     public ResponseEntity<byte[]> offerExcelFile() throws Exception{
 
 
-        String fileName="Food_Order_Offers";
+        String fileName="Food_Order_Offers.xlsx";
 
         List<Offer> offers = this.offerService.findAll();
         Workbook workbook = this.offerExcelService.dataToExcel(offers);
@@ -786,7 +786,7 @@ public class AdminController {
     public ResponseEntity<byte[]> complainExcelFile() throws Exception{
 
 
-        String fileName="Food_Order_Complains";
+        String fileName="Food_Order_Complains.xlsx";
 
         List<Complain> complains = this.complainService.findAll();
         Workbook workbook = this.complainExcelService.dataToExcel(complains);
