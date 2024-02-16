@@ -6,9 +6,21 @@
 </head>
 <body>
 <section>
+
+  <div class="front-image">
+    <img style="width:100%;height: 500px" th:src="@{/image/project-back-image/product-index.webp}">
+
+    <div class="mid-top" th:text="${restaurant.restaurantName}"></div>
+    <div class="left-bottom" th:text="${restaurant.area.areaName}"></div>
+    <div class="right-bottom" th:text="${restaurant.city.cityName}"></div>
+    <div class="mid-bottom" th:text="${restaurant.restaurantAddress}"></div>
+  </div>
   <div class="mt-2">
     <div class="container">
 
+      <div class="not-product" th:if="${products != null || !products.isEmpty()}">
+        <h1>In This Restaurant Do not have any Food So Try With Different Restaurant</h1>
+      </div>
 
       <div class='row mb-2' th:if="${products != null and not #lists.isEmpty(products)}">
         <div class='col-md-3 mb-1' th:each="product:${products}">

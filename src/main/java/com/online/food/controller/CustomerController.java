@@ -305,8 +305,17 @@ public class CustomerController {
     @GetMapping("/restaurant/{id}")
     public String showRestaurantProduct(@PathVariable("id") String id,Model model){
 
+        Restaurant restaurant = this.restaurantService.findById(Long.valueOf(id));
         List<Product> products = this.productService.findByRestaurantId(Long.valueOf(id));
-        model.addAttribute("products",products);
+
+
+            model.addAttribute("products", products);
+
+
+        model.addAttribute("restaurant",restaurant);
+
+
+
         return "customer/restaurant-product";
     }
 }

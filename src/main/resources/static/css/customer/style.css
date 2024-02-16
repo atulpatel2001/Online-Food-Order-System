@@ -1,7 +1,14 @@
 .primary-bg{
-background:#424242;
+    background-color: #78909C
 
 }
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
 .error{
 color:red;
 }
@@ -124,4 +131,67 @@ body {
 }
 .checked {
     color: #ffd700;
+}
+
+
+
+.front-image{
+
+
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.mid-top{
+    background-color: black;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 35px;
+    font-family: "Montserrat", sans-serif;
+    font-style: italic;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.mid-bottom{
+    background-color: black;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 35px;
+    font-family: "Montserrat", sans-serif;
+    font-style: italic;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.left-bottom{
+    background-color: black;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 35px;
+    font-family: "Montserrat", sans-serif;
+    font-style: italic;
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+}
+
+.right-bottom{
+    background-color: black;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 35px;
+    font-family: "Montserrat", sans-serif;
+    font-style: italic;
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
 }
