@@ -17,4 +17,8 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
     @Query("select p from Product as p where p.subCategory.category.categoryName = 'Vegitarian' ORDER BY p.productId DESC LIMIT 8")
     public List<Product> findVegitarianProduct();
 
+    @Query("SELECT p FROM Product p WHERE p.restaurant.restaurantId =:restaurantId")
+    List<Product> findByRestaurantId(@Param("restaurantId")Long restaurantId);
+
+
 }

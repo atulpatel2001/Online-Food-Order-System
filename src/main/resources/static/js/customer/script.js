@@ -213,12 +213,6 @@ $(document).ready(function(){
                 digits: true,
                 minlength: 10
             },
-            state: {
-                required: true
-            },
-            district: {
-                required: true
-            },
             city: {
                 required: true
             },
@@ -231,9 +225,6 @@ $(document).ready(function(){
                 required: true
             },
             buildingName: {
-                required: true
-            },
-            area: {
                 required: true
             },
             colony: {
@@ -282,12 +273,6 @@ $(document).ready(function(){
                 digits: true,
                 minlength: 10
             },
-            state: {
-                required: true
-            },
-            district: {
-                required: true
-            },
             city: {
                 required: true
             },
@@ -300,9 +285,6 @@ $(document).ready(function(){
                 required: true
             },
             buildingName: {
-                required: true
-            },
-            area: {
                 required: true
             },
             colony: {

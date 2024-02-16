@@ -47,4 +47,9 @@ public class ProductServiceImple implements ProductService {
     public List<Product> findVegitarianProduct() {
         return this.productRepo.findVegitarianProduct();
     }
+
+    @Override
+    public List<Product> findByRestaurantId(Long id) {
+        return this.productRepo.findByRestaurantId(id);
+    }
 }

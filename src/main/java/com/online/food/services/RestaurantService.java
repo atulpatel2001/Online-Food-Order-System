@@ -24,4 +24,5 @@ public interface RestaurantService {
     List<Restaurant> searchRestaurant(String query);
 
     List<Restaurant> findByareaId(Long areaId);
+    List<Restaurant> findByCityName(String cityName);
 }

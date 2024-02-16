@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{customer/_layout::Layout(~{::section})}" >
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<section>
+  <div class="mt-2">
+    <div class="container">
+
+
+      <div class='row mb-2' th:if="${products != null and not #lists.isEmpty(products)}">
+        <div class='col-md-3 mb-1' th:each="product:${products}">
+          <div class="product-container">
+            <div class="art-board">
+              <div class="art-board__product-product-container">
+                <div class="card-product">
+                  <div class="card-product__image">
+                    <img th:src="${product.imageName}" alt="Salad" />
+                  </div>
+                  <div class="card-product__info">
+                    <div class="car__info--title">
+                      <h3 th:text="${product.productName}">Salad</h3>
+                      <p>Fresh & healthy</p>
+                    </div>
+                    <div class="card-product__info--price">
+                      <p class="mt-4" th:text="'$ '+${product.productPrice}">$ 5</p>
+                      <span class="add-cart" style=" cursor: pointer;"  th:data-product_id="${product.productId}"><ion-icon style="font-size: 30px" name="cart-outline"></ion-icon></span>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+</section>
+</body>
+</html>

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+
 public interface RestaurantRepo extends JpaRepository<Restaurant,Long> {
     @Query("select r from Restaurant r where r.customer.customerId =:customerId")
     Restaurant findByCustomerId(@Param("customerId") Long customerId);
@@ -19,5 +19,9 @@ public interface RestaurantRepo extends JpaRepository<Restaurant,Long> {
 
     @Query("select r from Restaurant r where r.area.areaId =:areaId")
     List<Restaurant> findByareaId(@Param("areaId") Long areaId);
+
+    @Query("select r from Restaurant r where r.city.cityName =:cityName")
+    List<Restaurant> findByCityName(@Param("cityName") String cityName);
+
 
 }

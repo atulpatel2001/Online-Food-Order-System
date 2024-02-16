@@ -3,8 +3,6 @@ package com.online.food.controller;
 import com.online.food.helper.FileUploadHelper;
 import com.online.food.modal.*;
 import com.online.food.services.*;
-import jakarta.servlet.http.HttpSession;
-import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +40,8 @@ public class CustomerController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private AddressService addressService;
 
 
     @ModelAttribute
@@ -64,9 +64,11 @@ public class CustomerController {
     @GetMapping("/index")
     public String indexpage(Model model) {
         model.addAttribute("title", "Order-Food | Order Food Online in India");
-        List<Product> products = this.productService.findVegitarianProduct();
+        List<Restaurant> ahemdabad = this.restaurantService.findByCityName("Ahemdabad");
+        List<Restaurant> ghandhinagar = this.restaurantService.findByCityName("Ghandhinagar");
 
-        model.addAttribute("products", products);
+        model.addAttribute("ghandhinagar",ghandhinagar);
+        model.addAttribute("ahemdabad", ahemdabad);
 
         return "customer/index";
     }
@@ -229,27 +231,28 @@ public class CustomerController {
     public String addAddress(Principal principal,
                              @RequestParam("fullName") String fullName,
                              @RequestParam("phoneNumber") String phoneNumber,
-                             @RequestParam("state") String state,
-                             @RequestParam("district") String district,
                              @RequestParam("city") String city,
                              @RequestParam("pinCode") String pinCode,
                              @RequestParam("houseNo") String houseNo,
                              @RequestParam("buildingName") String buildingName,
-                             @RequestParam("area") String area,
                              @RequestParam("colony") String colony) {
 
         try {
-            System.out.println("Received data:");
-            System.out.println("Full Name: " + fullName);
-            System.out.println("Phone Number: " + phoneNumber);
-            System.out.println("State: " + state);
-            System.out.println("District: " + district);
-            System.out.println("City: " + city);
-            System.out.println("Pin Code: " + pinCode);
-            System.out.println("House No: " + houseNo);
-            System.out.println("Building Name: " + buildingName);
-            System.out.println("Area: " + area);
-            System.out.println("Colony: " + colony);
+            Customer customer = this.customerService.findByEmailId(principal.getName());
+
+            Address address=Address.builder()
+                    .fullName(fullName)
+                    .customer(customer)
+                    .phoneNumber(phoneNumber)
+                    .city(city)
+                    .buildingName(buildingName)
+                    .houseNo(houseNo)
+                    .colony(colony)
+                    .pinCode(pinCode).build();
+
+            this.addressService.add(address);
+            return "success";
+
 
         } catch (Exception e) {
             e.getMessage();
@@ -268,30 +271,28 @@ public class CustomerController {
 
                                 @RequestParam("fullName") String fullName,
                                  @RequestParam("phoneNumber") String phoneNumber,
-                                 @RequestParam("state") String state,
-                                 @RequestParam("district") String district,
+
                                  @RequestParam("city") String city,
                                  @RequestParam("pinCode") String pinCode,
                                  @RequestParam("houseNo") String houseNo,
                                  @RequestParam("buildingName") String buildingName,
-                                 @RequestParam("area") String area,
+
                                  @RequestParam("colony") String colony) {
 
 
         try {
-            System.out.println(addressId);
-            System.out.println("Received data:");
-            System.out.println("Full Name: " + fullName);
-            System.out.println("Phone Number: " + phoneNumber);
-            System.out.println("State: " + state);
-            System.out.println("District: " + district);
-            System.out.println("City: " + city);
-            System.out.println("Pin Code: " + pinCode);
-            System.out.println("House No: " + houseNo);
-            System.out.println("Building Name: " + buildingName);
-            System.out.println("Area: " + area);
-            System.out.println("Colony: " + colony);
+            Address address = this.addressService.get(addressId);
+            address.setFullName(fullName);
+            address.setPhoneNumber(phoneNumber);
+            address.setCity(city);
+            address.setPinCode(pinCode);
+            address.setHouseNo(houseNo);
+            address.setColony(colony);
+            address.setBuildingName(buildingName);
+            this.addressService.add(address);
 
+
+            return "success";
         } catch (Exception e) {
             e.getMessage();
 
@@ -300,4 +301,12 @@ public class CustomerController {
         return "success";
     }
 
+
+    @GetMapping("/restaurant/{id}")
+    public String showRestaurantProduct(@PathVariable("id") String id,Model model){
+
+        List<Product> products = this.productService.findByRestaurantId(Long.valueOf(id));
+        model.addAttribute("products",products);
+        return "customer/restaurant-product";
+    }
 }

@@ -32,8 +32,8 @@
 												<img th:src="${cart.product.imageName}" class="img-fluid rounded-3" alt="Book Image">
 											</div>
 											<div class="col-md-3 col-lg-3 col-xl-3">
-												<h6 class="text-muted">Book</h6>
-												<h6 class="text-black mb-0" th:text="${cart.product.productName}">Book Title</h6>
+												<h6 class="text-muted">Product</h6>
+												<h6 class="text-black mb-0" th:text="${cart.product.productName}">Product Title</h6>
 
 											
 											</div>
@@ -147,17 +147,7 @@
 														
 														
 														
-														<div class="form-group">
-															<label for="state">State</label>
-															<input name="state" type="text" class="form-control" id="state"
-																   aria-describedby="emailHelp" placeholder="Enter State" required>
-														</div>
-														
-														<div class="form-group">
-															<label for="district">District</label>
-															<input name="district" type="text" class="form-control" id="district"
-																   aria-describedby="emailHelp" placeholder="Enter District" required>
-														</div>
+
 														
 														
 														<div class="form-group">
@@ -187,11 +177,7 @@
 														</div>
 														
 														
-														<div class="form-group">
-															<label for="area">Area</label>
-															<input name="area" type="text" class="form-control" id="area"
-																   aria-describedby="emailHelp" placeholder="Enter Area" required>
-														</div>
+
 														
 														
 														<div class="form-group">
@@ -225,13 +211,10 @@
 										<div class="justify-content-between mb-5" th:if="${customer.address != null}">
 											<p>Name: <span th:text="${customer.address.fullName}"></span></p>
 											<p>PhoneNumber: <span th:text="${customer.address.phoneNumber}"></span></p>
-											<p>State: <span th:text="${customer.address.state}"></span></p>
-											<p>District: <span th:text="${customer.address.district}"></span></p>
 											<p>City: <span th:text="${customer.address.city}"></span></p>
 											<p>Pincode: <span th:text="${customer.address.pinCode}"></span></p>
 											<p>HouseNo: <span th:text="${customer.address.houseNo}"></span></p>
 											<p>BuildingName: <span th:text="${customer.address.buildingName}"></span></p>
-											<p>Area: <span th:text="${customer.address.area}"></span></p>
 											<p>Colony: <span th:text="${customer.address.colony}"></span></p>
 											<button class="btn d-inline-flex btn-sm btn-primary " data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
                                                              <span class="pe-2">
@@ -249,8 +232,6 @@
 															<h5 class="modal-title" id="staticBackdropLabel1">Update Address</h5>
 															<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 														</div>
-														
-														
 														
 														<div class="modal-body">
 															<form id="update-address-form"  >
@@ -270,23 +251,7 @@
 																		   th:value="${customer.address.phoneNumber}"
 																		   aria-describedby="emailHelp" placeholder="Enter PhoneNumber" required>
 																</div>
-																
-																
-																
-																
-																<div class="form-group">
-																	<label for="state2">State</label>
-																	<input name="state" type="text" class="form-control" id="state2"
-																		   th:value="${customer.address.state}"
-																		   aria-describedby="emailHelp" placeholder="Enter State" required>
-																</div>
-																
-																<div class="form-group">
-																	<label for="district1">District</label>
-																	<input name="district" type="text" class="form-control" id="district1"
-																		   th:value="${customer.address.district}"
-																		   aria-describedby="emailHelp" placeholder="Enter District" required>
-																</div>
+
 																
 																
 																<div class="form-group">
@@ -319,14 +284,7 @@
 																		   aria-describedby="emailHelp" placeholder="Enter Building Name" required>
 																</div>
 																
-																
-																<div class="form-group">
-																	<label for="area">Area</label>
-																	<input name="area" type="text" class="form-control" id="area"
-																		   th:value="${customer.address.state}"
-																		   aria-describedby="emailHelp" placeholder="Enter Area" required>
-																</div>
-																
+
 																
 																<div class="form-group">
 																	<label for="colony1">Colony</label>

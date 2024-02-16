@@ -10,47 +10,114 @@
 		<div class="container">
 
 
-			<div class="vegitairan-product" th:if="${products != null and not #lists.isEmpty(products)}">
+			<div class='row mb-2' id="ahemdabad-rest " th:if="${ahemdabad != null and not #lists.isEmpty(ahemdabad)}">
+				<div class="mb-0" style="font-size: 35px">Top restaurant chains in Ahemdabad</div>
 
-				<h1 class="title-shop m-3" id="title">VEGITARIAN</h1>
-				<main class="main bd-grid">
 
-					<article class="card1" th:each="product:${products}" style="width:255px;height:400px;">
-						<div class="card1__img">
-							<img th:src="${product.imageName}" class="img1" alt="" style="height:225px;">
-						</div>
-						<div class="card1__name">
-							<p th:text="${product.subCategory.category.categoryName}">AIR ZOOM PEGASUS</p>
-						</div>
+				<div class='col-md-3 mb-1' th:each="r:${ahemdabad}">
 
-						<div class="card1__precis ">
-							<a  class="card1__icon ml-3" th:href="@{'/'+${product.productId}+'/product-detail'}">
-								<i class="fa fa-eye"></i>
-							</a>
-
-							<div>
-								<span class="card1__preci card1__preci--before" th:text="${product.productName}">$990.00</span>
-								<span class="card1__preci card1__preci--before" th:text="${product.restaurant.restaurantName}">$990.00</span>
-								<span class="card1__preci card1__preci--now" th:text="'$'+${product.productPrice}">$749.00</span>
+					<a class="rest-page-link" th:href="@{'/order-food/restaurant/' + ${r.restaurantId}}">
+					<div class="product-container">
+						<div class="art-board">
+							<div class="art-board__product-product-container">
+								<div class="card-product">
+									<div class="card-product__image">
+										<img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Salad" />
+									</div>
+									<div class="card-product__info">
+										<div class="car__info--title">
+											<h3 th:text="${r.restaurantName}">Salad</h3>
+											<p  th:text="${r.restaurantAddress}">Fresh & sweet</p>
+										</div>
+										<div class="card-product__info--price">
+											<p th:text="${r.area.areaName}"></p>
+										</div>
+									</div>
+								</div>
 							</div>
-							<a class="card1__icon mr-3 add-cart" style=" cursor: pointer;"  th:data-product_id="${product.productId}">
-								<ion-icon name="cart-outline"></ion-icon>
-							</a>
-
 						</div>
-
-					</article>
-
-
-				</main>
-				<footer class="m-3">
-					<div class="gap-2">
-						<a class="btn btn-outline-dark" th:href="@{/all-product}">Read More</a>
 					</div>
-				</footer>
+
+					</a>
+				</div>
 
 
+
+				</div>
+
+
+
+			<div class='row mb-2' id="gandhinagar-rest" th:if="${ghandhinagar != null and not #lists.isEmpty(ghandhinagar)}">
+				<div class="mb-0" style="font-size: 35px">Top restaurant chains in Gandhinagar</div>
+				<div class='col-md-3 mb-2' th:each="r:${ghandhinagar}">
+					<a class="rest-page-link" th:href="@{'/order-food/restaurant/'+${r.restaurantId}}">
+					<div class="product-container">
+						<div class="art-board">
+							<div class="art-board__product-product-container">
+								<div class="card-product">
+									<div class="card-product__image">
+										<img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Salad" />
+									</div>
+									<div class="card-product__info">
+										<div class="car__info--title">
+											<h3 th:text="${r.restaurantName}"></h3>
+											<p class="mt-1" th:text="${r.restaurantAddress}"></p>
+										</div>
+										<div class="card-product__info--price">
+											<p th:text="${r.area.areaName}"></p>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					</a>
+				</div>
 			</div>
+
+<!--			<div class="vegitairan-product" th:if="${products != null and not #lists.isEmpty(products)}">-->
+
+<!--				<h1 class="title-shop m-3" id="title">VEGITARIAN</h1>-->
+<!--				<main class="main bd-grid">-->
+
+<!--					<article class="card1" th:each="product:${products}" style="width:255px;height:400px;">-->
+<!--						<div class="card1__img">-->
+<!--							<img th:src="${product.imageName}" class="img1" alt="" style="height:225px;">-->
+<!--						</div>-->
+<!--						<div class="card1__name">-->
+<!--							<p th:text="${product.subCategory.category.categoryName}">AIR ZOOM PEGASUS</p>-->
+<!--						</div>-->
+
+<!--						<div class="card1__precis ">-->
+<!--							<a  class="card1__icon ml-3" th:href="@{'/'+${product.productId}+'/product-detail'}">-->
+<!--								<i class="fa fa-eye"></i>-->
+<!--							</a>-->
+
+<!--							<div>-->
+<!--								<span class="card1__preci card1__preci&#45;&#45;before" th:text="${product.productName}">$990.00</span>-->
+<!--								<span class="card1__preci card1__preci&#45;&#45;before" th:text="${product.restaurant.restaurantName}">$990.00</span>-->
+<!--								<span class="card1__preci card1__preci&#45;&#45;now" th:text="'$'+${product.productPrice}">$749.00</span>-->
+<!--							</div>-->
+<!--							<a class="card1__icon mr-3 add-cart" style=" cursor: pointer;"  th:data-product_id="${product.productId}">-->
+<!--								<ion-icon name="cart-outline"></ion-icon>-->
+<!--							</a>-->
+
+<!--						</div>-->
+
+<!--					</article>-->
+
+
+<!--				</main>-->
+<!--				<footer class="m-3">-->
+<!--					<div class="gap-2">-->
+<!--						<a class="btn btn-outline-dark" th:href="@{/all-product}">Read More</a>-->
+<!--					</div>-->
+<!--				</footer>-->
+
+
+<!--			</div>-->
 		</div>
 	</div>
 	

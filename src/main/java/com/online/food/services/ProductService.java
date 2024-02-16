@@ -22,4 +22,6 @@ public interface ProductService {
     Page<Product> findProductForRestaurant(Long restaurantId,Pageable pageable);
 
     List<Product> findVegitarianProduct();
+
+    List<Product> findByRestaurantId(Long id);
 }

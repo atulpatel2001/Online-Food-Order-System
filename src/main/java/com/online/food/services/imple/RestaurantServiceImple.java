@@ -52,4 +52,9 @@ public class RestaurantServiceImple implements RestaurantService {
     public List<Restaurant> findByareaId(Long areaId) {
         return this.restaurantRepo.findByareaId(areaId);
     }
+
+    @Override
+    public List<Restaurant> findByCityName(String cityName) {
+        return this.restaurantRepo.findByCityName(cityName);
+    }
 }
