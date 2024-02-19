@@ -48,6 +48,8 @@ public class Restaurant implements Serializable {
     @JsonBackReference
     private List<Complain> complain;
 
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "restaurant")
+    private List<Staff> staffs;
 
 
 }

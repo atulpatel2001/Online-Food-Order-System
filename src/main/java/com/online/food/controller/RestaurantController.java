@@ -1,21 +1,22 @@
 package com.online.food.controller;
 
-import com.online.food.helper.FileUploadHelper;
 import com.online.food.modal.*;
 import com.online.food.services.*;
+import com.online.food.services.StaffService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,12 @@ public class RestaurantController {
 
     @Autowired
     private ComplainService complainService;
-
+    @Autowired
+    private StaffService staffService;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private OrderService orderService;
     private Logger logger= LoggerFactory.getLogger(RestaurantController.class);
 
 
@@ -279,6 +285,7 @@ public class RestaurantController {
         return "success";
     }
 
+    //get offer
     @GetMapping("/get-offer")
     @ResponseBody
     public Map<String,String> getOffer(@RequestParam("offer_id") Long offer_id) throws Exception{
@@ -296,6 +303,7 @@ public class RestaurantController {
 
     }
 
+    //update offer
     @PostMapping("/update-offer")
     @ResponseBody
     public String updateOffer(@RequestParam("offerId")Long offerId,
@@ -323,6 +331,7 @@ public class RestaurantController {
     }
 
 
+    //manage complain
 
     @GetMapping("/manage-complain/{page}")
     public String manageComplain(@PathVariable("page") int page,Principal principal,Model model){
@@ -346,6 +355,7 @@ public class RestaurantController {
         return "restaurant/manage-complain";
     }
 
+    //update complain status
     @PostMapping("/update-complain-status")
     @ResponseBody
     public String updateComplainStatus(@RequestParam("complainId")Long complainId,@RequestParam("status") int status){
@@ -368,6 +378,8 @@ public class RestaurantController {
         return "success";
     }
 
+    //reply complian data
+
     @PostMapping("/reply-data")
     @ResponseBody
     public String replyDataHandle(@RequestParam("replydes") String replyDes,@RequestParam("complainId") Long complainId)
@@ -382,6 +394,154 @@ public class RestaurantController {
             e.printStackTrace();
         }
         return "success";
+    }
+
+
+    //manage staff
+
+    @GetMapping("/manage-staff/{page}")
+    public String manageStaffPage(@PathVariable("page")int page ,Model model,Principal principal){
+        try {
+
+            Pageable pageable= PageRequest.of(page,5);
+
+            String name = principal.getName();
+            Customer customer = this.customerService.findByEmailId(name.trim());
+            Restaurant restaurant = customer.getRestaurant();
+            Page<Staff> staffs = this.staffService.findByRestaurantId(restaurant.getRestaurantId(), pageable);
+            model.addAttribute("staffs", staffs.getContent());
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", staffs.getTotalPages());
+            model.addAttribute("title","Restaurant | Manage Staff");
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "restaurant/manage-staff";
+    }
+
+    //add staff
+    @PostMapping("/add-staff")
+    @ResponseBody
+    public String addStaff(Principal principal,
+                           @RequestParam("staffName")String staffName,
+                           @RequestParam("staffEmail")String email,
+                           @RequestParam("phoneNumber")Long phoneNumber,
+                           @RequestParam("staffPassword")String staffPassword,
+                           @RequestParam("address") String address
+                           ){
+       try{
+           Customer staff= this.customerService.findByEmailId(email.trim());
+         if(staff == null){
+
+              Customer staffEmail=Customer.builder()
+                      .customerEmail(email)
+                      .customerPassword(this.passwordEncoder.encode(staffPassword))
+                      .customerJoinDate(LocalDateTime.now())
+                      .customerRole("ROLE_RESTAURANT-STAFF").
+                      customerName(staffName)
+                      .enable(false).build();
+
+             Customer customer = this.customerService.findByEmailId(principal.getName());
+             Customer save = this.customerService.save(staffEmail);
+             Restaurant restaurant = customer.getRestaurant();
+
+             Staff build = Staff.builder().phoneNumber(phoneNumber).address(address).restaurant(restaurant).customer(save).build();
+             this.staffService.save(build);
+
+             return "success";
+         }
+         else {
+
+             return "Already Registered This Email";
+         }
+       }
+       catch (Exception e){
+           e.printStackTrace();
+           return "error";
+
+       }
+
+    }
+
+    //delete staff
+    @PostMapping("/delete-staff")
+    @ResponseBody
+    public String banStaff(@RequestParam("staff_id") Long staff_id){
+        try{
+            Staff staff = this.staffService.findById(staff_id);
+            Customer customer = staff.getCustomer();
+            this.customerService.delete(customer);
+            return "success";
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return "error";
+        }
+
+    }
+
+    //get staff
+    @GetMapping("/get-staff")
+    @ResponseBody
+    public Map<String,String> getStaffData(@RequestParam("staff_id") Long staff_id){
+        Map<String,String> data=new HashMap<>();
+        Staff staff = this.staffService.findById(staff_id);
+
+        data.put("id", String.valueOf(staff.getId()));
+        data.put("name",staff.getCustomer().getCustomerName());
+        data.put("phoneNumber", String.valueOf(staff.getPhoneNumber()));
+        data.put("address",staff.getAddress());
+
+        return data;
+
+
+    }
+
+    //update staff
+    @PostMapping("/update-staff")
+    @ResponseBody
+    public String updateStaff(@RequestParam("staffName")String staffName,
+                              @RequestParam("phoneNumber")Long phoneNumber,
+                              @RequestParam("staffId")Long staffId,
+                              @RequestParam("address") String address){
+
+        try {
+
+            Staff staff = this.staffService.findById(staffId);
+            staff.setAddress(address);
+            staff.getCustomer().setCustomerName(staffName);
+            staff.setPhoneNumber(phoneNumber);
+            this.staffService.save(staff);
+            return "success";
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return "error";
+        }
+    }
+
+
+    //manage pending order
+
+    @GetMapping("/manage-pending-order")
+    public String managePendingOrder(Model model,Principal principal){
+        try {
+            Restaurant restaurant = this.customerService.findByEmailId(principal.getName()).getRestaurant();
+
+            List<Order> orders = this.orderService.findPendingOrderParticularResturant(restaurant.getRestaurantId());
+            model.addAttribute("orders",orders);
+            List<Staff> staffs = this.staffService.findByRestaurantIdNotPagination(restaurant.getRestaurantId());
+
+            model.addAttribute("staffs",staffs);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return "restaurant/manage-pending-order";
     }
 }
 

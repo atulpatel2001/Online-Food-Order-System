@@ -40,6 +40,8 @@ public class AdminController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private TransactionService transactionService;
 
     @Autowired
     private SubCategoryService subCategoryService;
@@ -976,6 +978,21 @@ public class AdminController {
     }
 
 
+    @GetMapping("/transaction-detail/{page}")
+    public String showAllTransaction(@PathVariable("page")int page, Model model){
+        try{
+            Pageable pageable=PageRequest.of(page,5);
 
+            Page<Transaction> transactions = this.transactionService.findAllPagination(pageable);
+            model.addAttribute("transactions", transactions.getContent());
+
+            model.addAttribute("currentPage", transactions.getNumber());
+            model.addAttribute("totalPages", transactions.getTotalPages());
+
+        }catch (Exception e){
+            e.getMessage();
+        }
+        return "admin/Transction-Detail";
+    }
 
 }

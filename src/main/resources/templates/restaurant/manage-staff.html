@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{restaurant/_layout::Layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<section>
+
+    <main class="p-5" >
+        <div class="container">
+            <button class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 " id="add-staff-button"><i
+                    class="fa fa-plus"></i></button>
+
+            <button class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 " id="show-staff-button"><i
+                    class="fa fa-eye"></i></button>
+
+            <div class="m-3 " id="show-staffs">
+
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class=" btn btn-secondary m-2" aria-current="page" type="button">Copy</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class=" btn btn-info m-2" type="button" href="#">CSV</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="btn btn-success m-2" type="button">
+                                        Excel
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="btn btn-danger m-2" type="button">PDF</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class=" btn btn-primary m-2" type="button">PRINT</a>
+                                </li>
+                            </ul>
+                            <div class="d-flex" role="search">
+
+
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </nav>
+
+
+                <div class="search-all m-2">
+                    <div class="search">
+                        <svg class="search__icon" width="22" height="22" viewBox="0 0 22 22" fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                    d="M10.5418 19.25C15.3513 19.25 19.2502 15.3512 19.2502 10.5417C19.2502 5.73223 15.3513 1.83337 10.5418 1.83337C5.73235 1.83337 1.8335 5.73223 1.8335 10.5417C1.8335 15.3512 5.73235 19.25 10.5418 19.25Z"
+                                    stroke="#596780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M20.1668 20.1667L18.3335 18.3334" stroke="#596780" stroke-width="1.5"
+                                  stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <input type="text" class="search__input" placeholder="Search something here" id=""
+                        />
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title text-uppercase mb-0">
+                                    Offer
+                                </h5>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table no-wrap user-table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" class="border-0 text-uppercase font-medium pl-4 font-size-table" >
+                                            ID
+                                        </th>
+                                        <th scope="col" class="border-0 text-uppercase font-size-table" >
+                                            Staff Name
+                                        </th>
+                                        <th scope="col" class="border-0 text-uppercase font-medium font-size-table">
+                                           Email Id
+                                        </th>
+                                        <th scope="col" class="border-0 text-uppercase font-medium font-size-table">
+                                         PhoneNumber
+                                        </th>
+
+                                        <th scope="col" class="border-0 text-uppercase font-medium font-size-table">
+                                           Address
+                                        </th>
+
+                                        <th scope="col" class="border-0 text-uppercase font-medium font-size-table">
+                                            Action
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="staff:${staffs}" th:if="${staffs != null}">
+                                        <td class="pl-4">
+                                            <div class="text-muted" th:text="${staff.id}">
+
+                                            </div>
+                                        </td>
+
+                                        <td >
+                                            <div class="text-muted" th:text="${staff.getCustomer().customerName}">
+
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div class="text-muted" th:text="${staff.getCustomer().getCustomerEmail()}">
+                                                45-89-96
+                                            </div>
+                                        </td>
+
+
+
+
+                                        <td>
+                                            <h5 class="font-medium mb-0" th:text="${staff.phoneNumber}">
+                                                Daniel Kristeen
+                                            </h5>
+
+                                        </td>
+                                        <td>
+                                            <div class="text-muted" th:text="${staff.address}">
+                                                45-89-96
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <button type="button"
+                                                    class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 delete-staff"
+                                                    th:data-staff_id="${staff.id}"
+
+                                            >
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                            <button type="button"
+                                                    class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2 update-staff-button"
+                                                    th:data-staff_id="${staff.id}"
+                                            >
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+
+
+                            <!-- pagination -->
+
+                            <div class="m-2">
+                                <div aria-label="Page navigation" th:if="${totalPages>0}">
+                                    <ul class="pagination justify-content-center">
+                                        <li th:if="${currentPage != 0 }" class="page-item">
+                                            <a class="page-link"
+                                               th:href="@{'/restaurant/manage-staff/' + ${currentPage - 1}}">Previous</a>
+                                        </li>
+                                        <li th:each="i : ${#numbers.sequence(1, totalPages)}" class="page-item"
+                                            th:classappend="${currentPage == i-1 ? 'active' : ''}">
+                                            <a class="page-link" th:href="@{'/restaurant/manage-staff/' + ${i-1}}">
+                                                <span th:text="${i}"></span>
+                                            </a>
+                                        </li>
+                                        <li th:if="${currentPage + 1 != totalPages}" class="page-item">
+                                            <a class="page-link" th:href="@{'/restaurant/manage-staff/' + ${currentPage + 1}}">Next</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!--			add form start-->
+
+            <div id="add-staff-form" style="display:none">
+                <div class="col-md-5 offset-md-4">
+                    <div class="card mt-3">
+                        <div class="card-header text-center ">
+                            <br />
+                            Add Staff
+                        </div>
+
+                        <div class="card-body">
+                            <form id="staff-reg-form">
+
+                                <div class="form-group">
+                                <label for="staffName">Staff Name</label>
+                                <input name="staffName" type="text" class="form-control" id="staffName"
+                                       aria-describedby="emailHelp" placeholder="Enter Staff Name" >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="staffEmail">Staff Email</label>
+                            <input name="staffEmail" type="email" class="form-control" id="staffEmail"
+                                   aria-describedby="emailHelp" placeholder="Enter email" >
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with
+                                anyone else.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number</label>
+                            <input name="phoneNumber" type="number" class="form-control" id="phoneNumber"
+                                   aria-describedby="emailHelp" placeholder="Enter Phone Number" >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="staffPassword">Password</label>
+                            <input name="staffPassword" type="password" class="form-control"
+                                   id="staffPassword" aria-describedby="emailHelp"
+                                   placeholder="Enter Password" >
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="password2">Retype Password</label>
+                            <input type="password" id="password2" class="form-control" placeholder="Retype Password"/>
+                            <small id="retype" class="form-text" style="font-weight: bold;" ></small>
+                        </div>
+
+
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <textarea name="address" class="form-control" id="address"
+                                              rows="10" placeholder="Enter Address"></textarea>
+                                </div>
+
+
+
+                                <div class="container text-center mt-3">
+                                    <button type="submit" class="btn btn-primary" id="submit-btn">
+                                        Submit
+                                    </button>
+                                    <button type="reset" class="btn btn-warning" id="reset-btn">
+                                        Reset
+                                    </button>
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!--			add form close-->
+
+<!--            &lt;!&ndash;			upadte form&ndash;&gt;-->
+
+
+
+            <div id="update-staff-form" style="display:none">
+                <div class="col-md-5 offset-md-4">
+                    <div class="card mt-3">
+                        <div class="card-header text-center ">
+                            <br />
+                            Update Staff
+                        </div>
+
+                        <div class="card-body">
+                            <form id="staff-update-form">
+
+                                <input type="hidden" name="staffId" id="staffId-up">
+                                <div class="form-group">
+                                    <label for="staffName">Staff Name</label>
+                                    <input name="staffName" type="text" class="form-control" id="staffName-up"
+                                           aria-describedby="emailHelp" placeholder="Enter Staff Name" >
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="phoneNumber">Phone Number</label>
+                                    <input name="phoneNumber" type="number" class="form-control" id="phoneNumber-up"
+                                           aria-describedby="emailHelp" placeholder="Enter Phone Number" >
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <textarea name="address" class="form-control" id="address-up"
+                                              rows="10" placeholder="Enter Address"></textarea>
+                                </div>
+
+
+
+                                <div class="container text-center mt-3">
+                                    <button type="submit" class="btn btn-primary" id="submit-btn-up">
+                                        Submit
+                                    </button>
+                                    <button type="reset" class="btn btn-warning" id="reset-btn-up">
+                                        Reset
+                                    </button>
+                                </div>
+                            </form>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </main>
+</section>
+</body>
+</html>

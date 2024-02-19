@@ -136,6 +136,7 @@ public class HomeController {
                         .customer(save)
                         .build();
                 this.restaurantService.save(restaurant);
+                return "success";
             }
             else {
                 this.logger.info("Already Registered This Email");
@@ -144,8 +145,9 @@ public class HomeController {
         }
         catch (Exception e){
             e.printStackTrace();
+            return "error";
         }
-        return "success";
+
     }
 
 

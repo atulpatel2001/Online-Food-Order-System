@@ -532,6 +532,8 @@ $(document).ready(function () {
 
 });
 
+
+//replay complain
 $(document).ready(function () {
      $(".reply-form-data").validate({
 
@@ -576,3 +578,249 @@ $(document).ready(function () {
 
      })
 })
+
+
+//for staff
+$(document).ready(function () {
+    $("#add-staff-button").click(function () {
+        $("#show-staffs").hide();
+        $("#update-staff-form").hide();
+        $("#add-staff-form").show();
+    });
+});
+
+$(document).ready(function () {
+    $("#show-staff-button").click(function () {
+
+        $("#update-staff-form").hide();
+        $("#add-staff-form").hide();
+        $("#show-staffs").show();
+    });
+})
+
+
+//staff from
+
+
+$(document).ready(function() {
+    $('#staff-reg-form').validate({
+        rules: {
+            staffName: {
+                required: true,
+                minlength: 4
+            },
+            staffEmail: {
+                required: true,
+                email: true
+            },
+            staffPassword: {
+                required: true,
+                minlength: 6,
+                maxlength: 20,
+
+            },
+            password2: {
+                required: true,
+                equalTo: "#staffPassword"
+            },
+
+            phoneNumber:{
+                required: true,
+                minlength: 10,
+                maxlength: 11,
+                number:true
+            },
+            address:{
+                required: true,
+                minlength: 4,
+            },
+        },
+        messages: {
+            customerPassword:   {
+                required: "Please enter a password.",
+                minlength: "Password must be at least 8 characters long."
+            },
+            password2: {
+                equalTo: "Passwords do not match!"
+            },
+        },
+        submitHandler: function(form) {
+            let password = $('#staffPassword').val();
+            let confirmPassword = $('#password2').val();
+            if (password.trim() !== confirmPassword.trim()) {
+                Swal.fire(
+                    'Password does not match?',
+                    'Try Again',
+                    'question'
+                )
+            } else {
+                let formData = new FormData(form);
+                $.ajax({
+                    url: "/restaurant/add-staff",
+                    type: 'POST',
+                    data: formData,
+                    success: function(data, textStatus, jqXHR) {
+                        if (data.trim() === 'success') {
+                            Swal.fire("Good job!", "Registered Successfully. We are going Redirect to Index Page!", "success")
+                                .then((value) => {
+                                    window.location = "/restaurant/index";
+                                });
+                        } else {
+                            Swal.fire("Please Try Again ",data);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        Swal.fire("Something Went Wrong !!! Try Again!!");
+                    },
+                    processData: false,
+                    contentType: false
+                });
+            }
+        }
+    });
+});
+
+//delete staff
+
+
+$(document).ready(function () {
+    $('.delete-staff').click(function () {
+
+        var staff_id = $(this).data('staff_id');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success ml-2',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false,
+        });
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: 'You are about to ban this staff.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Ban it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/restaurant/delete-staff',
+                    data: {
+                        staff_id: staff_id
+                    },
+                    success: function (response) {
+
+                        swalWithBootstrapButtons.fire(
+                            'Deleted!',
+                            'The Staff has been Baned.',
+                            'success'
+                        );
+
+                        $(this).closest('tr').remove();
+                    },
+                    error: function (xhr, status, error) {
+                        swalWithBootstrapButtons.fire(
+                            'Error!',
+                            'An error occurred while baning the Staff.',
+                            'error'
+                        );
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'The Staff has not been Baned.',
+                    'error'
+                );
+            }
+        });
+    });
+});
+
+
+
+//get Staff data
+$(document).ready(function () {
+    $(".update-staff-button").click(function () {
+        var staff_id = $(this).data('staff_id');
+
+        $.ajax({
+            url: '/restaurant/get-staff',
+            type: 'GET',
+            data: { staff_id: staff_id },
+            success: function (response) {
+                $("#staffId-up").val(response.id);
+                $("#staffName-up").val(response.name);
+                $("#phoneNumber-up").val(response.phoneNumber);
+                $("#address-up").val(response.address);
+
+
+                $("#add-staff-form").hide();
+                $("#show-staffs").hide();
+                $("#update-staff-form").show();
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+
+            }
+        });
+    });
+});
+
+
+
+
+
+$(document).ready(function() {
+    $('#staff-update-form').validate({
+        rules: {
+            staffName: {
+                required: true,
+                minlength: 4
+            },
+            phoneNumber:{
+                required: true,
+                minlength: 10,
+                maxlength: 11,
+                number:true
+            },
+            address:{
+                required: true,
+                minlength: 4,
+            },
+        },
+        messages: {
+
+        },
+        submitHandler: function(form) {
+                let formData = new FormData(form);
+                $.ajax({
+                    url: "/restaurant/update-staff",
+                    type: 'POST',
+                    data: formData,
+                    success: function(data, textStatus, jqXHR) {
+                        if (data.trim() === 'success') {
+                            Swal.fire("Good job!", "Updated Successfully. We are going Redirect to Index Page!", "success")
+                                .then((value) => {
+                                    window.location = "/restaurant/index";
+                                });
+                        } else {
+                            Swal.fire("Please Try Again ",data);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        Swal.fire("Something Went Wrong !!! Try Again!!");
+                    },
+                    processData: false,
+                    contentType: false
+                });
+
+        }
+    });
+});

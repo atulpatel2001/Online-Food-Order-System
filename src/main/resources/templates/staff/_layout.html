@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
-	<link rel="stylesheet" th:href="@{/css/restaurant/style.css}" />
+	<link rel="stylesheet" th:href="@{/css/staff/style.css}" />
     <title th:text="${title}">Base</title>
     <!-- fa fa font -->
     <link
@@ -43,42 +43,34 @@
     <div class="menu-items">
         <ul class="nav-links">
             <li>
-                <a th:href="@{/restaurant/index}">
+                <a th:href="@{/restaurant-staff/index}">
                     <i class="uil uil-estate"></i>
                     <span class="link-name">Dahsboard</span>
                 </a>
             </li>
             <li>
-                <a href="#" th:href="@{/restaurant/manage-product/0}">
+                <a href="#" th:href="@{/restaurant-staff/manage-pending-order}">
                     <i class="uil uil-briefcase"></i>
-
-                    <span class="link-name">Manage Product</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" th:href="@{/restaurant/manage-staff/0}">
-                    <i class="uil uil-user"></i>
-
-                    <span class="link-name">Manage Staff</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="#" th:href="@{/restaurant/manage-pending-order}">
-                    <i class="uil uil-user"></i>
 
                     <span class="link-name">Manage Pending Order</span>
                 </a>
             </li>
             <li>
-                <a href="#" th:href="@{/restaurant/manage-offer/0}">
+                <a href="#" th:href="@{/restaurant-staff/manage-history/0}">
+                    <i class="uil uil-user"></i>
+
+                    <span class="link-name">History</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" th:href="@{/restaurant-staff/manage-offer/0}">
                     <i class="uil-dropbox"></i>
                     <span class="link-name">Manage Offers</span>
                 </a>
             </li>
 
             <li>
-                <a href="#" th:href="@{/restaurant/manage-complain/0}">
+                <a href="#" th:href="@{/restaurant-staff/manage-complain/0}">
                     <i class="uil-missed-call"></i>
                     <span class="link-name">Manage Complain</span>
                 </a>
@@ -153,6 +145,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script th:src="@{/js/common.js}"></script>
-<script th:src="@{/js/restaurant/script.js}"></script>
+<script th:src="@{/js/staff/script.js}"></script>
 </body>
 </html>

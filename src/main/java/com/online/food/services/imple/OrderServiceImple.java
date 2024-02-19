@@ -53,4 +53,14 @@ public class OrderServiceImple implements OrderService {
     public int countDeliveredOrderParticularRestaurant(Long restaurantId) {
         return this.orderRepository.countDeliveredOrderParticularRestaurant(restaurantId);
     }
+
+    @Override
+    public List<Order> findPendingOrderParticularResturant(Long restaurantId) {
+        return this.orderRepository.findPendingOrderParticularResturant(restaurantId);
+    }
+
+    @Override
+    public Page<Order> findDeliveredOrderParticularResturant(Long restaurantId, Pageable pageable) {
+        return this.orderRepository.findDeliveredOrderParticularResturant(restaurantId,pageable);
+    }
 }

@@ -45,6 +45,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                 response.sendRedirect("/restaurant/index");
                 return;
             }
+            else if (auth.getAuthority().equals("ROLE_RESTAURANT-STAFF")) {
+                response.sendRedirect("/restaurant-staff/index");
+                return;
+            }
         }
         response.sendRedirect("/order-food/index");
 

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{restaurant/_layout::Layout(~{::section})}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<section>
+  <div class="container">
+  <div class="search-all mt-5"  style="margin-top: 60px">
+    <div class="search">
+      <svg class="search__icon" width="22" height="22" viewBox="0 0 22 22" fill="none"
+           xmlns="http://www.w3.org/2000/svg">
+        <path
+                d="M10.5418 19.25C15.3513 19.25 19.2502 15.3512 19.2502 10.5417C19.2502 5.73223 15.3513 1.83337 10.5418 1.83337C5.73235 1.83337 1.8335 5.73223 1.8335 10.5417C1.8335 15.3512 5.73235 19.25 10.5418 19.25Z"
+                stroke="#596780" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+        <path d="M20.1668 20.1667L18.3335 18.3334" stroke="#596780" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <input type="text" class="search__input" placeholder="Search something here" id="search-trans"
+      />
+    </div>
+
+    <div class="search-result-trans mt-3"></div>
+
+
+    <div class="card shadow border-0 mb-7">
+      <div class="card-header">
+        <h5 class="mb-0">New Orders</h5>
+      </div>
+
+      <!-- table start -->
+      <div class="table-responsive">
+        <table class="table table-hover table-nowrap">
+          <thead class="thead-light">
+          <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Order Date</th>
+            <th scope="col">Order Status</th>
+            <th scope="col">Staff Allocation</th>
+            <th scope="col"></th>
+            <th scope="col">Action</th>
+
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="order:${orders}"  th:if="${orders != null}">
+
+
+            <td>
+              <a class="text-heading font-semibold" >
+                <img style="height:70px;width:70px;" th:src="${order.product.imageName}" alt="image"/>
+                <p class="text-muted" style="font-size:10px;" th:text="${order.product.productName}"></p>
+              </a>
+
+            </td>
+
+            <td th:text="${order.productQuantity}" style="font-size:16px;font-width:30px">$3.500</td>
+
+
+            <td th:text="${order.orderDate}">
+
+            </td>
+            <td th:text="${order.orderStatus}">
+
+            </td>
+
+            <td th:text="${order.orderId}" id="orderId" style="display: none"></td>
+            <td class="text-center">
+              <div class="form-group">
+                <label for="select-staff" class="visually-hidden">Order Staff</label>
+                 <select class="form-select select-staff" id="select-staff" aria-label="Order Status" name="staffId">
+                   <option selected>Select Staff</option>
+                   <option th:each="staff : ${staffs}" th:value="${staff.id}" th:text="${staff.customer.customerName}" ></option>
+                </select>
+              </div>
+            </td>
+
+
+<!--            <td>-->
+<!--              <a href="#"  class="btn btn-sm btn-neutral"  th:data-bs-target="'#exampleModal-'+${order.orderId}" data-bs-toggle="modal"><i class="fa fa-tasks" aria-hidden="true"></i></a>-->
+<!--            <td>-->
+
+            <td >
+              <a href="#" th:href="@{'/restaurant/'+${order.orderId}+'/order-detail'}"  class="btn btn-sm btn-neutral" >View</a>
+            </td>
+
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- table end -->
+
+
+      <div class="card-footer  py-5">
+
+
+
+      </div>
+
+
+
+    </div>
+  </div>
+
+
+</section>
+</body>
+</html>

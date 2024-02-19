@@ -39,7 +39,13 @@ public class Security {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth.requestMatchers("/admin/**").hasRole("ADMIN").requestMatchers("/order-food/**").hasRole("CUSTOMER").requestMatchers("/restaurant/**").hasRole("RESTAURANT").requestMatchers("/**").permitAll().anyRequest().authenticated()).formLogin(form -> {
+        httpSecurity.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/admin/**").
+                hasRole("ADMIN").requestMatchers("/order-food/**")
+                        .hasRole("CUSTOMER").requestMatchers("/restaurant/**")
+                        .hasRole("RESTAURANT")
+                        .requestMatchers("/restaurant-staff/**").hasRole("RESTAURANT-STAFF")
+                        .requestMatchers("/**").permitAll().anyRequest().authenticated()).formLogin(form -> {
             form.loginPage("/signin").loginProcessingUrl("/doLogin").defaultSuccessUrl("/order-food/index", true).successHandler(this.customAuthenticationSuccessHandler);
         }).logout(log -> log.logoutSuccessHandler(this.customLogoutSuccessHandler));
 

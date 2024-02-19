@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/_layout::Layout(~{::section})}">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<section>
+	<div class="search-all mt-5">
+		<div class="search">
+			<svg class="search__icon" width="22" height="22" viewBox="0 0 22 22" fill="none"
+				 xmlns="http://www.w3.org/2000/svg">
+				<path
+						d="M10.5418 19.25C15.3513 19.25 19.2502 15.3512 19.2502 10.5417C19.2502 5.73223 15.3513 1.83337 10.5418 1.83337C5.73235 1.83337 1.8335 5.73223 1.8335 10.5417C1.8335 15.3512 5.73235 19.25 10.5418 19.25Z"
+						stroke="#596780" stroke-width="1.5" stroke-linecap="round"
+						stroke-linejoin="round" />
+				<path d="M20.1668 20.1667L18.3335 18.3334" stroke="#596780" stroke-width="1.5"
+					  stroke-linecap="round" stroke-linejoin="round" />
+			</svg>
+			<input type="text" class="search__input" placeholder="Search something here" id="search-trans"
+				  />
+		</div>
+
+		<div class="search-result-trans mt-3"></div>
+	
+	<div class="card shadow border-0 mb-7 m-4 mt-5" >
+		<div class="card-header">
+			<h5 class="mb-0">All Transaction
+			</h5>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-hover table-nowrap">
+				<thead class="thead-light">
+				<tr>
+					<th scope="col" >Order Id</th>
+					
+					<th scope="col">Product Title</th>
+					<th scope="col">Amount</th>
+					<th scope="col">Transcation Status</th>
+					<th scope="col">Payment Id</th>
+				</tr>
+				</thead>
+				<tbody th:if="${transactions != null}">
+				
+				<tr th:each="transaction:${transactions}" th:if="${transaction.order != null}">
+				<td>
+										<span class="badge badge-lg badge-dot">
+											<i class="bg-success"></i><a style="text-decoration:none;color:black;" th:href="@{'/admin/'+${transaction.order.orderId}+'/order-detail'}"><span style="text-decoration-none;color:black;" th:text="${transaction.order.orderId}"></span></a>
+                                      </span>
+					</td>
+					
+					<td>
+						<a th:href="@{'/admin/'+${transaction.order.product.imageName}+'/book-Info'}">
+					 	<img style="height:50px;" th:src="${transaction.order.product.imageName}" alt="book title">
+						<span th:text="${transaction.order.product.productName}" style="font-size:13px;text-decoration:none;color:black;"></span>
+						</a>
+					</td>
+					
+					<td th:text="${transaction.amount}">
+						$3.500
+					</td>
+					
+					<td th:text="${transaction.transcationStatus}">
+						$3.500
+					</td>
+				
+				<td th:text="${transaction.paymentId}">
+				
+				</td>
+				</tr>
+				
+				</tbody>
+			</table>
+			
+			<nav aria-label="Page navigation example text-center" th:if="${totalPages>0}" style="color:black">
+				<ul class="pagination">
+					<li class="page-item border" th:if="${currentPage != 0 }">
+						<a class="page-link" href="#" aria-label="Previous"
+						   th:href="@{'/admin/transaction-detail/' + ${currentPage - 1}}">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+					<li th:each="i : ${#numbers.sequence(1, totalPages)}" style="color:black"
+						th:classappend="${currentPage == i-1 ? 'active' : ''}"><a
+							class="page-link" href="#" th:href="@{'/admin/transaction-detail/' + ${i-1}}"
+							th:text="${i}">1</a></li>
+					
+					<li class="page-item  border" th:if="${currentPage + 1 != totalPages}" style="color:black">
+						<a class="page-link" href="#" aria-label="Next"
+						   th:href="@{'/admin/transaction-detail/' + ${currentPage + 1}}">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	
+	</div>
+	</div>
+	
+</section>
+</body>
+</html>

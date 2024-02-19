@@ -28,11 +28,6 @@ public class Order implements Serializable {
     @Column(name = "order_date")
     private LocalDate orderDate;
 
-    @Column(name = "shipped_Date")
-    private LocalDate shippedDate;
-    @Column(name = "outOfDelivery_Date")
-    private LocalDate outOfDeliveryDate;
-
     @Column(name = "delivered_Date")
     private LocalDate deliveredDate;
 
@@ -51,5 +46,7 @@ public class Order implements Serializable {
     @JoinColumn(name = "product_Id")
     @JsonBackReference
     private Product product;
+
+
 
 }

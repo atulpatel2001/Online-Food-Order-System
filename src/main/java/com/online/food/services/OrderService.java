@@ -31,6 +31,9 @@ public interface OrderService {
 
     public int countDeliveredOrderParticularRestaurant(Long restaurantId);
 
+    List<Order> findPendingOrderParticularResturant(Long restaurantId);
+    Page<Order> findDeliveredOrderParticularResturant(Long restaurantId,Pageable pageable);
+
 
 }
 
